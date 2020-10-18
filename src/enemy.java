@@ -1,19 +1,18 @@
 import java.awt.*;
 import java.awt.geom.*;
 
-public class enemy extends Ellipse2D.Double {
+public class Enemy extends Ellipse2D.Double {
 	
 	String sprite;
-	String path; // The array of points the enemy will travel through
+	String path; // The string representation of the bezier curve coordinates
 	double velocity; // The current speed of the enemy
 	double acceleration; // How much the speed of the enemy changes each frame
 	double maxVelocity; // The max velocity
 	double minVelocity; // The min velocity
 	double health; // Enemy health
 	boolean offset; // If the bezier curve coordinates should move along with the origin, or are fixed
-	// String routine;
 	
-	public enemy() {
+	public Enemy() {
 		
 		sprite = "";
 		path = "";
@@ -27,7 +26,7 @@ public class enemy extends Ellipse2D.Double {
 		offset = false;
 	}
 	
-	public enemy(String sprite, String path, double velocity, double acceleration, double maxVelocity, double minVelocity, Dimension size, int health,
+	public Enemy(String sprite, String path, double velocity, double acceleration, double maxVelocity, double minVelocity, Dimension size, int health,
 			boolean offset) {
 		
 		this.sprite = sprite;
@@ -40,12 +39,12 @@ public class enemy extends Ellipse2D.Double {
 		height = size.height;
 		this.health = health;
 		this.offset = offset;
-		// this.routine = routine;
 	}
 	
 	public static void create(String enem, Point origin, String routine) {
+		// Adds a new enemy to the enemy array
 		
-		game.activeEnemies.add(new enemyActive(game.enemyTypes.get(enem), origin, routine));
+		Game.activeEnemies.add(new EnemyActive(Game.enemyMap.get(enem), origin, routine));
 	}
 	
 	public static void draw(Graphics g) {
@@ -53,21 +52,23 @@ public class enemy extends Ellipse2D.Double {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.RED);
 		
-		for (int i = 0; i < game.activeEnemies.size(); i++)
-			g2.fill(game.activeEnemies.get(i));
-		for (int i = 0; i < game.activePaths.size(); i++)
-			g2.draw(game.activePaths.get(i));
+		for (int i = 0; i < Game.activeEnemies.size(); i++)
+			g2.fill(Game.activeEnemies.get(i));
+		for (int i = 0; i < Game.activePaths.size(); i++)
+			g2.draw(Game.activePaths.get(i));
 	}
 	
 	public static void kill(int enemy) {
+		// Marks an enemy for deletion
 		
-		game.deadEnemies.add(enemy);
+		Game.deadEnemies.add(enemy);
 	}
 	
 	public static void move(int enemy) {
+		// Updates an enemy's position
 		
-		enemyActive enem = game.activeEnemies.get(enemy);
-		int index = game.frameCount - enem.startFrame;
+		EnemyActive enem = Game.activeEnemies.get(enemy);
+		int index = Game.frameCount - enem.startFrame;
 		
 		if (index < enem.points.size()) {
 			enem.x = enem.points.get(index).x;
@@ -77,29 +78,33 @@ public class enemy extends Ellipse2D.Double {
 	}
 	
 	public static void routine(int enemy) {
-		enemyActive enem = game.activeEnemies.get(enemy);
+		// Updates an enemy's routine
+		
+		EnemyActive enem = Game.activeEnemies.get(enemy);
 		
 		if (enem.routine.peekFirst() == null)
 			return;
 		
-		if (enem.routine.peekFirst().time == game.frameCount - enem.startFrame)
+		if (enem.routine.peekFirst().time == Game.frameCount - enem.startFrame)
 			shoot(enemy);
 	}
 	
 	public static void shoot(int enemy) {
+		// Creates the specified projectile type at the enemy
 		
-		enemyActive enem = game.activeEnemies.get(enemy);
-		subroutine routine = enem.routine.removeFirst();
+		EnemyActive enem = Game.activeEnemies.get(enemy);
+		Subroutine routine = enem.routine.removeFirst();
 		
 		if (routine.angle > 0)
-			projectile.create(routine.proj, enem, routine.amount, routine.angle);
+			Projectile.create(routine.proj, enem, routine.amount, routine.angle);
 		else if (routine.amount > 0)
-			projectile.create(routine.proj, enem, routine.amount);
+			Projectile.create(routine.proj, enem, routine.amount);
 		else
-			projectile.create(routine.proj, enem);
+			Projectile.create(routine.proj, enem);
 	}
 	
 	public static void update(int enemy) {
+		// Updates an enemy
 		
 		move(enemy);
 		routine(enemy);

@@ -2,9 +2,12 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
-public class parser {
+public class Parser {
 	
 	public static void parseBullet(String[] arr) {
+		// Parses through bullet data
+		// Creates a new bullet type with the given attributes
+		// Adds the bullet type to the global bullet map
 		
 		String nameLocal = arr[0].split(" ")[1];
 		String spriteLocal = "";
@@ -32,59 +35,64 @@ public class parser {
 			
 			try {
 				switch (variable) {
-				case "sprite":
-					spriteLocal = value;
-					break;
-				case "inaccuracy":
-					inaccuracyLocal = Integer.parseInt(value);
-					break;
-				case "angle":
-					angleLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "turn":
-					turnLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "aimed":
-					aimedLocal = Boolean.parseBoolean(value);
-					break;
-				case "velocity":
-					velocityLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "acceleration":
-					accelerationLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "maxspeed":
-					maxLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "minspeed":
-					minLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "homing":
-					homingLocal = Integer.parseInt(value);
-					break;
-				case "lifetime":
-					lifetimeLocal = Integer.parseInt(value);
-					break;
-				case "width":
-					widthLocal = Integer.parseInt(value);
-					break;
-				case "height":
-					heightLocal = Integer.parseInt(value);
-					break;
-				case "secondary":
-					secondaryLocal = value;
-					break;
+					case "sprite":
+						spriteLocal = value;
+						break;
+					case "inaccuracy":
+						inaccuracyLocal = Integer.parseInt(value);
+						break;
+					case "angle":
+						angleLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "turn":
+						turnLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "aimed":
+						aimedLocal = Boolean.parseBoolean(value);
+						break;
+					case "velocity":
+						velocityLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "acceleration":
+						accelerationLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "maxspeed":
+						maxLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "minspeed":
+						minLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "homing":
+						homingLocal = Integer.parseInt(value);
+						break;
+					case "lifetime":
+						lifetimeLocal = Integer.parseInt(value);
+						break;
+					case "width":
+						widthLocal = Integer.parseInt(value);
+						break;
+					case "height":
+						heightLocal = Integer.parseInt(value);
+						break;
+					case "secondary":
+						secondaryLocal = value;
+						break;
+					default:
+						System.out.printf("WARN: %s is an invalid field for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
 				}
 			} catch (Exception e) {
 				System.out.printf("WARN: An error occured when creating field %s for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
 			}
 		}
 		
-		game.bulletTypes.put(nameLocal, new projectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal,
+		Game.bulletMap.put(nameLocal, new Projectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal,
 				maxLocal, minLocal, homingLocal, lifetimeLocal, new Dimension(widthLocal, heightLocal), secondaryLocal));
 	}
 	
 	public static void parseEnemy(String[] arr) {
+		// Parses through enemy data
+		// Creates a new enemy type with the given attributes
+		// Adds the enemy type to the global enemy map
 		
 		String nameLocal = arr[0].split(" ")[1];
 		String spriteLocal = "";
@@ -108,39 +116,38 @@ public class parser {
 			
 			try {
 				switch (variable) {
-				case "sprite":
-					spriteLocal = value;
-					break;
-				case "pathing":
-					pathLocal = value;
-					break;
-				case "velocity":
-					velocityLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "acceleration":
-					accelerationLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "maxspeed":
-					maxLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "minspeed":
-					minLocal = java.lang.Double.parseDouble(value);
-					break;
-				case "width":
-					widthLocal = Integer.parseInt(value);
-					break;
-				case "height":
-					heightLocal = Integer.parseInt(value);
-					break;
-				case "health":
-					healthLocal = Integer.parseInt(value);
-					break;
-				case "offset":
-					offsetLocal = Boolean.parseBoolean(value);
-					break;
-				// case "routine":
-				// routineLocal = value;
-				// break;
+					case "sprite":
+						spriteLocal = value;
+						break;
+					case "pathing":
+						pathLocal = value;
+						break;
+					case "velocity":
+						velocityLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "acceleration":
+						accelerationLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "maxspeed":
+						maxLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "minspeed":
+						minLocal = java.lang.Double.parseDouble(value);
+						break;
+					case "width":
+						widthLocal = Integer.parseInt(value);
+						break;
+					case "height":
+						heightLocal = Integer.parseInt(value);
+						break;
+					case "health":
+						healthLocal = Integer.parseInt(value);
+						break;
+					case "offset":
+						offsetLocal = Boolean.parseBoolean(value);
+						break;
+					default:
+						System.out.printf("WARN: %s is an invalid field for enemy %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
 				}
 			} catch (Exception e) {
 				System.out.printf("WARN: An error occured when creating field %s for enemy %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
@@ -153,11 +160,14 @@ public class parser {
 			System.out.printf("WARN: An error occured when creating pathing for enemy %s%n", nameLocal.toUpperCase());
 		}
 		
-		game.enemyTypes.put(nameLocal, new enemy(spriteLocal, pathLocal, velocityLocal, accelerationLocal, maxLocal, minLocal,
+		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, velocityLocal, accelerationLocal, maxLocal, minLocal,
 				new Dimension(widthLocal, heightLocal), healthLocal, offsetLocal));
 	}
 	
 	public static ArrayList<Point2D.Double> parsePathing(String str, Point origin, boolean offset) {
+		// Parses through a string of bezier curve coordinates
+		// Creates the corresponding curve(s)
+		// Returns an array of points iterating through the curve(s)
 		
 		String[] arr = str.split("/");
 		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
@@ -200,17 +210,17 @@ public class parser {
 		pathShape = path;
 		iterator = pathShape.getPathIterator(null, 0.001);
 		
-		game.activePaths.add(path);
+		Game.activePaths.add(path);
 		
 		while (!iterator.isDone()) {
 			
 			double[] coords = new double[6];
 			
 			switch (iterator.currentSegment(coords)) {
-			case PathIterator.SEG_MOVETO:
-			case PathIterator.SEG_LINETO:
-				points.add(new Point2D.Double(coords[0], coords[1]));
-				break;
+				case PathIterator.SEG_MOVETO:
+				case PathIterator.SEG_LINETO:
+					points.add(new Point2D.Double(coords[0], coords[1]));
+					break;
 			}
 			
 			iterator.next();
@@ -220,12 +230,15 @@ public class parser {
 	}
 	
 	public static void parseRoutine(ArrayList<String> arr) {
+		// Parses through routine data
+		// Creates a queue of subroutines (routine)
+		// Adds the routine to the global routine map
 		
 		String nameLocal = arr.get(0).split(" ")[1];
 		
 		try {
 			
-			ArrayDeque<subroutine> stack = new ArrayDeque<subroutine>();
+			ArrayDeque<Subroutine> queue = new ArrayDeque<Subroutine>();
 			
 			for (int i = 1; i < arr.size(); i++) {
 				
@@ -250,21 +263,25 @@ public class parser {
 				if (name == null || time == -1)
 					throw new java.lang.RuntimeException();
 				
-				stack.addLast(new subroutine(time, name, amount, angle));
+				queue.addLast(new Subroutine(time, name, amount, angle));
 			}
-			game.routineTypes.put(nameLocal, stack);
+			
+			Game.routineMap.put(nameLocal, queue);
 		} catch (Exception e) {
 			System.out.printf("WARN: An error occured when creating routine %s%n", nameLocal.toUpperCase());
 		}
 	}
 	
 	public static void parseScript(ArrayList<String> arr) {
+		// Parses through script data
+		// Creates a queue of subscripts (script)
+		// Adds the script to the global script queue
 		
 		String nameLocal = arr.get(0).split(" ")[1];
 		
 		try {
 			
-			ArrayDeque<subscript> script = new ArrayDeque<subscript>();
+			ArrayDeque<Subscript> script = new ArrayDeque<Subscript>();
 			
 			for (int i = 1; i < arr.size(); i++) {
 				
@@ -278,9 +295,10 @@ public class parser {
 				String[] str = st.nextToken().split(",");
 				Point origin = new Point(Integer.parseInt(str[0].trim()), Integer.parseInt(str[1].trim()));
 				
-				script.addLast(new subscript(time, enemy, origin, routine));
+				script.addLast(new Subscript(time, enemy, origin, routine));
 			}
-			game.scriptList.addLast(script);
+			
+			Game.scriptQueue.addLast(script);
 		} catch (Exception e) {
 			System.out.printf("WARN: An error occured when creating script %s%n", nameLocal.toUpperCase());
 		}

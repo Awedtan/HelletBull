@@ -2,13 +2,13 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
-public class enemyActive extends enemy {
+public class EnemyActive extends Enemy {
 	
-	ArrayList<Point2D.Double> points;
-	ArrayDeque <subroutine> routine;
-	int startFrame;
+	ArrayList<Point2D.Double> points; // The array of points the enemy will move through
+	ArrayDeque<Subroutine> routine; // The array of subroutines the enemy will shoot through
+	int startFrame; // The frame the enemy was created
 	
-	public enemyActive(enemy enem, Point origin, String routine) {
+	public EnemyActive(Enemy enem, Point origin, String routine) {
 		
 		sprite = enem.sprite;
 		path = enem.path;
@@ -21,8 +21,8 @@ public class enemyActive extends enemy {
 		health = enem.health;
 		offset = enem.offset;
 		
-		this.routine = game.routineTypes.get(routine).clone();
-		points = parser.parsePathing(path, origin, offset);
-		startFrame = game.frameCount;
+		this.routine = Game.routineMap.get(routine).clone();
+		points = Parser.parsePathing(path, origin, offset);
+		startFrame = Game.frameCount;
 	}
 }

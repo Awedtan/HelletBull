@@ -2,62 +2,43 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class body extends JPanel implements KeyListener, Runnable {
+public class Body extends JPanel implements KeyListener, Runnable {
 	
 	static JFrame frame;
-	static body panel = new body();
+	static Body panel = new Body();
 	
-	public body() {
+	public Body() {
 		
 		setLayout(null);
-		setPreferredSize(new Dimension(game.SCREENWIDTH, game.SCREENHEIGHT));
+		setPreferredSize(new Dimension(Game.SCREENWIDTH, Game.SCREENHEIGHT));
 		setBackground(Color.WHITE);
 		setFocusable(true);
 		addKeyListener(this);
 	}
 	
 	@Override
-	public void run() {
+	public void run() { // Setting up game
 		
-		game.createBullets();
-		game.createRoutines();
-		game.createEnemies();
-		game.createScripts();
-		controller.initialize();
+		Game.createBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
+		Game.createRoutines(); // Bullet routines tell individual enemies when to spawn bullets
+		Game.createEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
+		Game.createScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
+		Controller.initialize();
 		
-		while (game.run) {
+		while (Game.run) { // Main game loop
 			
-			update();
-			controller.update();
+			Game.update();
+			Controller.update();
 			this.repaint();
 			
-			game.frameCount++;
+			Game.frameCount++;
 			
 			try {
-				Thread.sleep(1000 / (int) (game.FPS * game.gameSpeed));
+				Thread.sleep(1000 / (int) (Game.FPS * Game.gameSpeed));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void update() {
-		
-		player.move();
-		
-		for (int i = 0; i < game.activeBullets.size(); i++)
-			projectile.update(i);
-		
-		for (int i = 0; i < game.activeBullets.size(); i++)
-			if (game.activeBullets.get(i).lifetime == 0 || !projectile.checkInBounds(i) || player.checkCollision(i)) {
-				projectile.kill(i);
-				i--;
-			}
-		
-		for (int i = 0; i < game.activeEnemies.size(); i++)
-			enemy.update(i);
-		
-		game.script();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -66,11 +47,11 @@ public class body extends JPanel implements KeyListener, Runnable {
 			
 			super.paintComponent(g);
 			
-			player.draw(g);
-			projectile.draw(g);
-			enemy.draw(g);
+			Player.draw(g);
+			Projectile.draw(g);
+			Enemy.draw(g);
 			
-			testDummy.draw(g);
+			TestDummy.draw(g);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,38 +75,38 @@ public class body extends JPanel implements KeyListener, Runnable {
 	public void keyPressed(KeyEvent e) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_A)
-			player.moveLeft = true;
+			Player.moveLeft = true;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_D)
-			player.moveRight = true;
+			Player.moveRight = true;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_W)
-			player.moveUp = true;
+			Player.moveUp = true;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_S)
-			player.moveDown = true;
+			Player.moveDown = true;
 		
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
-			player.focus = true;
+			Player.focus = true;
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_A)
-			player.moveLeft = false;
+			Player.moveLeft = false;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_D)
-			player.moveRight = false;
+			Player.moveRight = false;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_W)
-			player.moveUp = false;
+			Player.moveUp = false;
 		
 		else if (e.getKeyCode() == KeyEvent.VK_S)
-			player.moveDown = false;
+			Player.moveDown = false;
 		
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
-			player.focus = false;
+			Player.focus = false;
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 import com.studiohartman.jamepad.*;
 
-public class controller {
+public class Controller {
 	
 	static ControllerManager controllers = new ControllerManager();
 	
@@ -13,57 +13,58 @@ public class controller {
 	}
 	
 	public static void update() {
+		// Updates the controller state and does stuff accordingly
 		
-		ControllerState state = controllers.getState(0);
+		ControllerState state = controllers.getState(0); // State of first controller
 		
 		if (!state.isConnected)
 			return;
 		
 		if (state.rightTrigger > 0)
-			if (game.frameCount - player.lastShot > player.shotDelay) {
-				player.shoot();
-				player.lastShot = game.frameCount;
+			if (Game.frameCount - Player.lastShot > Player.shotDelay) { // Player shooting
+				Player.shoot();
+				Player.lastShot = Game.frameCount;
 			}
 		
 		if (state.rb)
-			if (game.frameCount - player.lastBombed > player.bombDelay) {
-				player.bomb();
-				player.lastBombed = game.frameCount;
+			if (Game.frameCount - Player.lastBomb > Player.bombDelay) { // Player bombing
+				Player.bomb();
+				Player.lastBomb = Game.frameCount;
 			}
 		
-		if (state.leftTrigger > 0)
-			player.focus = true;
+		if (state.leftTrigger > 0) // Player focusing
+			Player.focus = true;
 		else
-			player.focus = false;
+			Player.focus = false;
 		
-		if (state.leftStickMagnitude > DEADZONE) {
+		if (state.leftStickMagnitude > DEADZONE) { // Player movement
 			
 			double angle = state.leftStickAngle;
 			double abs = Math.abs(angle);
 			
 			if (abs < MOVEANGLES[0])
-				player.setMove(90);
+				Player.setMove(90);
 			
 			else if (abs > MOVEANGLES[3])
-				player.setMove(-90);
+				Player.setMove(-90);
 			
 			else if (abs > MOVEANGLES[0] && abs < MOVEANGLES[1]) {
 				if (angle > 0)
-					player.setMove(135);
+					Player.setMove(135);
 				else
-					player.setMove(45);
+					Player.setMove(45);
 			} else if (abs > MOVEANGLES[1] && abs < MOVEANGLES[2])
 				if (angle > 0)
-					player.setMove(180);
+					Player.setMove(180);
 				else
-					player.setMove(0);
+					Player.setMove(0);
 				
 			else if (abs > 112.5 && abs < MOVEANGLES[3])
 				if (angle > 0)
-					player.setMove(-135);
+					Player.setMove(-135);
 				else
-					player.setMove(-45);
+					Player.setMove(-45);
 		} else
-			player.setMove(-1);
+			Player.setMove(-1);
 	}
 }

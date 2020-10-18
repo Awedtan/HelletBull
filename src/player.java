@@ -1,46 +1,50 @@
 import java.awt.*;
 import java.awt.geom.*;
 
-public class player {
+public class Player {
 	
-	final static double STARTSPEED = 3.0;
+	final static double STARTSPEED = 3.0; // Default player speed
 	final static int STARTPOSX = 100;
 	final static int STARTPOSY = 550;
 	
-	static int width = 40;
-	static int height = width;
-	static Color color = Color.BLUE;
-	static int hbSize = 5;
-	static Color hbColor = Color.YELLOW;
+	static int playerWidth = 40; // Player model properties
+	static int playerHeight = playerWidth;
+	static Color playerColor = Color.BLUE;
 	
-	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, width, height);
-	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + width / 2 - hbSize / 2, STARTPOSY + height / 2 - hbSize / 2, hbSize, hbSize);
+	static int hitboxSize = 5; // Hitbox properties
+	static Color hitboxColor = Color.YELLOW;
 	
-	static int lastShot = 0;
-	static int shotDelay = 10;
-	static int lastBombed = 0;
-	static int bombDelay = 240;
+	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
+	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
+			hitboxSize, hitboxSize);
 	
-	static double speed = STARTSPEED;
-	static boolean moveLeft;
+	static int lastShot = 0; // Frame of last player shot
+	static int shotDelay = 10; // Player shot cooldown
+	static int lastBomb = 0; // Frame of last player bomb
+	static int bombDelay = 240; // Player bomb cooldown
+	
+	static double speed; // Actual player speed
+	static boolean moveLeft; // Movement booleans
 	static boolean moveRight;
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean focus;
 	
 	public static void bomb() {
-		
+		// TODO: make this
 	}
 	
 	public static boolean checkCollision(int bullet) {
+		// Checks for bullet collision with the player
+		// Returns true if collided
 		
-		projectile blt = game.activeBullets.get(bullet);
+		Projectile blt = Game.activeBullets.get(bullet);
 		
 		if (Math.abs(blt.x - hitbox.x) < 30 && Math.abs(blt.y - hitbox.y) < 30)
 			if (new Rectangle2D.Double(hitbox.x, hitbox.y, hitbox.width, hitbox.height)
 					.intersects(new Rectangle2D.Double(blt.x, blt.y, blt.width, blt.height))) {
 				
-				player.hit(bullet);
+				Player.hit(bullet);
 				return true;
 			}
 		
@@ -51,22 +55,24 @@ public class player {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(color);
+		g2.setColor(playerColor);
 		g2.fill(model);
 		
 		Image img = Toolkit.getDefaultToolkit().getImage("images/world-ship.png");
 		g2.drawImage(img, (int) model.x, (int) model.y, null);
 		
-		g2.setColor(hbColor);
+		g2.setColor(hitboxColor);
 		g2.fill(hitbox);
 	}
 	
 	public static void hit(int bullet) {
+		// TODO: make this
 		
 		System.out.println("You got hit!");
 	}
 	
 	public static void move() {
+		// Updates player position
 		
 		if (focus)
 			speed = (STARTSPEED * .5);
@@ -94,74 +100,76 @@ public class player {
 	}
 	
 	public static void setMove(int direction) {
+		// Controls movement booleans if using a controller
+		// Doesn't do anything if using keyboard
 		
 		switch (direction) {
-		case (-1):
-			moveLeft = false;
-			moveRight = false;
-			moveUp = false;
-			moveDown = false;
-			break;
-		
-		case (0):
-			moveLeft = false;
-			moveRight = false;
-			moveUp = false;
-			moveDown = true;
-			break;
-		
-		case (45):
-			moveLeft = false;
-			moveRight = true;
-			moveUp = false;
-			moveDown = true;
-			break;
-		
-		case (90):
-			moveLeft = false;
-			moveRight = true;
-			moveUp = false;
-			moveDown = false;
-			break;
-		
-		case (135):
-			moveLeft = false;
-			moveRight = true;
-			moveUp = true;
-			moveDown = false;
-			break;
-		
-		case (180):
-			moveLeft = false;
-			moveRight = false;
-			moveUp = true;
-			moveDown = false;
-			break;
-		
-		case (-135):
-			moveLeft = true;
-			moveRight = false;
-			moveUp = true;
-			moveDown = false;
-			break;
-		
-		case (-90):
-			moveLeft = true;
-			moveRight = false;
-			moveUp = false;
-			moveDown = false;
-			break;
-		
-		case (-45):
-			moveLeft = true;
-			moveRight = false;
-			moveUp = false;
-			moveDown = true;
-			break;
+			case (-1):
+				moveLeft = false;
+				moveRight = false;
+				moveUp = false;
+				moveDown = false;
+				break;
+			
+			case (0):
+				moveLeft = false;
+				moveRight = false;
+				moveUp = false;
+				moveDown = true;
+				break;
+			
+			case (45):
+				moveLeft = false;
+				moveRight = true;
+				moveUp = false;
+				moveDown = true;
+				break;
+			
+			case (90):
+				moveLeft = false;
+				moveRight = true;
+				moveUp = false;
+				moveDown = false;
+				break;
+			
+			case (135):
+				moveLeft = false;
+				moveRight = true;
+				moveUp = true;
+				moveDown = false;
+				break;
+			
+			case (180):
+				moveLeft = false;
+				moveRight = false;
+				moveUp = true;
+				moveDown = false;
+				break;
+			
+			case (-135):
+				moveLeft = true;
+				moveRight = false;
+				moveUp = true;
+				moveDown = false;
+				break;
+			
+			case (-90):
+				moveLeft = true;
+				moveRight = false;
+				moveUp = false;
+				moveDown = false;
+				break;
+			
+			case (-45):
+				moveLeft = true;
+				moveRight = false;
+				moveUp = false;
+				moveDown = true;
+				break;
 		}
 	}
 	
 	public static void shoot() {
-		
+		// TODO: make this
 	}
 }

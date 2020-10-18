@@ -3,31 +3,32 @@ import java.awt.geom.*;
 import java.io.*;
 import java.util.*;
 
-public class game {
+public class Game {
 	
-	final static int FPS = 120;
+	static HashMap<String, Projectile> bulletMap = new HashMap<String, Projectile>(); // Projectile types
+	static ArrayList<Projectile> activeBullets = new ArrayList<Projectile>(); // Projectiles currently alive
+	
+	static HashMap<String, ArrayDeque<Subroutine>> routineMap = new HashMap<String, ArrayDeque<Subroutine>>(); // Routine types
+	
+	static HashMap<String, Enemy> enemyMap = new HashMap<String, Enemy>(); // Enemy types
+	static ArrayList<EnemyActive> activeEnemies = new ArrayList<EnemyActive>(); // Enemies currently alive
+	static ArrayList<Integer> deadEnemies = new ArrayList<Integer>(); // Enemies to be killed
+	
+	static ArrayList<Path2D.Double> activePaths = new ArrayList<Path2D.Double>(); // All active enemy path curves
+	
+	static ArrayDeque<ArrayDeque<Subscript>> scriptQueue = new ArrayDeque<ArrayDeque<Subscript>>(); // Queue of scripts, scripts are queues of subscripts
+	static ArrayDeque<Subscript> activeScript = new ArrayDeque<Subscript>(); // Active script
+	
 	final static int SCREENWIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	final static int SCREENHEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	
-	static HashMap<String, projectile> bulletTypes = new HashMap<String, projectile>();
-	static ArrayList<projectile> activeBullets = new ArrayList<projectile>();
-	
-	static HashMap<String, enemy> enemyTypes = new HashMap<String, enemy>();
-	static ArrayList<enemyActive> activeEnemies = new ArrayList<enemyActive>();
-	static ArrayList<Integer> deadEnemies = new ArrayList<Integer>();
-	
-	static HashMap<String, ArrayDeque<subroutine>> routineTypes = new HashMap<String, ArrayDeque<subroutine>>();
-	
-	static ArrayList<Path2D.Double> activePaths = new ArrayList<Path2D.Double>();
-	
-	static ArrayDeque<ArrayDeque<subscript>> scriptList = new ArrayDeque<ArrayDeque<subscript>>();
-	static ArrayDeque<subscript> activeScript = new ArrayDeque<subscript>();
-	
+	final static int FPS = 120;
 	static double gameSpeed = 1.0;
 	static int frameCount = 0;
 	static boolean run = true;
 	
 	public static double angleTo(Ellipse2D.Double origin, Ellipse2D.Double target) {
+		// Finds the angle from the origin to the target
+		// FOR ALL ANGLES IN THIS GAME: down is 0, up is +-180, right is 90, left is -90
 		
 		double angle;
 		
@@ -59,29 +60,31 @@ public class game {
 		return angle;
 	}
 	
-	public static double angleTo(double originX, double originY, double tarcenterX, double tarcenterY) {
+	public static double angleTo(double originX, double originY, double tarCenterX, double tarCenterY) {
+		// Finds the angle from the origin coordinates to the target coordinates
+		// FOR ALL ANGLES IN THIS GAME: down is 0, up is +-180, right is 90, left is -90
 		
 		double angle;
 		
-		if (tarcenterX > originX && tarcenterY > originY) { // Quadrant 4
-			angle = Math.toDegrees(Math.atan(Math.abs(tarcenterX - originX) / Math.abs(tarcenterY - originY)));
+		if (tarCenterX > originX && tarCenterY > originY) { // Quadrant 4
+			angle = Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
 			
-		} else if (tarcenterX < originX && tarcenterY > originY) { // Quadrant 3
-			angle = -Math.toDegrees(Math.atan(Math.abs(tarcenterX - originX) / Math.abs(tarcenterY - originY)));
+		} else if (tarCenterX < originX && tarCenterY > originY) { // Quadrant 3
+			angle = -Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
 			
-		} else if (tarcenterX < originX && tarcenterY < originY) { // Quadrant 2
-			angle = -180 + Math.toDegrees(Math.atan(Math.abs(tarcenterX - originX) / Math.abs(tarcenterY - originY)));
+		} else if (tarCenterX < originX && tarCenterY < originY) { // Quadrant 2
+			angle = -180 + Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
 			
-		} else if (tarcenterX > originX && tarcenterY < originY) { // Quadrant 1
-			angle = 180 - Math.toDegrees(Math.atan(Math.abs(tarcenterX - originX) / Math.abs(tarcenterY - originY)));
+		} else if (tarCenterX > originX && tarCenterY < originY) { // Quadrant 1
+			angle = 180 - Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
 			
-		} else if (tarcenterX == originX)
-			if (tarcenterY > originY)
+		} else if (tarCenterX == originX)
+			if (tarCenterY > originY)
 				angle = 0;
 			else
 				angle = 180;
-		else if (tarcenterY == originY)
-			if (tarcenterX > originX)
+		else if (tarCenterY == originY)
+			if (tarCenterX > originX)
 				angle = 90;
 			else
 				angle = -90;
@@ -92,16 +95,20 @@ public class game {
 	}
 	
 	public static double centerX(Ellipse2D.Double ellipse) {
+		// Returns the x coordinate of the center of the given ellipse
 		
 		return ellipse.x + ellipse.width / 2;
 	}
 	
 	public static double centerY(Ellipse2D.Double ellipse) {
+		// Returns the y coordinate of the center of the given ellipse
 		
 		return ellipse.y + ellipse.height / 2;
 	}
 	
 	public static void createBullets() {
+		// Reads in data from bullet files
+		// Collects and sends the data to be parsed
 		
 		try {
 			
@@ -121,7 +128,7 @@ public class game {
 				
 				str = input.readLine();
 				if (accumulate[0] != null)
-					parser.parseBullet(accumulate);
+					Parser.parseBullet(accumulate);
 			}
 			
 			input.close();
@@ -133,6 +140,8 @@ public class game {
 	}
 	
 	public static void createEnemies() {
+		// Reads in data from enemy files
+		// Collects and sends the data to be parsed
 		
 		try {
 			
@@ -153,7 +162,7 @@ public class game {
 				str = input.readLine();
 				
 				if (accumulate[0] != null)
-					parser.parseEnemy(accumulate);
+					Parser.parseEnemy(accumulate);
 			}
 			
 			input.close();
@@ -165,6 +174,8 @@ public class game {
 	}
 	
 	public static void createRoutines() {
+		// Reads in data from routine files
+		// Collects and sends the data to be parsed
 		
 		try {
 			
@@ -184,7 +195,7 @@ public class game {
 				str = input.readLine();
 				
 				if (accumulate.size() != 0)
-					parser.parseRoutine(accumulate);
+					Parser.parseRoutine(accumulate);
 			}
 			
 			input.close();
@@ -196,6 +207,8 @@ public class game {
 	}
 	
 	public static void createScripts() {
+		// Reads in data from script files
+		// Collects and sends the data to be parsed
 		
 		try {
 			
@@ -212,7 +225,7 @@ public class game {
 				}
 			
 			if (accumulate.size() != 0)
-				parser.parseScript(accumulate);
+				Parser.parseScript(accumulate);
 			
 			input.close();
 		} catch (FileNotFoundException e) {
@@ -223,11 +236,14 @@ public class game {
 	}
 	
 	public static double distanceTo(Ellipse2D.Double origin, Ellipse2D.Double target) {
+		// Returns the distance from the center of the origin to the center of the target
 		
-		return Math.sqrt(Math.pow(target.y - origin.y, 2) + Math.pow(target.x - origin.x, 2));
+		return Math.sqrt(Math.pow(centerY(target) - centerY(target), 2) + Math.pow(centerX(target) - centerX(target), 2));
 	}
 	
 	public static void purgeEnemies() {
+		// Removes all enemies marked for deletion
+		// TODO: clear paths as well
 		
 		int increment = 0;
 		
@@ -240,17 +256,41 @@ public class game {
 	}
 	
 	public static void script() {
+		// Creates and runs game scripts
 		
 		if (activeScript.peekFirst() == null)
-			if (scriptList.peekFirst() != null)
-				activeScript = scriptList.removeFirst();
+			if (scriptQueue.peekFirst() != null)
+				activeScript = scriptQueue.removeFirst();
 			else
 				return;
 			
-		if (game.frameCount == activeScript.peekFirst().time) {
+		if (frameCount == activeScript.peekFirst().time) {
 			
-			subscript current = activeScript.removeFirst();
-			enemy.create(current.enemy, current.origin, current.routine);
+			Subscript current = activeScript.removeFirst();
+			Enemy.create(current.enemy, current.origin, current.routine);
 		}
+	}
+	
+	public static void update() {
+		// Updates all aspects of the game
+		
+		Player.move();
+		
+		for (int i = 0; i < activeBullets.size(); i++)
+			Projectile.update(i);
+		
+		for (int i = 0; i < activeBullets.size(); i++)
+			if (activeBullets.get(i).lifetimeInt == 0 || !Projectile.checkInBounds(i) || Player.checkCollision(i)) {
+				Projectile.kill(i);
+				i--;
+			}
+		
+		for (int i = 0; i < activeEnemies.size(); i++)
+			Enemy.update(i);
+		
+		script();
+		
+		if (deadEnemies.size() > 0)
+			purgeEnemies();
 	}
 }
