@@ -1,14 +1,14 @@
 routine test
 	40	LCurveBlt	16
 	60	StraightBlt 16	10
-	80 RCurveBlt	8
-	100 StraightBlt
-	120 StraightBlt 4	10
+	80	RCurveBlt	8
+	100	StraightBlt
+	120	StraightBlt 4	10
 	130	StraightBlt 16	10
-	200 RCurveBlt	8
-	240 StraightBlt
-	280 StraightBlt 4	10
-	500 LCurveBlt	16
+	200	RCurveBlt	8
+	240	StraightBlt
+	280	StraightBlt 4	10
+	500	LCurveBlt	16
 ;
 
 routine test2
