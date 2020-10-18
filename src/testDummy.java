@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.*;
 
 public class testDummy {
 	
@@ -10,19 +11,22 @@ public class testDummy {
 	public static void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		if (game.frameCount % 200 == 0) {
-			projectileCircle.create("LCurveBlt", 16, dummy);
-		}
+		if (game.frameCount == 0)
+			return;
 		
-		if (game.frameCount % 150 == 0) {
-			projectileMulti.create(new String[] { "spread1", "spread2", "spread3" }, dummy);
-		}
+		// if (game.frameCount % 200 == 0) {
+		// 	projectile.create("LCurveBlt", game.activeEnemies.get(0), 16);
+		// }
 		
-		if (game.frameCount % 5 == 0) {
-			projectileSingle.create("StraightBlt", dummy);
-		}
+		// if (game.frameCount % 150 == 0) {
+		// 	projectile.create("BigBlt", game.activeEnemies.get(0), 5, 15.0);
+		// }
 		
-		g2.setColor(Color.red);
-		g2.fill(dummy);
+		// if (game.frameCount % 5 == 0) {
+		// 	projectile.create("StraightBlt", game.activeEnemies.get(0));
+		// }
+		
+		g2.setColor(Color.RED);
+		// g2.fill(dummy);
 	}
 }

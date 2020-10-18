@@ -9,10 +9,17 @@ public class player {
 	
 	static int width = 40;
 	static int height = width;
-	static Color color = Color.blue;
+	static Color color = Color.BLUE;
+	static int hbSize = 5;
+	static Color hbColor = Color.YELLOW;
 	
 	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, width, height);
-	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + width / 2, STARTPOSY + height / 2, 5, 5);
+	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + width / 2 - hbSize / 2, STARTPOSY + height / 2 - hbSize / 2, hbSize, hbSize);
+	
+	static int lastShot = 0;
+	static int shotDelay = 10;
+	static int lastBombed = 0;
+	static int bombDelay = 240;
 	
 	static double speed = STARTSPEED;
 	static boolean moveLeft;
@@ -21,22 +28,69 @@ public class player {
 	static boolean moveDown;
 	static boolean focus;
 	
-	static int lastBombed = 0;
-	static int bombDelay = 240;
+	public static void bomb() {
+		
+	}
+	
+	public static boolean checkCollision(int bullet) {
+		
+		projectile blt = game.activeBullets.get(bullet);
+		
+		if (Math.abs(blt.x - hitbox.x) < 30 && Math.abs(blt.y - hitbox.y) < 30)
+			if (new Rectangle2D.Double(hitbox.x, hitbox.y, hitbox.width, hitbox.height)
+					.intersects(new Rectangle2D.Double(blt.x, blt.y, blt.width, blt.height))) {
+				
+				player.hit(bullet);
+				return true;
+			}
+		
+		return false;
+	}
 	
 	public static void draw(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		Image img = Toolkit.getDefaultToolkit().getImage("world-ship.png");
-		
 		g2.setColor(color);
-		// g2.fill(model);
+		g2.fill(model);
 		
+		Image img = Toolkit.getDefaultToolkit().getImage("images/world-ship.png");
 		g2.drawImage(img, (int) model.x, (int) model.y, null);
 		
-		g2.setColor(Color.white);
+		g2.setColor(hbColor);
 		g2.fill(hitbox);
+	}
+	
+	public static void hit(int bullet) {
+		
+		System.out.println("You got hit!");
+	}
+	
+	public static void move() {
+		
+		if (focus)
+			speed = (STARTSPEED * .5);
+		else
+			speed = STARTSPEED;
+		
+		if ((moveLeft || moveRight) && (moveUp || moveDown))
+			speed *= 0.7;
+		
+		if (moveLeft && !moveRight) {
+			model.x -= speed;
+			hitbox.x -= speed;
+		} else if (moveRight && !moveLeft) {
+			model.x += speed;
+			hitbox.x += speed;
+		}
+		
+		if (moveUp && !moveDown) {
+			model.y -= speed;
+			hitbox.y -= speed;
+		} else if (moveDown && !moveUp) {
+			model.y += speed;
+			hitbox.y += speed;
+		}
 	}
 	
 	public static void setMove(int direction) {
@@ -107,50 +161,7 @@ public class player {
 		}
 	}
 	
-	public static void move() {
+	public static void shoot() {
 		
-		if (focus)
-			speed = (STARTSPEED * .5);
-		else
-			speed = STARTSPEED;
-		
-		if ((moveLeft || moveRight) && (moveUp || moveDown))
-			speed /= 1.5;
-		
-		if (moveLeft && !moveRight) {
-			model.x -= speed;
-			hitbox.x -= speed;
-		} else if (moveRight && !moveLeft) {
-			model.x += speed;
-			hitbox.x += speed;
-		}
-		
-		if (moveUp && !moveDown) {
-			model.y -= speed;
-			hitbox.y -= speed;
-		} else if (moveDown && !moveUp) {
-			model.y += speed;
-			hitbox.y += speed;
-		}
-	}
-	
-	public static void hit(int bullet) {
-		
-		System.out.println("You got hit!");
-	}
-	
-	public static boolean checkCollision(int bullet) {
-		
-		projectile blt = game.activeBullets.get(bullet);
-		
-		if (Math.abs(blt.x - hitbox.x) < 30 && Math.abs(blt.y - hitbox.y) < 30)
-			if (new Rectangle2D.Double(hitbox.x, hitbox.y, hitbox.width, hitbox.height)
-					.intersects(new Rectangle2D.Double(blt.x, blt.y, blt.width, blt.height))) {
-				
-				player.hit(bullet);
-				return true;
-			}
-		
-		return false;
 	}
 }

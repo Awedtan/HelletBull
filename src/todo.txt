@@ -1,0 +1,14 @@
+general
+	level scripting
+	verify names before starting
+
+projectiles
+	sprites
+	
+player
+	shooting
+	hitbox
+	sprites
+
+enemies
+	sprites

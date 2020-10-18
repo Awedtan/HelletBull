@@ -11,7 +11,7 @@ public class body extends JPanel implements KeyListener, Runnable {
 		
 		setLayout(null);
 		setPreferredSize(new Dimension(game.SCREENWIDTH, game.SCREENHEIGHT));
-		setBackground(Color.darkGray);
+		setBackground(Color.WHITE);
 		setFocusable(true);
 		addKeyListener(this);
 	}
@@ -20,19 +20,21 @@ public class body extends JPanel implements KeyListener, Runnable {
 	public void run() {
 		
 		game.createBullets();
+		game.createRoutines();
+		game.createEnemies();
+		game.createScripts();
 		controller.initialize();
 		
 		while (game.run) {
 			
 			update();
 			controller.update();
-			
 			this.repaint();
 			
 			game.frameCount++;
 			
 			try {
-				Thread.sleep(1000 / (int) (game.FPS * game.GAMESPEED));
+				Thread.sleep(1000 / (int) (game.FPS * game.gameSpeed));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -51,6 +53,11 @@ public class body extends JPanel implements KeyListener, Runnable {
 				projectile.kill(i);
 				i--;
 			}
+		
+		for (int i = 0; i < game.activeEnemies.size(); i++)
+			enemy.update(i);
+		
+		game.script();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -59,12 +66,11 @@ public class body extends JPanel implements KeyListener, Runnable {
 			
 			super.paintComponent(g);
 			
+			player.draw(g);
 			projectile.draw(g);
-			testDummy.draw(g);
+			enemy.draw(g);
 			
-			Graphics gPlayer = g.create();
-			player.draw(gPlayer);
-			gPlayer.dispose();
+			testDummy.draw(g);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +79,7 @@ public class body extends JPanel implements KeyListener, Runnable {
 	
 	public static void main(String[] args) throws Exception {
 		
-		frame = new JFrame("Lazer Tag");
+		frame = new JFrame("Hellet Bull");
 		frame.setUndecorated(true);
 		frame.add(panel);
 		frame.pack();

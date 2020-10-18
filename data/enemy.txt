@@ -1,0 +1,14 @@
+enemy test
+	sprite			file
+	pathing			960,1080,1920,0 / 0,0,1920,1080,0,1080 / 0,0,1920,0,1920,1080 / 0,1080,1920,0,0,0
+	velocity		1.0
+	acceleration	0.0
+	maxspeed		10.0
+	minspeed		0.0
+	width			20
+	height			20
+	health			10
+	offset			true
+;
+
+?
