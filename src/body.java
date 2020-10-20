@@ -17,13 +17,15 @@ public class Body extends JPanel implements KeyListener, Runnable {
 	}
 	
 	@Override
-	public void run() { // Setting up game
-		
-		Game.createBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
-		Game.createRoutines(); // Bullet routines tell individual enemies when to spawn bullets
-		Game.createEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
-		Game.createScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
+	public void run() {
+		PlayerProjectile.initialize();
+		Game.initializeBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
+		Game.initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
+		Game.initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
+		Game.initializeScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
 		Controller.initialize();
+		
+		long time = System.currentTimeMillis();
 		
 		while (Game.run) { // Main game loop
 			
@@ -33,6 +35,11 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			
 			Game.frameCount++;
 			
+			if (Game.frameCount % 120 == 0){
+				System.out.println(System.currentTimeMillis() - time + "ms/120fps");
+				time = System.currentTimeMillis();
+			}
+				
 			try {
 				Thread.sleep(1000 / (int) (Game.FPS * Game.gameSpeed));
 			} catch (Exception e) {
@@ -49,7 +56,8 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			
 			Player.draw(g);
 			Projectile.draw(g);
-			Enemy.draw(g);
+			EnemyActive.draw(g);
+			PlayerProjectile.draw(g);
 			
 			TestDummy.draw(g);
 			
@@ -76,18 +84,16 @@ public class Body extends JPanel implements KeyListener, Runnable {
 		
 		if (e.getKeyCode() == KeyEvent.VK_A)
 			Player.moveLeft = true;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_D)
+		if (e.getKeyCode() == KeyEvent.VK_D)
 			Player.moveRight = true;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_W)
+		if (e.getKeyCode() == KeyEvent.VK_W)
 			Player.moveUp = true;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_S)
+		if (e.getKeyCode() == KeyEvent.VK_S)
 			Player.moveDown = true;
-		
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
 			Player.focus = true;
+		if (e.getKeyCode() == KeyEvent.VK_Z)
+			Player.shoot = true;
 	}
 	
 	@Override
@@ -95,18 +101,16 @@ public class Body extends JPanel implements KeyListener, Runnable {
 		
 		if (e.getKeyCode() == KeyEvent.VK_A)
 			Player.moveLeft = false;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_D)
+		if (e.getKeyCode() == KeyEvent.VK_D)
 			Player.moveRight = false;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_W)
+		if (e.getKeyCode() == KeyEvent.VK_W)
 			Player.moveUp = false;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_S)
+		if (e.getKeyCode() == KeyEvent.VK_S)
 			Player.moveDown = false;
-		
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
 			Player.focus = false;
+		if (e.getKeyCode() == KeyEvent.VK_Z)
+			Player.shoot = false;
 	}
 	
 	@Override

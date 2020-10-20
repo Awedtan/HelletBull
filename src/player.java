@@ -18,6 +18,8 @@ public class Player {
 	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
+	static int shotPower = 0;
+	
 	static int lastShot = 0; // Frame of last player shot
 	static int shotDelay = 10; // Player shot cooldown
 	static int lastBomb = 0; // Frame of last player bomb
@@ -30,25 +32,12 @@ public class Player {
 	static boolean moveDown;
 	static boolean focus;
 	
+	static boolean shoot;
+	
 	public static void bomb() {
 		// TODO: make this
-	}
-	
-	public static boolean checkCollision(int bullet) {
-		// Checks for bullet collision with the player
-		// Returns true if collided
 		
-		Projectile blt = Game.activeBullets.get(bullet);
-		
-		if (Math.abs(blt.x - hitbox.x) < 30 && Math.abs(blt.y - hitbox.y) < 30)
-			if (new Rectangle2D.Double(hitbox.x, hitbox.y, hitbox.width, hitbox.height)
-					.intersects(new Rectangle2D.Double(blt.x, blt.y, blt.width, blt.height))) {
-				
-				Player.hit(bullet);
-				return true;
-			}
-		
-		return false;
+		lastBomb = Game.frameCount;
 	}
 	
 	public static void draw(Graphics g) {
@@ -65,10 +54,10 @@ public class Player {
 		g2.fill(hitbox);
 	}
 	
-	public static void hit(int bullet) {
+	public static void hit() {
 		// TODO: make this
 		
-		System.out.println("You got hit!");
+		// System.out.println("You got hit!");
 	}
 	
 	public static void move() {
@@ -170,6 +159,15 @@ public class Player {
 	}
 	
 	public static void shoot() {
-		// TODO: make this
+		
+		PlayerProjectile.create("test", shotPower);
+		lastShot = Game.frameCount;
+	}
+	
+	public static void update() {
+		
+		move();
+		if (shoot && Game.frameCount - lastShot > shotDelay)
+			shoot();
 	}
 }
