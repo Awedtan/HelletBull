@@ -55,8 +55,8 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLUE);
 		
-		for (int i = 0; i < activeBullets.size(); i++)
-			g2.fill(activeBullets.get(i));
+		for (PlayerProjectile pp : activeBullets)
+			g2.fill(pp);
 	}
 	
 	public static void initialize() {
@@ -78,8 +78,8 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		
 		this.move();
 		
-		if (Maths.distanceTo(this, Player.model) < 20)
-			if (this.checkCollision(Player.model)) {
+		if (Maths.distanceTo(this, Player.hitbox) < 20)
+			if (this.checkCollision(Player.hitbox)) {
 				this.kill();
 				Player.hit();
 			}

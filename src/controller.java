@@ -2,10 +2,10 @@ import com.studiohartman.jamepad.*;
 
 public class Controller {
 	
-	static ControllerManager controllers = new ControllerManager();
+	private static ControllerManager controllers = new ControllerManager();
 	
-	final static double[] MOVEANGLES = { 27.5, 62.5, 117.5, 152.5 };
-	final static double DEADZONE = 0.4;
+	static final double[] MOVEANGLES = { 27.5, 62.5, 117.5, 152.5 };
+	static final double DEADZONE = 0.4;
 	
 	public static void initialize() {
 		

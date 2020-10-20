@@ -142,8 +142,8 @@ public class Projectile extends Ellipse2D.Double {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLACK);
 		
-		for (int i = 0; i < Game.activeBullets.size(); i++)
-			g2.fill(Game.activeBullets.get(i));
+		for (Projectile p : Game.activeBullets)
+			g2.fill(p);
 	}
 	
 	public void kill() {

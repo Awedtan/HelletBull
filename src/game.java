@@ -20,9 +20,9 @@ public class Game {
 	static ArrayDeque<ArrayDeque<Subscript>> scriptQueue = new ArrayDeque<>(); // Queue of scripts, scripts are queues of subscripts
 	static ArrayDeque<Subscript> activeScript = new ArrayDeque<>(); // Active script
 	
-	final static int SCREENWIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	final static int SCREENHEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	final static int FPS = 120;
+	static final int SCREENWIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	static final int SCREENHEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	static final int FPS = 120;
 	static double gameSpeed = 1.0;
 	static int frameCount = 0;
 	static boolean run = true;

@@ -26,10 +26,6 @@ public class EnemyActive extends Enemy {
 		startFrame = Game.frameCount;
 	}
 	
-	public boolean checkCollision() {
-		return false;
-	}
-	
 	public static void create(String enem, Point origin, String routine) {
 		// Adds a new enemy to the enemy array
 		
@@ -41,14 +37,14 @@ public class EnemyActive extends Enemy {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.RED);
 		
-		for (int i = 0; i < Game.activeEnemies.size(); i++)
-			g2.fill(Game.activeEnemies.get(i));
-		for (int i = 0; i < Game.activePaths.size(); i++)
-			g2.draw(Game.activePaths.get(i));
+		for (EnemyActive ea : Game.activeEnemies)
+			g2.fill(ea);
+		for (Path2D.Double d : Game.activePaths)
+			g2.draw(d);
 	}
 	
 	public void hit(int bullet) {
-		
+		//TODO: make this
 	}
 	
 	public void kill() {

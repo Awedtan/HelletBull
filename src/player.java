@@ -3,16 +3,16 @@ import java.awt.geom.*;
 
 public class Player {
 	
-	final static double STARTSPEED = 3.0; // Default player speed
-	final static int STARTPOSX = 100;
-	final static int STARTPOSY = 550;
+	private final static double STARTSPEED = 3.0; // Default player speed
+	private final static int STARTPOSX = 100;
+	private final static int STARTPOSY = 550;
 	
-	static int playerWidth = 40; // Player model properties
-	static int playerHeight = playerWidth;
-	static Color playerColor = Color.BLUE;
+	private static int playerWidth = 40; // Player model properties
+	private static int playerHeight = playerWidth;
+	private static Color playerColor = Color.BLUE;
 	
-	static int hitboxSize = 5; // Hitbox properties
-	static Color hitboxColor = Color.YELLOW;
+	private static int hitboxSize = 5; // Hitbox properties
+	private static Color hitboxColor = Color.YELLOW;
 	
 	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
 	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles

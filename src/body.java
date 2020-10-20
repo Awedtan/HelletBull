@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class Body extends JPanel implements KeyListener, Runnable {
 	
-	static JFrame frame;
-	static Body panel = new Body();
+	private static JFrame frame;
+	private static Body panel = new Body();
 	
 	public Body() {
 		
