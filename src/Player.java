@@ -18,7 +18,7 @@ public class Player {
 	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
-	static int shotPower = 0;
+	static int shotPower = 3;
 	
 	static int lastShot = 0; // Frame of last player shot
 	static int shotDelay = 10; // Player shot cooldown

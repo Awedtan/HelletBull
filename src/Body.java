@@ -35,8 +35,8 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			
 			Game.frameCount++;
 			
-			if (Game.frameCount % 120 == 0){
-				System.out.println(System.currentTimeMillis() - time + "ms/120fps");
+			if (Game.frameCount % 240 == 0){
+				System.out.println(System.currentTimeMillis() - time + "ms/240fps");
 				time = System.currentTimeMillis();
 			}
 				

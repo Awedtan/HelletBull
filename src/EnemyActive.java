@@ -43,8 +43,13 @@ public class EnemyActive extends Enemy {
 			g2.draw(d);
 	}
 	
-	public void hit(int bullet) {
-		//TODO: make this
+	public void hit(int damage) {
+		// TODO: make this
+		
+		this.health -= damage;
+		
+		if (this.health <= 0)
+			this.kill();
 	}
 	
 	public void kill() {

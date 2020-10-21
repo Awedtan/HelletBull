@@ -211,8 +211,8 @@ public class Projectile extends Ellipse2D.Double {
 		if (this.lifetime == 0 || !this.checkInBounds())
 			this.kill();
 		
-		if (Maths.distanceTo(this, Player.model) < 20)
-			if (this.checkCollision(Player.model)) {
+		if (Maths.distanceTo(this, Player.hitbox) < 20)
+			if (this.checkCollision(Player.hitbox)) {
 				this.kill();
 				Player.hit();
 			}

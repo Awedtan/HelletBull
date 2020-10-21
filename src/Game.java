@@ -162,7 +162,7 @@ public class Game {
 		for (Projectile p : deadBullets) {
 			if (bulletMap.get(p.subbullet) != null)
 				p.spawn();
-			activeBullets.remove(activeBullets.indexOf(p));
+			activeBullets.remove(p);
 		}
 		
 		deadBullets.clear();
@@ -173,7 +173,7 @@ public class Game {
 		// TODO: clear paths as well
 		
 		for (EnemyActive ea : deadEnemies)
-			activeEnemies.remove(activeEnemies.indexOf(ea));
+			activeEnemies.remove(ea);
 		
 		deadEnemies.clear();
 	}
@@ -210,6 +210,8 @@ public class Game {
 			purgeEnemies();
 		if (deadBullets.size() > 0)
 			purgeBullets();
+		if (PlayerProjectile.deadBullets.size() > 0)
+			PlayerProjectile.purge();
 		
 		script();
 	}
