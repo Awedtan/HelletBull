@@ -18,7 +18,9 @@ public class Game {
 	static ArrayList<Path2D.Double> activePaths = new ArrayList<>(); // All active enemy path curves
 	
 	static ArrayDeque<ArrayDeque<Subscript>> scriptQueue = new ArrayDeque<>(); // Queue of scripts, scripts are queues of subscripts
-	static ArrayDeque<Subscript> activeScript = new ArrayDeque<>(); // Active script
+	static ArrayDeque<Subscript> activeScript = new ArrayDeque<>(); // Current script
+	
+	static ArrayDeque<Pickup> activePickups = new ArrayDeque<>(); // Pickups currently alive
 	
 	static final int SCREENWIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	static final int SCREENHEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();

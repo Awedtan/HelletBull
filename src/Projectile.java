@@ -34,8 +34,8 @@ public class Projectile extends Ellipse2D.Double {
 		subbullet = "";
 	}
 	
-	public Projectile(String sprite, int inaccuracy, double angle, double turn, boolean aimed, double velocity, double acceleration, double maxVelocity,
-			double minVelocity, int homingInt, int lifetime, Dimension size, String subBullet) { // Stored projectile types
+	public Projectile(String sprite, int inaccuracy, double angle, double turn, boolean aimed, double velocity, double acceleration,
+			double maxVelocity, double minVelocity, int homing, int lifetime, Dimension size, String subBullet) { // Stored projectile types
 		
 		this.sprite = sprite;
 		this.inaccuracy = inaccuracy;
@@ -46,8 +46,27 @@ public class Projectile extends Ellipse2D.Double {
 		this.acceleration = acceleration;
 		this.maxVelocity = maxVelocity;
 		this.minVelocity = minVelocity;
-		this.homing = homingInt;
+		this.homing = homing;
 		this.lifetime = lifetime;
+		width = size.width;
+		height = size.height;
+		this.subbullet = subBullet;
+	}
+	
+	public Projectile(String sprite, String inaccuracy, String angle, String turn, String aimed, String velocity, String acceleration,
+			String maxVelocity, String minVelocity, String homing, String lifetime, Dimension size, String subBullet) { // Stored projectile types
+		
+		this.sprite = sprite;
+		this.inaccuracy = Integer.parseInt(inaccuracy);
+		this.angle = java.lang.Double.parseDouble(angle);
+		this.turn = java.lang.Double.parseDouble(turn);
+		this.aimed = Boolean.parseBoolean(aimed);
+		this.velocity = java.lang.Double.parseDouble(velocity);
+		this.acceleration = java.lang.Double.parseDouble(acceleration);
+		this.maxVelocity = java.lang.Double.parseDouble(maxVelocity);
+		this.minVelocity = java.lang.Double.parseDouble(minVelocity);
+		this.homing = Integer.parseInt(homing);
+		this.lifetime = Integer.parseInt(lifetime);
 		width = size.width;
 		height = size.height;
 		this.subbullet = subBullet;
@@ -83,27 +102,11 @@ public class Projectile extends Ellipse2D.Double {
 		}
 	}
 	
-	public boolean checkCollision(Ellipse2D.Double ellipse) {
+	public boolean collides(Ellipse2D.Double ellipse) {
 		// Checks for bullet collision
 		// Returns true if collided
 		
 		return Maths.intersects(this, ellipse);
-	}
-	
-	public boolean checkInBounds() {
-		// Checks if the bullet is within an arbitrary rectangle based on screen size
-		// Returns false if the bullet exceeds these bounds
-		
-		int buffer = 10;
-		
-		double x1 = this.x;
-		double y1 = this.y;
-		double x2 = this.x + this.width;
-		double y2 = this.y + this.height;
-		
-		if (x1 > Game.SCREENWIDTH - buffer || x2 < buffer || y1 > Game.SCREENHEIGHT - buffer || y2 < buffer)
-			return false;
-		return true;
 	}
 	
 	public static void create(String proj, Ellipse2D.Double origin) {
@@ -118,10 +121,9 @@ public class Projectile extends Ellipse2D.Double {
 		for (int i = 0; i < amount; i++) {
 			Projectile blt = Game.bulletMap.get(proj);
 			
-			Game.activeBullets.add(new Projectile(
-					new Projectile(blt.sprite, blt.inaccuracy, blt.angle + i * (360.0 / amount), blt.turn, blt.aimed, blt.velocity, blt.acceleration,
-							blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, new Dimension((int) blt.width, (int) blt.height), blt.subbullet),
-					origin));
+			Game.activeBullets.add(new Projectile(new Projectile(blt.sprite, blt.inaccuracy, blt.angle + i * (360.0 / amount), blt.turn, blt.aimed,
+					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime,
+					new Dimension((int) blt.width, (int) blt.height), blt.subbullet), origin));
 		}
 	}
 	
@@ -144,6 +146,22 @@ public class Projectile extends Ellipse2D.Double {
 		
 		for (Projectile p : Game.activeBullets)
 			g2.fill(p);
+	}
+	
+	public boolean inBounds() {
+		// Checks if the bullet is within an arbitrary rectangle based on screen size
+		// Returns false if the bullet exceeds these bounds
+		
+		int buffer = 10;
+		
+		double x1 = this.x;
+		double y1 = this.y;
+		double x2 = this.x + this.width;
+		double y2 = this.y + this.height;
+		
+		if (x1 > Game.SCREENWIDTH - buffer || x2 < buffer || y1 > Game.SCREENHEIGHT - buffer || y2 < buffer)
+			return false;
+		return true;
 	}
 	
 	public void kill() {
@@ -193,13 +211,14 @@ public class Projectile extends Ellipse2D.Double {
 		Projectile blt = Game.bulletMap.get(this.subbullet);
 		
 		if (!blt.aimed)
-			Game.activeBullets.add(new Projectile(new Projectile(blt.sprite, blt.inaccuracy, this.angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration,
-					blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, new Dimension((int) blt.width, (int) blt.height), blt.subbullet), this));
-		else
 			Game.activeBullets.add(new Projectile(
-					new Projectile(blt.sprite, blt.inaccuracy, Maths.angleTo(this, Player.hitbox), blt.turn, false, blt.velocity, blt.acceleration,
-							blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, new Dimension((int) blt.width, (int) blt.height), blt.subbullet),
+					new Projectile(blt.sprite, blt.inaccuracy, this.angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration, blt.maxVelocity,
+							blt.minVelocity, blt.homing, blt.lifetime, new Dimension((int) blt.width, (int) blt.height), blt.subbullet),
 					this));
+		else
+			Game.activeBullets.add(new Projectile(new Projectile(blt.sprite, blt.inaccuracy, Maths.angleTo(this, Player.hitbox), blt.turn, false,
+					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime,
+					new Dimension((int) blt.width, (int) blt.height), blt.subbullet), this));
 	}
 	
 	public void update() {
@@ -208,11 +227,11 @@ public class Projectile extends Ellipse2D.Double {
 		this.move();
 		this.lifetime--;
 		
-		if (this.lifetime == 0 || !this.checkInBounds())
+		if (this.lifetime == 0 || !this.inBounds())
 			this.kill();
 		
 		if (Maths.distanceTo(this, Player.hitbox) < 20)
-			if (this.checkCollision(Player.hitbox)) {
+			if (this.collides(Player.hitbox)) {
 				this.kill();
 				Player.hit();
 			}

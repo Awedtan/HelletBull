@@ -3,9 +3,9 @@ import java.awt.geom.*;
 
 public class Player {
 	
-	private final static double STARTSPEED = 3.0; // Default player speed
-	private final static int STARTPOSX = 100;
-	private final static int STARTPOSY = 550;
+	private static final double STARTSPEED = 3.0; // Default player speed
+	private static final int STARTPOSX = Game.SCREENWIDTH / 2;
+	private static final int STARTPOSY = Game.SCREENHEIGHT / 2;
 	
 	private static int playerWidth = 40; // Player model properties
 	private static int playerHeight = playerWidth;
@@ -18,12 +18,15 @@ public class Player {
 	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
+	static int points = 0;
+	static int power = 0;
 	static int shotPower = 3;
+	static final int MAXPOWER = 10;
 	
 	static int lastShot = 0; // Frame of last player shot
-	static int shotDelay = 10; // Player shot cooldown
+	static final int SHOTDELAY = 10; // Player shot cooldown
 	static int lastBomb = 0; // Frame of last player bomb
-	static int bombDelay = 240; // Player bomb cooldown
+	static final int BOMBDELAY = 240; // Player bomb cooldown
 	
 	static double speed; // Actual player speed
 	static boolean moveLeft; // Movement booleans
@@ -167,7 +170,7 @@ public class Player {
 	public static void update() {
 		
 		move();
-		if (shoot && Game.frameCount - lastShot > shotDelay)
+		if (shoot && Game.frameCount - lastShot > SHOTDELAY)
 			shoot();
 	}
 }

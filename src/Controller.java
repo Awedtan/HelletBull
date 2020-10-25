@@ -21,11 +21,11 @@ public class Controller {
 			return;
 		
 		if (state.rightTrigger > 0)
-			if (Game.frameCount - Player.lastShot > Player.shotDelay) // Player shooting
+			if (Game.frameCount - Player.lastShot > Player.SHOTDELAY) // Player shooting
 				Player.shoot();
 			
 		if (state.rb)
-			if (Game.frameCount - Player.lastBomb > Player.bombDelay) // Player bombing
+			if (Game.frameCount - Player.lastBomb > Player.BOMBDELAY) // Player bombing
 				Player.bomb();
 			
 		if (state.leftTrigger > 0) // Player focusing

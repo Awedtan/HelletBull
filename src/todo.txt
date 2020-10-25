@@ -12,3 +12,4 @@ player
 
 enemies
 	sprites
+	speed

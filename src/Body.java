@@ -18,6 +18,7 @@ public class Body extends JPanel implements KeyListener, Runnable {
 	
 	@Override
 	public void run() {
+		
 		PlayerProjectile.initialize();
 		Game.initializeBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
 		Game.initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
@@ -35,11 +36,11 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			
 			Game.frameCount++;
 			
-			if (Game.frameCount % 240 == 0){
+			if (Game.frameCount % 240 == 0) {
 				System.out.println(System.currentTimeMillis() - time + "ms/240fps");
 				time = System.currentTimeMillis();
 			}
-				
+			
 			try {
 				Thread.sleep(1000 / (int) (Game.FPS * Game.gameSpeed));
 			} catch (Exception e) {
