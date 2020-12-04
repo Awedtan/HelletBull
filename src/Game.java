@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Game {
 	
-	static HashMap<String, Projectile> bulletMap = new HashMap<>(); // Projectile types
-	static ArrayList<Projectile> activeBullets = new ArrayList<>(); // Projectiles currently alive
-	static ArrayList<Projectile> deadBullets = new ArrayList<>(); // Projectiles to be killed
+	static HashMap<String, EnemyProjectile> bulletMap = new HashMap<>(); // Projectile types
+	static ArrayList<EnemyProjectile> activeBullets = new ArrayList<>(); // Projectiles currently alive
+	static ArrayList<EnemyProjectile> deadBullets = new ArrayList<>(); // Projectiles to be killed
 	
 	static HashMap<String, ArrayDeque<Subroutine>> routineMap = new HashMap<>(); // Routine types
 	
@@ -20,10 +20,11 @@ public class Game {
 	static ArrayDeque<ArrayDeque<Subscript>> scriptQueue = new ArrayDeque<>(); // Queue of scripts, scripts are queues of subscripts
 	static ArrayDeque<Subscript> activeScript = new ArrayDeque<>(); // Current script
 	
-	static ArrayDeque<Pickup> activePickups = new ArrayDeque<>(); // Pickups currently alive
+	static ArrayList<Pickup> activePickups = new ArrayList<>(); // Pickups currently alive
+	static ArrayList<Pickup> deadPickups = new ArrayList<>(); // Pickups currently alive
 	
-	static final int SCREENWIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	static final int SCREENHEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	static final int SCREENWIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.9);
+	static final int SCREENHEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
 	static final int FPS = 120;
 	static double gameSpeed = 1.0;
 	static int frameCount = 0;
@@ -161,7 +162,7 @@ public class Game {
 	public static void purgeBullets() {
 		// Removes all bullets marked for deletion
 		
-		for (Projectile p : deadBullets) {
+		for (EnemyProjectile p : deadBullets) {
 			if (bulletMap.get(p.subbullet) != null)
 				p.spawn();
 			activeBullets.remove(p);
@@ -178,6 +179,16 @@ public class Game {
 			activeEnemies.remove(ea);
 		
 		deadEnemies.clear();
+	}
+	
+	public static void purgePickups() {
+		// Removes all enemies marked for deletion
+		// TODO: clear paths as well
+		
+		for (Pickup pu : deadPickups)
+			activePickups.remove(pu);
+		
+		deadPickups.clear();
 	}
 	
 	public static void script() {
@@ -201,12 +212,14 @@ public class Game {
 		
 		Player.update();
 		
-		for (Projectile p : activeBullets)
+		for (EnemyProjectile p : activeBullets)
 			p.update();
 		for (EnemyActive ea : activeEnemies)
 			ea.update();
 		for (PlayerProjectile pp : PlayerProjectile.activeBullets)
 			pp.update();
+		for (Pickup pu : activePickups)
+			pu.update();
 		
 		if (deadEnemies.size() > 0)
 			purgeEnemies();
@@ -214,6 +227,8 @@ public class Game {
 			purgeBullets();
 		if (PlayerProjectile.deadBullets.size() > 0)
 			PlayerProjectile.purge();
+		if (deadPickups.size() > 0)
+			purgePickups();
 		
 		script();
 	}

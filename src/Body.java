@@ -2,6 +2,25 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/*
+general
+	level scripting
+	verify names before starting
+	panel layout
+
+projectiles
+	sprites
+	
+player
+	shooting
+	hitbox
+	sprites
+
+enemies
+	sprites
+	speed
+*/
+
 public class Body extends JPanel implements KeyListener, Runnable {
 	
 	private static JFrame frame;
@@ -37,7 +56,7 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			Game.frameCount++;
 			
 			if (Game.frameCount % 240 == 0) {
-				System.out.println(System.currentTimeMillis() - time + "ms/240fps");
+				System.out.println(System.currentTimeMillis() - time + "ms/240 frames");
 				time = System.currentTimeMillis();
 			}
 			
@@ -56,9 +75,10 @@ public class Body extends JPanel implements KeyListener, Runnable {
 			super.paintComponent(g);
 			
 			Player.draw(g);
-			Projectile.draw(g);
-			EnemyActive.draw(g);
-			PlayerProjectile.draw(g);
+			EnemyProjectile.drawAll(g);
+			EnemyActive.drawAll(g);
+			PlayerProjectile.drawAll(g);
+			Pickup.drawAll(g);
 			
 			TestDummy.draw(g);
 			
@@ -70,11 +90,11 @@ public class Body extends JPanel implements KeyListener, Runnable {
 	public static void main(String[] args) throws Exception {
 		
 		frame = new JFrame("Hellet Bull");
-		frame.setUndecorated(true);
+		// frame.setUndecorated(true);
 		frame.add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		panel.run();

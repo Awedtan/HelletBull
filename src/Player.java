@@ -20,7 +20,7 @@ public class Player {
 	
 	static int points = 0;
 	static int power = 0;
-	static int shotPower = 3;
+	static int shotPower = 0;
 	static final int MAXPOWER = 10;
 	
 	static int lastShot = 0; // Frame of last player shot
@@ -36,6 +36,12 @@ public class Player {
 	static boolean focus;
 	
 	static boolean shoot;
+	
+	public static void addScore(int value){
+		
+		power += value;
+		shotPower = Maths.log(power);
+	}
 	
 	public static void bomb() {
 		// TODO: make this

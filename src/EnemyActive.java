@@ -32,15 +32,15 @@ public class EnemyActive extends Enemy {
 		Game.activeEnemies.add(new EnemyActive(Game.enemyMap.get(enem), origin, routine));
 	}
 	
-	public static void draw(Graphics g) {
+	public static void drawAll(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.RED);
 		
 		for (EnemyActive ea : Game.activeEnemies)
 			g2.fill(ea);
-		for (Path2D.Double d : Game.activePaths)
-			g2.draw(d);
+		// for (Path2D.Double d : Game.activePaths)
+		// 	g2.draw(d);
 	}
 	
 	public void hit(int damage) {
@@ -56,6 +56,7 @@ public class EnemyActive extends Enemy {
 		// Marks the enemy for deletion
 		
 		Game.deadEnemies.add(this);
+		Pickup.create(1, 10, this);
 	}
 	
 	public void move() {
@@ -86,11 +87,11 @@ public class EnemyActive extends Enemy {
 		Subroutine routine = this.routine.removeFirst();
 		
 		if (routine.angle > 0)
-			Projectile.create(routine.proj, this, routine.amount, routine.angle);
+			EnemyProjectile.create(routine.proj, this, routine.amount, routine.angle);
 		else if (routine.amount > 0)
-			Projectile.create(routine.proj, this, routine.amount);
+			EnemyProjectile.create(routine.proj, this, routine.amount);
 		else
-			Projectile.create(routine.proj, this);
+			EnemyProjectile.create(routine.proj, this);
 	}
 	
 	public void update() {

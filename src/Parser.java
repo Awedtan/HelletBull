@@ -85,8 +85,8 @@ public class Parser {
 			}
 		}
 		
-		Game.bulletMap.put(nameLocal, new Projectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal,
-				maxLocal, minLocal, homingLocal, lifetimeLocal, new Dimension(widthLocal, heightLocal), secondaryLocal));
+		Game.bulletMap.put(nameLocal, new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal, lifetimeLocal,
+				new Dimension(widthLocal, heightLocal), secondaryLocal));
 	}
 	
 	public static void parseEnemy(String[] arr) {
@@ -160,8 +160,7 @@ public class Parser {
 			System.out.printf("WARN: An error occured when creating pathing for enemy %s%n", nameLocal.toUpperCase());
 		}
 		
-		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, velocityLocal, accelerationLocal, maxLocal, minLocal,
-				new Dimension(widthLocal, heightLocal), healthLocal, offsetLocal));
+		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, new Dimension(widthLocal, heightLocal), healthLocal, offsetLocal));
 	}
 	
 	public static ArrayList<Point2D.Double> parsePathing(String str, Point origin, boolean offset) {
@@ -177,39 +176,44 @@ public class Parser {
 		
 		path.moveTo(origin.x, origin.y);
 		
-		if (!offset)
-			for (int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
+			
+			String[] coords = arr[i].split(",");
+			int[] ints = new int[coords.length];
+			boolean bool = true;
+			
+			for (int j = 0; j < coords.length; j++) {
 				
-				String[] coords = arr[i].split(",");
+				coords[j] = coords[j].trim();
 				
-				if (coords.length == 6) // Two point curve
-					path.curveTo(Integer.parseInt(coords[0].trim()), Integer.parseInt(coords[1].trim()), Integer.parseInt(coords[2].trim()),
-							Integer.parseInt(coords[3].trim()), Integer.parseInt(coords[4].trim()), Integer.parseInt(coords[5].trim()));
-				else if (coords.length == 4) // One point curve
-					path.quadTo(Integer.parseInt(coords[0].trim()), Integer.parseInt(coords[1].trim()), Integer.parseInt(coords[2].trim()),
-							Integer.parseInt(coords[3].trim()));
+				if (Integer.parseInt(coords[j]) > 10 || Integer.parseInt(coords[j]) < 0)
+					throw new RuntimeException();
+				
+				if (bool)
+					ints[j] = Maths.toWidth(Integer.parseInt(coords[j]));
 				else
-					throw new java.lang.RuntimeException();
+					ints[j] = Maths.toHeight(Integer.parseInt(coords[j]));
+					
+				bool = !bool;
 			}
-		else
-			for (int i = 0; i < arr.length; i++) {
-				
-				String[] coords = arr[i].split(",");
-				
+			
+			if (offset) // Yes offset
 				if (coords.length == 6) // Two point curve
-					path.curveTo(Integer.parseInt(coords[0].trim()) + origin.x, Integer.parseInt(coords[1].trim()) + origin.y,
-							Integer.parseInt(coords[2].trim()) + origin.x, Integer.parseInt(coords[3].trim()) + origin.y,
-							Integer.parseInt(coords[4].trim()) + origin.x, Integer.parseInt(coords[5].trim()) + origin.y);
+					path.curveTo(ints[0] + origin.x, ints[1] + origin.y, ints[2] + origin.x, ints[3] + origin.y, ints[4] + origin.x, ints[5] + origin.y);
 				else if (coords.length == 4) // One point curve
-					path.quadTo(Integer.parseInt(coords[0].trim()) + origin.x, Integer.parseInt(coords[1].trim()) + origin.y,
-							Integer.parseInt(coords[2].trim()) + origin.x, Integer.parseInt(coords[3].trim()) + origin.y);
+					path.quadTo(ints[0] + origin.x, ints[1] + origin.y, ints[2] + origin.x, ints[3] + origin.y);
 				else
-					throw new java.lang.RuntimeException();
-			}
+					throw new RuntimeException();
+			else if (coords.length == 6) // No offset, Two point curve
+				path.curveTo(ints[0], ints[1], ints[2], ints[3], ints[4], ints[5]);
+			else if (coords.length == 4) // No offset, One point curve
+				path.quadTo(ints[0], ints[1], ints[2], ints[3]);
+			else
+				throw new RuntimeException();
+		}
 		
 		pathShape = path;
 		iterator = pathShape.getPathIterator(null, 0.001);
-		
 		Game.activePaths.add(path);
 		
 		while (!iterator.isDone()) {
@@ -293,7 +297,7 @@ public class Parser {
 				String enemy = st.nextToken();
 				String routine = st.nextToken();
 				String[] str = st.nextToken().split(",");
-				Point origin = new Point(Integer.parseInt(str[0].trim()), Integer.parseInt(str[1].trim()));
+				Point origin = new Point(Maths.toWidth(Integer.parseInt(str[0].trim())), Maths.toHeight(Integer.parseInt(str[1].trim())));
 				
 				script.addLast(new Subscript(time, enemy, origin, routine));
 			}

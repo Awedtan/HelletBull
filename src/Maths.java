@@ -83,8 +83,42 @@ public class Maths {
 		return ellipse.y + ellipse.height / 2;
 	}
 	
+	public static double centerX(Rectangle2D.Double ellipse) {
+		// Returns the x coordinate of the center of the given rectangle
+		
+		return ellipse.x + ellipse.width / 2;
+	}
+	
+	public static double centerY(Rectangle2D.Double ellipse) {
+		// Returns the y coordinate of the center of the given rectangle
+		
+		return ellipse.y + ellipse.height / 2;
+	}
+	
+	public static boolean checkInBounds(Ellipse2D.Double ellipse) {
+		// Checks if the bullet is within some arbitrary rectangle
+		// Returns false if the bullet exceeds these bounds
+		
+		int buffer = 10;
+		
+		double x1 = ellipse.x;
+		double y1 = ellipse.y;
+		double x2 = ellipse.x + ellipse.width;
+		double y2 = ellipse.y + ellipse.height;
+		
+		if (x1 > Game.SCREENWIDTH - buffer || x2 < buffer || y1 > Game.SCREENHEIGHT - buffer || y2 < buffer)
+			return false;
+		return true;
+	}
+	
 	public static double distanceTo(Ellipse2D.Double origin, Ellipse2D.Double target) {
-		// Returns the distance from the center of the origin to the center of the target
+		// Returns the distance from the center of the origin ellipse to the center of the target ellipse
+		
+		return Math.sqrt(Math.pow(centerY(origin) - centerY(target), 2) + Math.pow(centerX(origin) - centerX(target), 2));
+	}
+	
+	public static double distanceTo(Rectangle2D.Double origin, Ellipse2D.Double target) {
+		// Returns the distance from the center of the origin rectangle to the center of the target rectangle
 		
 		return Math.sqrt(Math.pow(centerY(origin) - centerY(target), 2) + Math.pow(centerX(origin) - centerX(target), 2));
 	}
@@ -140,10 +174,31 @@ public class Maths {
 		return !thisArea.equals(temp);
 	}
 	
+	public static int log(int x) {
+		
+		return (int) (Math.log(x) / Math.log(2) + 1e-10);
+	}
+	
 	public static Point midpoint(Point p1, Point p2) {
 		// Takes in two points
 		// Returns the midpoint of the line between p1 and p2
 		
 		return new Point((int) (p1.x + p2.x) / 2, (int) (p1.y + p2.y) / 2);
+	}
+	
+	public static int toHeight(int i) {
+		
+		if (i > 10 || i < 0)
+			throw new RuntimeException();
+		
+		return Game.SCREENHEIGHT / 10 * i;
+	}
+	
+	public static int toWidth(int i) {
+		
+		if (i > 10 || i < 0)
+			throw new RuntimeException();
+		
+		return Game.SCREENWIDTH / 10 * i;
 	}
 }

@@ -5,7 +5,7 @@ public class Controller {
 	private static ControllerManager controllers = new ControllerManager();
 	
 	static final double[] MOVEANGLES = { 27.5, 62.5, 117.5, 152.5 };
-	static final double DEADZONE = 0.6;
+	static final double DEADZONE = 0.5;
 	
 	public static void initialize() {
 		

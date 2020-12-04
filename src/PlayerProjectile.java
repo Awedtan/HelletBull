@@ -45,31 +45,14 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		return Maths.intersects(this, ellipse);
 	}
 	
-	public boolean checkInBounds() {
-		// Checks if the bullet is within an arbitrary rectangle based on screen size
-		// Returns false if the bullet exceeds these bounds
-		
-		int buffer = 10;
-		
-		double x1 = this.x;
-		double y1 = this.y;
-		double x2 = this.x + this.width;
-		double y2 = this.y + this.height;
-		
-		if (x1 > Game.SCREENWIDTH - buffer || x2 < buffer || y1 > Game.SCREENHEIGHT - buffer || y2 < buffer)
-			return false;
-		return true;
-	}
-	
 	public static void create(String name, int power) {
 		
 		for (int i = 0; i <= power; i++)
 			if (i < bulletMap.get(name).length)
-				activeBullets
-						.add(new PlayerProjectile(bulletMap.get(name)[i], new Point((int) Maths.centerX(Player.model), (int) Maths.centerY(Player.model))));
+				activeBullets.add(new PlayerProjectile(bulletMap.get(name)[i], new Point((int) Maths.centerX(Player.model), (int) Maths.centerY(Player.model))));
 	}
 	
-	public static void draw(Graphics g) {
+	public static void drawAll(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLUE);
@@ -80,8 +63,8 @@ public class PlayerProjectile extends Ellipse2D.Double {
 	
 	public static void initialize() {
 		
-		bulletMap.put("test", new PlayerProjectile[] { new PlayerProjectile("", 1, 180, 6, 0, new Dimension(10, 10)),
-				new PlayerProjectile("", 1, 185, 6, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 175, 6, 0, new Dimension(10, 10)) });
+		bulletMap.put("test", new PlayerProjectile[] { new PlayerProjectile("", 1, 180, 8, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 185, 8, 0, new Dimension(10, 10)),
+				new PlayerProjectile("", 1, 175, 8, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 170, 8, 0, new Dimension(10, 10)),new PlayerProjectile("", 1, 190, 8, 0, new Dimension(10, 10))});
 	}
 	
 	public void kill() {
@@ -109,7 +92,7 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		
 		this.move();
 		
-		if (!this.checkInBounds())
+		if (!Maths.checkInBounds(this))
 			this.kill();
 		
 		for (EnemyActive ea : Game.activeEnemies)
