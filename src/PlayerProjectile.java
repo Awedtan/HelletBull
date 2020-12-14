@@ -4,13 +4,18 @@ import java.util.*;
 
 public class PlayerProjectile extends Ellipse2D.Double {
 	
-	static HashMap<String, PlayerProjectile[]> bulletMap = new HashMap<>(); // Projectile types
+	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile("", 1, 180, 10, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 185, 10, 0, new Dimension(10, 10)),
+			new PlayerProjectile("", 1, 175, 10, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 170, 10, 0, new Dimension(10, 10)),
+			new PlayerProjectile("", 1, 190, 10, 0, new Dimension(10, 10)) };
+	
 	static ArrayList<PlayerProjectile> activeBullets = new ArrayList<>(); // Projectiles currently alive
 	static ArrayList<PlayerProjectile> deadBullets = new ArrayList<>(); // Projectiles to be killed
 	
+	static int BUFFER = -10;
+	
 	String sprite;
 	int damage;
-	double angle; // The angle of the proj, 0 is down, 90 is right, -90 is left, 180 is up
+	double angle; // The angle of the proj, 0 is down, 90 is right, -90 is left, +-180 is up
 	double velocity; // The current speed of the proj
 	int homing; // If greater than 0, the proj will follow the player until this many pixels away
 	
@@ -27,11 +32,11 @@ public class PlayerProjectile extends Ellipse2D.Double {
 	
 	public PlayerProjectile(PlayerProjectile pp, Point origin) {
 		
-		this.sprite = pp.sprite;
-		this.damage = pp.damage;
-		this.angle = pp.angle;
-		this.velocity = pp.velocity;
-		this.homing = pp.homing;
+		sprite = pp.sprite;
+		damage = pp.damage;
+		angle = pp.angle;
+		velocity = pp.velocity;
+		homing = pp.homing;
 		width = pp.width;
 		height = pp.height;
 		x = origin.x;
@@ -45,11 +50,12 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		return Maths.intersects(this, ellipse);
 	}
 	
-	public static void create(String name, int power) {
+	public static void create(int power) {
 		
-		for (int i = 0; i <= power; i++)
-			if (i < bulletMap.get(name).length)
-				activeBullets.add(new PlayerProjectile(bulletMap.get(name)[i], new Point((int) Maths.centerX(Player.model), (int) Maths.centerY(Player.model))));
+		for (int i = 0; i <= power; i++) {
+			PlayerProjectile pp = shotPowers[i];
+			activeBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.model.getBounds(), pp.width), (int) Maths.centerY(Player.model.getBounds(), pp.height))));
+		}
 	}
 	
 	public static void drawAll(Graphics g) {
@@ -61,12 +67,6 @@ public class PlayerProjectile extends Ellipse2D.Double {
 			g2.fill(pp);
 	}
 	
-	public static void initialize() {
-		
-		bulletMap.put("test", new PlayerProjectile[] { new PlayerProjectile("", 1, 180, 8, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 185, 8, 0, new Dimension(10, 10)),
-				new PlayerProjectile("", 1, 175, 8, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 170, 8, 0, new Dimension(10, 10)),new PlayerProjectile("", 1, 190, 8, 0, new Dimension(10, 10))});
-	}
-	
 	public void kill() {
 		// Marks the bullet for deletion
 		
@@ -75,8 +75,8 @@ public class PlayerProjectile extends Ellipse2D.Double {
 	
 	public void move() {
 		
-		this.x += Math.sin(Math.toRadians(this.angle)) * this.velocity;
-		this.y += Math.cos(Math.toRadians(this.angle)) * this.velocity;
+		x += Math.sin(Math.toRadians(angle)) * velocity;
+		y += Math.cos(Math.toRadians(angle)) * velocity;
 	}
 	
 	public static void purge() {
@@ -90,16 +90,16 @@ public class PlayerProjectile extends Ellipse2D.Double {
 	
 	public void update() {
 		
-		this.move();
+		move();
 		
-		if (!Maths.checkInBounds(this))
-			this.kill();
+		if (Maths.checkInBounds(this.getBounds(), BUFFER) != -1)
+			kill();
 		
 		for (EnemyActive ea : Game.activeEnemies)
-			if (Maths.distanceTo(this, ea) < 20)
-				if (this.checkCollision(ea)) {
-					this.kill();
-					ea.hit(this.damage);
+			if (Maths.distanceTo(this.getBounds(), ea.getBounds()) < 20)
+				if (checkCollision(ea)) {
+					kill();
+					ea.hit(damage);
 				}
 	}
 }

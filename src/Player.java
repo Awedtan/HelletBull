@@ -3,30 +3,31 @@ import java.awt.geom.*;
 
 public class Player {
 	
-	private static final double STARTSPEED = 3.0; // Default player speed
-	private static final int STARTPOSX = Game.SCREENWIDTH / 2;
-	private static final int STARTPOSY = Game.SCREENHEIGHT / 2;
+	static final double STARTSPEED = 4.0; // Base player speed
+	static final int STARTPOSX = Game.PLAYSCREEN.width / 2;
+	static final int STARTPOSY = Game.PLAYSCREEN.height / 2;
 	
-	private static int playerWidth = 40; // Player model properties
-	private static int playerHeight = playerWidth;
-	private static Color playerColor = Color.BLUE;
+	static int playerWidth = 40; // Player model properties
+	static int playerHeight = playerWidth;
+	static Color playerColor = Color.BLUE;
 	
-	private static int hitboxSize = 5; // Hitbox properties
-	private static Color hitboxColor = Color.YELLOW;
+	static int hitboxSize = 5; // Hitbox properties
+	static int grazeRadius = 20;
+	static Color hitboxColor = Color.YELLOW;
 	
 	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
 	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
+	static final int MAXPOWER = 10;
 	static int points = 0;
 	static int power = 0;
 	static int shotPower = 0;
-	static final int MAXPOWER = 10;
 	
-	static int lastShot = 0; // Frame of last player shot
-	static final int SHOTDELAY = 10; // Player shot cooldown
-	static int lastBomb = 0; // Frame of last player bomb
+	static final int SHOTDELAY = 7; // Player shot cooldown
 	static final int BOMBDELAY = 240; // Player bomb cooldown
+	static int lastShot = 0; // Frame of last player shot
+	static int lastBomb = 0; // Frame of last player bomb
 	
 	static double speed; // Actual player speed
 	static boolean moveLeft; // Movement booleans
@@ -34,13 +35,18 @@ public class Player {
 	static boolean moveUp;
 	static boolean moveDown;
 	static boolean focus;
-	
 	static boolean shoot;
 	
-	public static void addScore(int value){
+	static String pickupClip = "pickup";
+	static String deathClip = "playerdeath";
+	static String shotClip = "playershot";
+	
+	public static void addScore(int value) {
 		
 		power += value;
-		shotPower = Maths.log(power);
+		shotPower = Maths.log(power / 2);
+		
+		Game.playClip(pickupClip);
 	}
 	
 	public static void bomb() {
@@ -57,7 +63,7 @@ public class Player {
 		g2.fill(model);
 		
 		Image img = Toolkit.getDefaultToolkit().getImage("images/world-ship.png");
-		g2.drawImage(img, (int) model.x, (int) model.y, null);
+		// g2.drawImage(img, (int) model.x, (int) model.y, null);
 		
 		g2.setColor(hitboxColor);
 		g2.fill(hitbox);
@@ -66,11 +72,16 @@ public class Player {
 	public static void hit() {
 		// TODO: make this
 		
-		// System.out.println("You got hit!");
+		Game.playClip(deathClip);
 	}
 	
 	public static void move() {
 		// Updates player position
+		
+		double mx = model.x;
+		double my = model.y;
+		double hx = hitbox.x;
+		double hy = hitbox.y;
 		
 		if (focus)
 			speed = (STARTSPEED * .5);
@@ -94,6 +105,23 @@ public class Player {
 		} else if (moveDown && !moveUp) {
 			model.y += speed;
 			hitbox.y += speed;
+		}
+		
+		switch (Maths.checkInBounds(Player.model.getBounds(), 0)) {
+			case (0):
+				model.x = mx;
+				hitbox.x = hx;
+				break;
+			case (1):
+				model.y = my;
+				hitbox.y = hy;
+				break;
+			case (2):
+				model.x = mx;
+				hitbox.x = hx;
+				model.y = my;
+				hitbox.y = hy;
+				break;
 		}
 	}
 	
@@ -169,8 +197,10 @@ public class Player {
 	
 	public static void shoot() {
 		
-		PlayerProjectile.create("test", shotPower);
+		PlayerProjectile.create(shotPower);
 		lastShot = Game.frameCount;
+		
+		Game.playClip(shotClip);
 	}
 	
 	public static void update() {

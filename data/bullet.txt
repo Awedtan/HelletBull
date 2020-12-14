@@ -102,18 +102,35 @@ bullet LCurveBlt
 
 bullet AimedBlt
 	sprite			file
-	inaccuracy		0
+	inaccuracy		2
 	angle			0.0
 	turn			0.0
 	aimed			true
 	velocity		1.0
 	acceleration	0.01
-	maxspeed		10.0
+	maxspeed		2.0
 	minspeed		0.0
 	homing			0
 	lifetime		-1
 	width			20
 	height			20
+	secondary		n
+;
+
+bullet Bigg
+	sprite			file
+	inaccuracy		0
+	angle			0.0
+	turn			0.0
+	aimed			false
+	velocity		0.2
+	acceleration	0.0
+	maxspeed		10.0
+	minspeed		0.0
+	homing			0
+	lifetime		-1
+	width			700
+	height			300
 	secondary		n
 ;
 

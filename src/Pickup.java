@@ -13,8 +13,8 @@ public class Pickup extends Rectangle2D.Double {
 		this.value = value;
 		width = size;
 		height = size;
-		x = Maths.centerX(ellipse) - size / 2;
-		y = Maths.centerY(ellipse) - size / 2;
+		x = Maths.centerX(ellipse.getBounds()) - size / 2;
+		y = Maths.centerY(ellipse.getBounds()) - size / 2;
 	}
 	
 	public boolean collides(Ellipse2D.Double ellipse) {
@@ -52,11 +52,14 @@ public class Pickup extends Rectangle2D.Double {
 	
 	public void update() {
 		
-		this.move();
+		move();
 		
-		if (Maths.distanceTo(this, Player.model) < 50)
-			if (this.collides(Player.model)) {
-				this.kill();
+		if (Maths.checkInBounds(this.getBounds(), -20) != -1)
+			kill();
+		
+		if (Maths.distanceTo(this.getBounds(), Player.model.getBounds()) < Player.grazeRadius * 2)
+			if (collides(Player.model)) {
+				kill();
 				Player.addScore(this.value);
 			}
 	}

@@ -9,28 +9,30 @@ public class Maths {
 		
 		double angle;
 		
-		if (target.x > origin.x && target.y > origin.y) { // Quadrant 4
+		if (target.x > origin.x && target.y > origin.y) // Quadrant 4
 			angle = Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-			
-		} else if (target.x < origin.x && target.y > origin.y) { // Quadrant 3
+		
+		else if (target.x < origin.x && target.y > origin.y) // Quadrant 3
 			angle = -Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-			
-		} else if (target.x < origin.x && target.y < origin.y) { // Quadrant 2
+		
+		else if (target.x < origin.x && target.y < origin.y) // Quadrant 2
 			angle = -180 + Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-			
-		} else if (target.x > origin.x && target.y < origin.y) { // Quadrant 1
+		
+		else if (target.x > origin.x && target.y < origin.y) // Quadrant 1
 			angle = 180 - Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-			
-		} else if (target.x == origin.x)
+		
+		else if (target.x == origin.x)
 			if (target.y > origin.y)
 				angle = 0;
 			else
 				angle = 180;
+			
 		else if (target.y == origin.y)
 			if (target.x > origin.x)
 				angle = 90;
 			else
 				angle = -90;
+			
 		else
 			angle = 0;
 		
@@ -43,23 +45,24 @@ public class Maths {
 		
 		double angle;
 		
-		if (tarCenterX > originX && tarCenterY > originY) { // Quadrant 4
+		if (tarCenterX > originX && tarCenterY > originY) // Quadrant 4
 			angle = Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
-			
-		} else if (tarCenterX < originX && tarCenterY > originY) { // Quadrant 3
+		
+		else if (tarCenterX < originX && tarCenterY > originY) // Quadrant 3
 			angle = -Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
-			
-		} else if (tarCenterX < originX && tarCenterY < originY) { // Quadrant 2
+		
+		else if (tarCenterX < originX && tarCenterY < originY) // Quadrant 2
 			angle = -180 + Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
-			
-		} else if (tarCenterX > originX && tarCenterY < originY) { // Quadrant 1
+		
+		else if (tarCenterX > originX && tarCenterY < originY) // Quadrant 1
 			angle = 180 - Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
-			
-		} else if (tarCenterX == originX)
+		
+		else if (tarCenterX == originX)
 			if (tarCenterY > originY)
 				angle = 0;
 			else
 				angle = 180;
+			
 		else if (tarCenterY == originY)
 			if (tarCenterX > originX)
 				angle = 90;
@@ -71,56 +74,54 @@ public class Maths {
 		return angle;
 	}
 	
-	public static double centerX(Ellipse2D.Double ellipse) {
-		// Returns the x coordinate of the center of the given ellipse
-		
-		return ellipse.x + ellipse.width / 2;
-	}
-	
-	public static double centerY(Ellipse2D.Double ellipse) {
-		// Returns the y coordinate of the center of the given ellipse
-		
-		return ellipse.y + ellipse.height / 2;
-	}
-	
-	public static double centerX(Rectangle2D.Double ellipse) {
+	public static double centerX(Rectangle rect) {
 		// Returns the x coordinate of the center of the given rectangle
 		
-		return ellipse.x + ellipse.width / 2;
+		return rect.x + rect.width / 2;
 	}
 	
-	public static double centerY(Rectangle2D.Double ellipse) {
+	public static double centerY(Rectangle rect) {
 		// Returns the y coordinate of the center of the given rectangle
 		
-		return ellipse.y + ellipse.height / 2;
+		return rect.y + rect.height / 2;
 	}
 	
-	public static boolean checkInBounds(Ellipse2D.Double ellipse) {
-		// Checks if the bullet is within some arbitrary rectangle
-		// Returns false if the bullet exceeds these bounds
+	public static double centerX(Rectangle rect, double offset) {
+		// Returns the x coordinate of the center of the given rectangle with an offset
 		
-		int buffer = 10;
-		
-		double x1 = ellipse.x;
-		double y1 = ellipse.y;
-		double x2 = ellipse.x + ellipse.width;
-		double y2 = ellipse.y + ellipse.height;
-		
-		if (x1 > Game.SCREENWIDTH - buffer || x2 < buffer || y1 > Game.SCREENHEIGHT - buffer || y2 < buffer)
-			return false;
-		return true;
+		return rect.x + rect.width / 2 - offset / 2;
 	}
 	
-	public static double distanceTo(Ellipse2D.Double origin, Ellipse2D.Double target) {
-		// Returns the distance from the center of the origin ellipse to the center of the target ellipse
+	public static double centerY(Rectangle rect, double offset) {
+		// Returns the y coordinate of the center of the given rectangle with an offset
 		
-		return Math.sqrt(Math.pow(centerY(origin) - centerY(target), 2) + Math.pow(centerX(origin) - centerX(target), 2));
+		return rect.y + rect.height / 2 - offset / 2;
 	}
 	
-	public static double distanceTo(Rectangle2D.Double origin, Ellipse2D.Double target) {
+	public static int checkInBounds(Rectangle rect, double buffer) {
+		// Checks if the rectangle is within some arbitrary rectangle
+		// Returns false if the rectangle exceeds these bounds
+		
+		double x1 = rect.x;
+		double y1 = rect.y;
+		double x2 = rect.x + rect.width;
+		double y2 = rect.y + rect.height;
+		
+		if (x2 > Game.PLAYSCREEN.width - buffer || x1 < buffer)
+			if (y2 > Game.PLAYSCREEN.height - buffer || y1 < buffer)
+				return 2;
+			else
+				return 0;
+		else if (y2 > Game.PLAYSCREEN.height - buffer || y1 < buffer)
+			return 1;
+		
+		return -1;
+	}
+	
+	public static double distanceTo(Rectangle origin, Rectangle target) {
 		// Returns the distance from the center of the origin rectangle to the center of the target rectangle
 		
-		return Math.sqrt(Math.pow(centerY(origin) - centerY(target), 2) + Math.pow(centerX(origin) - centerX(target), 2));
+		return Math.sqrt(Math.pow(centerY(origin.getBounds()) - centerY(target.getBounds()), 2) + Math.pow(centerX(origin.getBounds()) - centerX(target.getBounds()), 2));
 	}
 	
 	public static Area ellipseArea(Ellipse2D.Double ellipse) {
@@ -163,7 +164,7 @@ public class Maths {
 	
 	public static boolean intersects(Ellipse2D.Double first, Ellipse2D.Double second) {
 		// Takes in two ellipses
-		// Checks if they roughly intersect
+		// Checks if they intersect
 		
 		Area thisArea = ellipseArea(first);
 		Area ellArea = ellipseArea(second);
@@ -181,24 +182,30 @@ public class Maths {
 	
 	public static Point midpoint(Point p1, Point p2) {
 		// Takes in two points
-		// Returns the midpoint of the line between p1 and p2
+		// Returns the midpoint between p1 and p2
 		
 		return new Point((int) (p1.x + p2.x) / 2, (int) (p1.y + p2.y) / 2);
 	}
 	
 	public static int toHeight(int i) {
 		
-		if (i > 10 || i < 0)
+		if (Math.abs(i) > Game.GRIDLINES)
 			throw new RuntimeException();
-		
-		return Game.SCREENHEIGHT / 10 * i;
+			
+		if (i >= 0)
+			return Game.PLAYSCREEN.height / 10 * i;
+		else
+			return Game.PLAYSCREEN.height / 10 * i;
 	}
 	
 	public static int toWidth(int i) {
 		
-		if (i > 10 || i < 0)
+		if (Math.abs(i) > Game.GRIDLINES)
 			throw new RuntimeException();
 		
-		return Game.SCREENWIDTH / 10 * i;
+		if (i >= 0)
+			return Game.PLAYSCREEN.width / 10 * i;
+		else
+			return Game.PLAYSCREEN.width / 10 * i;
 	}
 }

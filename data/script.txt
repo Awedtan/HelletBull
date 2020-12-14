@@ -1,17 +1,145 @@
+!
 script first
-	240	test	test	0,0
-	480	test	test	0,0
-	660	test	test	0,0
-	780	test	test	0,0
-	860	test	test	0,0
-	1080	test	test	0,0
-	1160	test	test	0,0
-	1280	test	test	0,0
-	1360	test	test	0,0
-	1480	test	test	0,0
-	1860	test	test	0,0
-	2080	test	test	0,0
-	2260	test	test	0,0
-	2480	test	test	0,0
-	2860	test	test	0,0
+	60	basic1	test	2,-1
+	60	basic1	test	2,-1
+	60	basic1	test	2,-1
+	60	basic1	test	2,-1
+	60	basic1	test	2,-1
+
+	60	basic2	empty	8,-1
+	60	basic2	empty	8,-1
+	60	basic2	empty	8,-1
+	60	basic2	empty	8,-1
+	60	basic2	empty	8,-1
+;
+
+script second
+	60	basic3	empty	0,-1
+	30	basic3	empty	1,-1
+	30	basic3	empty	2,-1
+	30	basic3	empty	3,-1
+	30	basic3	empty	4,-1
+	30	basic3	empty	5,-1
+	30	basic3	empty	6,-1
+	30	basic3	empty	7,-1
+	30	basic3	empty	8,-1
+	
+	240	basic4	empty	10,-1
+	30	basic4	empty	9,-1
+	30	basic4	empty	8,-1
+	30	basic4	empty	7,-1
+	30	basic4	empty	6,-1
+	30	basic4	empty	5,-1
+	30	basic4	empty	4,-1
+	30	basic4	empty	3,-1
+	30	basic4	empty	2,-1
+;
+
+script third
+	60	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	120	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+;
+
+script fourth
+	60	basic3	empty	0,-1
+	30	basic3	empty	1,-1
+	30	basic3	empty	2,-1
+	30	basic3	empty	3,-1
+	30	basic3	empty	4,-1
+	30	basic3	empty	5,-1
+	30	basic3	empty	6,-1
+	30	basic3	empty	7,-1
+	30	basic3	empty	8,-1
+	
+	30	basic4	empty	10,-1
+	30	basic4	empty	9,-1
+	30	basic4	empty	8,-1
+	30	basic4	empty	7,-1
+	30	basic4	empty	6,-1
+	30	basic4	empty	5,-1
+	30	basic4	empty	4,-1
+	30	basic4	empty	3,-1
+	30	basic4	empty	2,-1
+	
+	60	basic3	empty	0,-1
+	30	basic3	empty	1,-1
+	30	basic3	empty	2,-1
+	30	basic3	empty	3,-1
+	30	basic3	empty	4,-1
+	30	basic3	empty	5,-1
+	30	basic3	empty	6,-1
+	30	basic3	empty	7,-1
+	30	basic3	empty	8,-1
+	
+	30	basic4	empty	10,-1
+	30	basic4	empty	9,-1
+	30	basic4	empty	8,-1
+	30	basic4	empty	7,-1
+	30	basic4	empty	6,-1
+	30	basic4	empty	5,-1
+	30	basic4	empty	4,-1
+	30	basic4	empty	3,-1
+	30	basic4	empty	2,-1
+;
+
+script fifth
+	60	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	20	basic5	empty	-1,6
+	120	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+	20	basic6	empty	11,6
+;
+
+script sixth
+	60	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+	30	basic7	empty	3,-2
+	30	basic8	empty	7,-2
+;
+
 ?

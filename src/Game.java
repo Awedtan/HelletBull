@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.io.*;
 import java.util.*;
+import javax.sound.sampled.*;
 
 public class Game {
 	
@@ -23,11 +24,14 @@ public class Game {
 	static ArrayList<Pickup> activePickups = new ArrayList<>(); // Pickups currently alive
 	static ArrayList<Pickup> deadPickups = new ArrayList<>(); // Pickups currently alive
 	
-	static final int SCREENWIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.9);
-	static final int SCREENHEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
+	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960);
+	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960);
+	static final Rectangle SIDESCREEN = new Rectangle(900, 0, 1280 - 900, 960);
+	static final int GRIDLINES = 15;
 	static final int FPS = 120;
 	static double gameSpeed = 1.0;
 	static int frameCount = 0;
+	static int lastSpawnFrame = 0;
 	static boolean run = true;
 	
 	public static void initializeBullets() {
@@ -137,25 +141,43 @@ public class Game {
 		try {
 			
 			BufferedReader input = new BufferedReader(new FileReader("data/script.txt"));
-			String str = input.readLine();
+			String str = input.readLine().trim();
 			
-			ArrayList<String> accumulate = new ArrayList<String>();
+			while (str.indexOf('!') == -1)
+				str = input.readLine().trim();
 			
-			if (str.indexOf("script") == 0)
-				while (str.indexOf('?') == -1) {
-					if (str.length() > 0)
-						accumulate.add(str);
-					str = input.readLine();
-				}
-			
-			if (accumulate.size() != 0)
-				Parser.parseScript(accumulate);
-			
+			while (str.indexOf('?') == -1) {
+				ArrayList<String> accumulate = new ArrayList<String>();
+				
+				if (str.indexOf("script") == 0)
+					while (str.indexOf(';') == -1) {
+						if (str.length() > 1)
+							accumulate.add(str);
+						str = input.readLine();
+					}
+				
+				str = input.readLine();
+				
+				if (accumulate.size() != 0)
+					Parser.parseScript(accumulate);
+			}
 			input.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("The specified file was not found.");
 		} catch (IOException e) {
 			System.out.println("Something went wrong while reading a file.");
+		}
+	}
+	
+	public static void playClip(String s) {
+		
+		try {
+			
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+			clip.start();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -183,7 +205,6 @@ public class Game {
 	
 	public static void purgePickups() {
 		// Removes all enemies marked for deletion
-		// TODO: clear paths as well
 		
 		for (Pickup pu : deadPickups)
 			activePickups.remove(pu);
@@ -191,19 +212,32 @@ public class Game {
 		deadPickups.clear();
 	}
 	
+	public static void purgeScript() {
+		// Transitions into next script
+		// Resets all relevant delay values
+		
+		frameCount = 0;
+		lastSpawnFrame = 0;
+		Player.lastShot = 0;
+		Player.lastBomb = 0;
+		
+		activeScript = scriptQueue.removeFirst();
+	}
+	
 	public static void script() {
 		// Runs game scripts
 		
 		if (activeScript.peekFirst() == null)
-			if (scriptQueue.peekFirst() != null)
-				activeScript = scriptQueue.removeFirst();
+			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty())
+				purgeScript();
 			else
 				return;
 			
-		if (frameCount == activeScript.peekFirst().time) {
+		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
 			
 			Subscript current = activeScript.removeFirst();
 			EnemyActive.create(current.enemy, current.origin, current.routine);
+			lastSpawnFrame = frameCount;
 		}
 	}
 	

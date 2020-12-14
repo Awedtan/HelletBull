@@ -1,10 +1,12 @@
 routine test
-	40	LCurveBlt	16
-
+	120	LCurveBlt	16
 ;
 
 routine test2
-	140	RCurveBlt2	16
+	240 Bigg
+;
+
+routine empty
 ;
 
 ?

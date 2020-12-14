@@ -2,7 +2,7 @@ import com.studiohartman.jamepad.*;
 
 public class Controller {
 	
-	private static ControllerManager controllers = new ControllerManager();
+	static ControllerManager controllers = new ControllerManager();
 	
 	static final double[] MOVEANGLES = { 27.5, 62.5, 117.5, 152.5 };
 	static final double DEADZONE = 0.5;
@@ -44,12 +44,13 @@ public class Controller {
 			else if (abs > MOVEANGLES[3])
 				Player.setMove(-90);
 			
-			else if (abs > MOVEANGLES[0] && abs < MOVEANGLES[1]) {
+			else if (abs > MOVEANGLES[0] && abs < MOVEANGLES[1])
 				if (angle > 0)
 					Player.setMove(135);
 				else
 					Player.setMove(45);
-			} else if (abs > MOVEANGLES[1] && abs < MOVEANGLES[2])
+				
+			else if (abs > MOVEANGLES[1] && abs < MOVEANGLES[2])
 				if (angle > 0)
 					Player.setMove(180);
 				else
