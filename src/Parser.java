@@ -321,6 +321,7 @@ public class Parser {
 			}
 			
 			Game.scriptQueue.addLast(script);
+			Game.scriptMap.put(nameLocal, script);
 		} catch (Exception e) {
 			System.out.printf("WARN: An error occured when creating script %s%n", nameLocal.toUpperCase());
 		}

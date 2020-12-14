@@ -1,4 +1,4 @@
-enemy basic1
+enemy first1
 	sprite			file
 	pathing			2,6,9,5
 	width			20
@@ -7,7 +7,7 @@ enemy basic1
 	offset			true
 ;
 
-enemy basic2
+enemy first2
 	sprite		file
 	pathing		-2,6,-9,5
 	width		20
@@ -16,7 +16,7 @@ enemy basic2
 	offset		true
 ;
 
-enemy basic3
+enemy second1
 	sprite		file
 	pathing		0,3,1,3 / 240 / 0,3,1,0
 	width		20
@@ -25,7 +25,7 @@ enemy basic3
 	offset		true
 ;
 
-enemy basic4
+enemy second2
 	sprite		file
 	pathing		0,3,-1,3 / 240 / 0,3,-1,0
 	width		20
@@ -34,7 +34,7 @@ enemy basic4
 	offset		true
 ;
 
-enemy basic5
+enemy third1
 	sprite		file
 	pathing		3,-2,3,-5 / 2,0,6,4
 	width		20
@@ -43,7 +43,7 @@ enemy basic5
 	offset		true
 ;
 
-enemy basic6
+enemy third2
 	sprite		file
 	pathing		-3,-2,-3,-5 / -2,0,-6,4
 	width		20
@@ -52,7 +52,7 @@ enemy basic6
 	offset		true
 ;
 
-enemy basic7
+enemy fourth1
 	sprite		file
 	pathing		-4,1,0,2 / 4,3,0,4 / -4,5,0,6 / 4,7,0,8 / -4,9,0,10 / 4,11,0,12
 	width		20
@@ -62,7 +62,7 @@ enemy basic7
 	offset		true
 ;
 
-enemy basic8
+enemy fourth2
 	sprite		file
 	pathing		4,1,0,2 / -4,3,0,4 / 4,5,0,6 / -4,7,0,8 / 4,9,0,10 / -4,11,0,12
 	width		20

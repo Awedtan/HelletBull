@@ -14,4 +14,8 @@ public class Subscript {
 		this.origin = origin;
 		this.routine = routine;
 	}
+	
+	public String toString(){
+		return time + ", " + enemy + ", " + origin + "," + routine;
+	}
 }

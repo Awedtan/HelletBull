@@ -3,7 +3,8 @@ import javax.swing.*;
 /* TODO
 general
 	level scripting
-	verify names before starting
+	routine scripting (0r0r)
+	verify script before starting
 	panel layout
 
 projectiles

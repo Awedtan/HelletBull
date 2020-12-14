@@ -1,6 +1,6 @@
-bullet HomingBlt
+bullet SDfirst1
 	sprite			file
-	inaccuracy		40
+	inaccuracy		0
 	angle			0.0
 	turn			0.0
 	aimed			true
@@ -8,130 +8,15 @@ bullet HomingBlt
 	acceleration	0.0
 	maxspeed		10.0
 	minspeed		0.0
-	homing			100
-	lifetime		-1
-	width			5
-	height			5
-	secondary		n
-;
-
-bullet RCurveBlt2
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			2.0
-	aimed			false
-	velocity		2.0
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
 	homing			0
-	lifetime		120
+	lifetime		-1
 	width			10
 	height			10
-	secondary		HomingBlt
-;
-
-bullet StraightBlt
-	sprite			file
-	inaccuracy		40
-	angle			0.0
-	turn			0.0
-	aimed			true
-	velocity		2.0
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		-1
-	width			5
-	height			5
-	secondary		n
-;
-
-bullet BigBlt
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			0.0
-	aimed			true
-	velocity		1.5
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		-1
-	width			25
-	height			25
-	secondary		n
-;
-
-bullet RCurveBlt
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			2.0
-	aimed			false
-	velocity		2.0
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		120
-	width			10
-	height			10
-	secondary		AimedBlt
-;
-
-bullet LCurveBlt
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			-2.0
-	aimed			false
-	velocity		2.0
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		120
-	width			5
-	height			5
-	secondary		RCurveBlt
-;
-
-bullet AimedBlt
-	sprite			file
-	inaccuracy		2
-	angle			0.0
-	turn			0.0
-	aimed			true
-	velocity		1.0
-	acceleration	0.01
-	maxspeed		2.0
-	minspeed		0.0
-	homing			0
-	lifetime		-1
-	width			20
-	height			20
-	secondary		n
-;
-
-bullet Bigg
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			0.0
-	aimed			false
-	velocity		0.2
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		-1
-	width			700
-	height			300
 	secondary		n
 ;
 
 ?
+
+single/burst/circle -> S/B/C
+dumb/aimed/homing -> D/A/H
+first enemy name

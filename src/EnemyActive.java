@@ -60,7 +60,7 @@ public class EnemyActive extends Enemy {
 			kill();
 			Game.playClip(deathClip);
 			
-			switch ((int) (Math.random() * 15)) {
+			switch ((int) (Math.random() * 50)) {
 				case (0):
 					Pickup.create(5, 20, this);
 					break;
@@ -68,6 +68,7 @@ public class EnemyActive extends Enemy {
 				case (2):
 				case (3):
 				case (4):
+				case (5):
 					Pickup.create(1, 10, this);
 					break;
 			}

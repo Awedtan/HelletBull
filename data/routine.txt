@@ -1,12 +1,19 @@
-routine test
-	120	LCurveBlt	16
+routine first1
+	90	SDfirst1
 ;
 
-routine test2
-	240 Bigg
+routine third1
+	60	SDfirst1
+	90	SDfirst1
+	120	SDfirst1
+	300	SDfirst1
+	330	SDfirst1
+	390	SDfirst1
 ;
 
 routine empty
 ;
 
 ?
+
+first enemy name

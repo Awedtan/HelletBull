@@ -1,145 +1,112 @@
 !
 script first
-	60	basic1	test	2,-1
-	60	basic1	test	2,-1
-	60	basic1	test	2,-1
-	60	basic1	test	2,-1
-	60	basic1	test	2,-1
+	60	first1	empty	2,-1
+	60	first1	empty	2,-1
+	60	first1	first1	2,-1
+	60	first1	empty	2,-1
+	60	first1	empty	2,-1
 
-	60	basic2	empty	8,-1
-	60	basic2	empty	8,-1
-	60	basic2	empty	8,-1
-	60	basic2	empty	8,-1
-	60	basic2	empty	8,-1
+	60	first2	empty	8,-1
+	60	first2	first1	8,-1
+	60	first2	first1	8,-1
+	60	first2	empty	8,-1
+	60	first2	first1	8,-1
 ;
 
 script second
-	60	basic3	empty	0,-1
-	30	basic3	empty	1,-1
-	30	basic3	empty	2,-1
-	30	basic3	empty	3,-1
-	30	basic3	empty	4,-1
-	30	basic3	empty	5,-1
-	30	basic3	empty	6,-1
-	30	basic3	empty	7,-1
-	30	basic3	empty	8,-1
+	30	second1	empty	0,-1
+	30	second1	first1	1,-1
+	30	second1	empty	2,-1
+	30	second1	first1	3,-1
+	30	second1	empty	4,-1
+	30	second1	first1	5,-1
+	30	second1	empty	6,-1
+	30	second1	first1	7,-1
+	30	second1	empty	8,-1
 	
-	240	basic4	empty	10,-1
-	30	basic4	empty	9,-1
-	30	basic4	empty	8,-1
-	30	basic4	empty	7,-1
-	30	basic4	empty	6,-1
-	30	basic4	empty	5,-1
-	30	basic4	empty	4,-1
-	30	basic4	empty	3,-1
-	30	basic4	empty	2,-1
+	60	second2	empty	10,-1
+	30	second2	first1	9,-1
+	30	second2	empty	8,-1
+	30	second2	first1	7,-1
+	30	second2	empty	6,-1
+	30	second2	first1	5,-1
+	30	second2	empty	4,-1
+	30	second2	first1	3,-1
+	30	second2	empty	2,-1
 ;
 
 script third
-	60	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	120	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
+	30	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	20	third1	third1	-1,6
+	60	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
+	20	third2	third1	11,6
 ;
+
+second
+second
+third
 
 script fourth
-	60	basic3	empty	0,-1
-	30	basic3	empty	1,-1
-	30	basic3	empty	2,-1
-	30	basic3	empty	3,-1
-	30	basic3	empty	4,-1
-	30	basic3	empty	5,-1
-	30	basic3	empty	6,-1
-	30	basic3	empty	7,-1
-	30	basic3	empty	8,-1
-	
-	30	basic4	empty	10,-1
-	30	basic4	empty	9,-1
-	30	basic4	empty	8,-1
-	30	basic4	empty	7,-1
-	30	basic4	empty	6,-1
-	30	basic4	empty	5,-1
-	30	basic4	empty	4,-1
-	30	basic4	empty	3,-1
-	30	basic4	empty	2,-1
-	
-	60	basic3	empty	0,-1
-	30	basic3	empty	1,-1
-	30	basic3	empty	2,-1
-	30	basic3	empty	3,-1
-	30	basic3	empty	4,-1
-	30	basic3	empty	5,-1
-	30	basic3	empty	6,-1
-	30	basic3	empty	7,-1
-	30	basic3	empty	8,-1
-	
-	30	basic4	empty	10,-1
-	30	basic4	empty	9,-1
-	30	basic4	empty	8,-1
-	30	basic4	empty	7,-1
-	30	basic4	empty	6,-1
-	30	basic4	empty	5,-1
-	30	basic4	empty	4,-1
-	30	basic4	empty	3,-1
-	30	basic4	empty	2,-1
-;
-
-script fifth
-	60	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	20	basic5	empty	-1,6
-	120	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-	20	basic6	empty	11,6
-;
-
-script sixth
-	60	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
-	30	basic7	empty	3,-2
-	30	basic8	empty	7,-2
+	30	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	third1	3,-2
+	10	fourth2	third1	7,-2
+	10	fourth2	third1	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
+	10	fourth1	empty	3,-2
+	10	fourth2	empty	7,-2
 ;
 
 ?
