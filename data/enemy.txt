@@ -1,3 +1,12 @@
+enemy test
+	sprite			file
+	pathing			8,0 / 240 / 6,0 / 240 / 0,5,-1,6 /240
+	width			20
+	height			20
+	health			1
+	offset			true
+;
+
 enemy first1
 	sprite			file
 	pathing			2,6,9,5

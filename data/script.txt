@@ -1,4 +1,8 @@
 !
+script test
+	120	test	first1	1,6
+;
+?
 script first
 	60	first1	empty	2,-1
 	60	first1	empty	2,-1
@@ -57,7 +61,7 @@ script third
 second
 second
 third
-
+?
 script fourth
 	30	fourth1	third1	3,-2
 	10	fourth2	third1	7,-2
@@ -108,5 +112,3 @@ script fourth
 	10	fourth1	empty	3,-2
 	10	fourth2	empty	7,-2
 ;
-
-?

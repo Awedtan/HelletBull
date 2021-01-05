@@ -19,4 +19,4 @@ bullet SDfirst1
 
 single/burst/circle -> S/B/C
 dumb/aimed/homing -> D/A/H
-first enemy name
+first appearance enemy name

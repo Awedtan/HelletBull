@@ -28,7 +28,7 @@ public class Game {
 	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960);
 	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960);
 	static final Rectangle SIDESCREEN = new Rectangle(900, 0, 1280 - 900, 960);
-	static final int GRIDLINES = 15;
+	static final int GRIDLINES = 20;
 	static final int FPS = 120;
 	static double gameSpeed = 1.0;
 	static int frameCount = 0;

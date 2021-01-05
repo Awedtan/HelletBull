@@ -21,7 +21,7 @@ public class Pickup extends Rectangle2D.Double {
 		// Checks for pickup collision
 		// Returns true if collided
 		
-		return Maths.ellipseArea(ellipse).intersects(this);
+		return Maths.octagonShape(ellipse).intersects(this);
 	}
 	
 	public static void create(int value, int size, Ellipse2D.Double ellipse) {

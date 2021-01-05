@@ -164,7 +164,7 @@ public class Parser {
 		
 		path.moveTo(origin.x, origin.y);
 		
-		Point prevPoint = new Point();
+		Point prevPoint = new Point(origin.x, origin.y);
 		
 		for (int i = 0; i < arr.length; i++) {
 			
@@ -205,6 +205,29 @@ public class Parser {
 					path.quadTo(ints[0] + origin.x, ints[1] + origin.y, ints[2] + origin.x, ints[3] + origin.y);
 					prevPoint = new Point(ints[2] + origin.x, ints[3] + origin.y);
 					
+				} else if (ints.length == 2) { // Straight line, TODO: make this better
+					
+					double velocity = 2, min = 0.3, multiplier = 1, ratio = 3;
+					double x = prevPoint.x, y = prevPoint.y, tarx = ints[0] + origin.x, tary = ints[1] + origin.y;
+					double angle = Maths.angleTo(x, y, tarx, tary);
+					double startDist = Maths.distanceTo(x, y, tarx, tary);
+					double lastDist = startDist;
+					
+					while (Maths.distanceTo(x, y, tarx, tary) <= lastDist) {
+						
+						lastDist = Maths.distanceTo(x, y, tarx, tary);
+						x += Math.sin(Math.toRadians(angle)) * velocity * multiplier;
+						y += Math.cos(Math.toRadians(angle)) * velocity * multiplier;
+						
+						path.lineTo(x, y);
+						
+						if (velocity * multiplier > min)
+							if (lastDist / startDist < 1 / ratio)
+								multiplier = lastDist / (startDist / ratio);
+					}
+					
+					prevPoint = new Point(ints[0] + origin.x, ints[1] + origin.y);
+					
 				} else if (ints.length == 1) { // Signals for the enemy to pause movement for ints[0] frames
 					path.lineTo(ints[0], EnemyActive.POINTPAUSEVALUE);
 					path.moveTo(prevPoint.x, prevPoint.y);
@@ -219,6 +242,29 @@ public class Parser {
 			} else if (ints.length == 4) { // No offset, One point curve
 				path.quadTo(ints[0], ints[1], ints[2], ints[3]);
 				prevPoint = new Point(ints[2], ints[3]);
+				
+			} else if (ints.length == 2) { // No offset, Straight line, TODO: make this better
+				
+				double velocity = 2, min = 0.3, multiplier = 1, ratio = 3;
+				double x = prevPoint.x, y = prevPoint.y;
+				double angle = Maths.angleTo(x, y, ints[0], ints[1]);
+				double startDist = Maths.distanceTo(x, y, ints[0], ints[1]);
+				double lastDist = startDist;
+				
+				while (Maths.distanceTo(x, y, ints[0], ints[1]) <= lastDist) {
+					
+					lastDist = Maths.distanceTo(x, y, ints[0], ints[1]);
+					x += Math.sin(Math.toRadians(angle)) * velocity * multiplier;
+					y += Math.cos(Math.toRadians(angle)) * velocity * multiplier;
+					
+					path.lineTo(x, y);
+					
+					if (velocity * multiplier > min)
+						if (lastDist / startDist < 1 / ratio)
+							multiplier = lastDist / (startDist / ratio);
+				}
+				
+				prevPoint = new Point(ints[0], ints[1]);
 				
 			} else if (ints.length == 1) { // Signals for the enemy to pause movement for ints[0] frames
 				path.lineTo(ints[0], EnemyActive.POINTPAUSEVALUE);

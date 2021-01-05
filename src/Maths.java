@@ -3,7 +3,7 @@ import java.awt.geom.*;
 
 public class Maths {
 	
-	public static double angleTo(Ellipse2D.Double origin, Ellipse2D.Double target) {
+	public static double angleTo(Rectangle origin, Rectangle target) {
 		// Finds the angle from the origin to the target
 		// FOR ALL ANGLES IN THIS GAME: down is 0, up is +-180, right is 90, left is -90
 		
@@ -124,12 +124,18 @@ public class Maths {
 		return Math.sqrt(Math.pow(centerY(origin.getBounds()) - centerY(target.getBounds()), 2) + Math.pow(centerX(origin.getBounds()) - centerX(target.getBounds()), 2));
 	}
 	
-	public static Area ellipseArea(Ellipse2D.Double ellipse) {
-		// Takes in an ellipse
+	public static double distanceTo(double originX, double originY, double targetX, double targetY) {
+		// Returns the distance from the center of the origin rectangle to the center of the target rectangle
+		
+		return Math.sqrt(Math.pow(originY - targetY, 2) + Math.pow(originX - targetX, 2));
+	}
+	
+	public static Area octagonShape(Shape shape) {
+		// Takes in an ellipse shape
 		// Returns an area object of an octagon that's roughly represenative of the ellipse
 		// This is needed because turning an ellipse directly into an area is way too slow
 		
-		Rectangle2D.Double bound = (Rectangle2D.Double) ellipse.getBounds2D();
+		Rectangle2D.Double bound = (Rectangle2D.Double) shape.getBounds2D();
 		
 		Point topLeft = new Point((int) (bound.x), (int) (bound.y));
 		Point botLeft = new Point((int) (bound.x), (int) (bound.y + bound.height));
@@ -162,17 +168,30 @@ public class Maths {
 		return new Area(path);
 	}
 	
-	public static boolean intersects(Ellipse2D.Double first, Ellipse2D.Double second) {
+	public static boolean intersects(Shape first, Shape second) {
 		// Takes in two ellipses
 		// Checks if they intersect
 		
-		Area thisArea = ellipseArea(first);
-		Area ellArea = ellipseArea(second);
+		Area firArea = octagonShape(first);
+		Area secArea = octagonShape(second);
 		
-		Area temp = (Area) thisArea.clone();
-		thisArea.subtract(ellArea);
+		Area temp = (Area) firArea.clone();
+		firArea.subtract(secArea);
 		
-		return !thisArea.equals(temp);
+		return !firArea.equals(temp);
+	}
+	
+	public static boolean intersects(Shape first, Shape second, double angle) {
+		// Takes in two ellipses
+		// Checks if they intersect
+		
+		Area firArea = new Area(rotate(octagonShape(first), angle));
+		Area secArea = octagonShape(second);
+		
+		Area temp = (Area) firArea.clone();
+		firArea.subtract(secArea);
+		
+		return !firArea.equals(temp);
 	}
 	
 	public static int log(int x) {
@@ -187,15 +206,25 @@ public class Maths {
 		return new Point((int) (p1.x + p2.x) / 2, (int) (p1.y + p2.y) / 2);
 	}
 	
+	public static Shape rotate(Shape s, double angle) {
+		
+		return AffineTransform.getRotateInstance(angle, Maths.centerX(s.getBounds()), Maths.centerY(s.getBounds())).createTransformedShape(s);
+	}
+	
 	public static int toHeight(int i) {
 		
 		if (Math.abs(i) > Game.GRIDLINES)
 			throw new RuntimeException();
-			
+		
 		if (i >= 0)
 			return Game.PLAYSCREEN.height / 10 * i;
 		else
 			return Game.PLAYSCREEN.height / 10 * i;
+	}
+	
+	public static double toRadians(double angle) {
+		// System.out.println(Math.abs(angle)/180);
+		return -angle/180.0 * Math.PI;
 	}
 	
 	public static int toWidth(int i) {

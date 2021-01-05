@@ -6,8 +6,11 @@ general
 	routine scripting (0r0r)
 	verify script before starting
 	panel layout
+	music
+	FIX BULLET ROUTINES TO BEHAVE LIKE SCRIPTS FOR THEIR TIMING
 
 projectiles
+	ROTATING STUFF(MAKE EVERYTHING AN OCTAGON???)
 	sprites
 	
 player
