@@ -10,7 +10,7 @@ public class Parser {
 		// Adds the bullet type to the global bullet map
 		
 		String nameLocal = arr[0].split(" ")[1];
-		String spriteLocal = "";
+		String spriteLocal = "zy";
 		int inaccuracyLocal = 0;
 		double angleLocal = 0;
 		double turnLocal = 0;
@@ -20,9 +20,7 @@ public class Parser {
 		double maxLocal = 1;
 		double minLocal = 0;
 		int homingLocal = 0;
-		int lifetimeLocal = 120;
-		int widthLocal = 10;
-		int heightLocal = 10;
+		int lifetimeLocal = -1;
 		String secondaryLocal = "";
 		
 		for (int i = 1; i < arr.length; i++) {
@@ -68,12 +66,12 @@ public class Parser {
 					case "lifetime":
 						lifetimeLocal = Integer.parseInt(value);
 						break;
-					case "width":
-						widthLocal = Integer.parseInt(value);
-						break;
-					case "height":
-						heightLocal = Integer.parseInt(value);
-						break;
+					// case "width":
+					// widthLocal = Integer.parseInt(value);
+					// break;
+					// case "height":
+					// heightLocal = Integer.parseInt(value);
+					// break;
 					case "secondary":
 						secondaryLocal = value;
 						break;
@@ -85,8 +83,8 @@ public class Parser {
 			}
 		}
 		
-		Game.bulletMap.put(nameLocal, new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal,
-				lifetimeLocal, new Dimension(widthLocal, heightLocal), secondaryLocal));
+		Game.bulletMap.put(nameLocal,
+				new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal, lifetimeLocal, secondaryLocal));
 	}
 	
 	public static void parseEnemy(String[] arr) {
@@ -97,9 +95,9 @@ public class Parser {
 		String nameLocal = arr[0].split(" ")[1];
 		String spriteLocal = "";
 		String pathLocal = "";
-		int widthLocal = 10;
-		int heightLocal = 10;
-		int healthLocal = 0;
+		int widthLocal = 20;
+		int heightLocal = 20;
+		int healthLocal = 1;
 		double flatLocal = 0.003;
 		boolean offsetLocal = false;
 		
@@ -152,9 +150,9 @@ public class Parser {
 	}
 	
 	public static ArrayDeque<Point2D.Double> parsePathing(String str, Point origin, double flatness, boolean offset, boolean check) {
-		// Parses through a string of bezier curve coordinates
-		// Creates the corresponding curve(s)
-		// Returns an array of points iterating through the curve(s)
+		// Parses through a string of coordinates
+		// Creates the corresponding curve(s) and/or line(s)
+		// Returns an array of points iterating through the curve(s) and/or line(s)
 		
 		String[] arr = str.split("/");
 		ArrayDeque<Point2D.Double> points = new ArrayDeque<Point2D.Double>();
@@ -172,8 +170,8 @@ public class Parser {
 			int[] ints = new int[coords.length];
 			boolean bool = true;
 			
-			if (coords.length == 1 && i == 0)
-				throw new RuntimeException();
+			// if (coords.length == 1 && i == 0)
+			// throw new RuntimeException();
 			
 			if (coords.length != 1)
 				for (int j = 0; j < coords.length; j++) {
@@ -196,18 +194,21 @@ public class Parser {
 			else
 				ints[0] = Integer.parseInt(coords[0].trim());
 			
-			if (offset) // Yes offset
+			if (offset) { // Yes offset
 				if (ints.length == 6) { // Two point curve
 					path.curveTo(ints[0] + origin.x, ints[1] + origin.y, ints[2] + origin.x, ints[3] + origin.y, ints[4] + origin.x, ints[5] + origin.y);
 					prevPoint = new Point(ints[4] + origin.x, ints[5] + origin.y);
 					
 				} else if (ints.length == 4) { // One point curve
+					
 					path.quadTo(ints[0] + origin.x, ints[1] + origin.y, ints[2] + origin.x, ints[3] + origin.y);
 					prevPoint = new Point(ints[2] + origin.x, ints[3] + origin.y);
 					
-				} else if (ints.length == 2) { // Straight line, TODO: make this better
+				} else if (ints.length == 3) { // Straight line, custom velocity
 					
-					double velocity = 2, min = 0.3, multiplier = 1, ratio = 3;
+					int velocity = Maths.fromWidth(ints[2]);
+					
+					double min = 0.3, multiplier = 1, ratio = 3;
 					double x = prevPoint.x, y = prevPoint.y, tarx = ints[0] + origin.x, tary = ints[1] + origin.y;
 					double angle = Maths.angleTo(x, y, tarx, tary);
 					double startDist = Maths.distanceTo(x, y, tarx, tary);
@@ -228,24 +229,76 @@ public class Parser {
 					
 					prevPoint = new Point(ints[0] + origin.x, ints[1] + origin.y);
 					
-				} else if (ints.length == 1) { // Signals for the enemy to pause movement for ints[0] frames
+				} else if (ints.length == 2) { // Straight line, default velocity
+					
+					int velocity = 2;
+					
+					double min = 0.3, multiplier = 1, ratio = 3;
+					double x = prevPoint.x, y = prevPoint.y, tarx = ints[0] + origin.x, tary = ints[1] + origin.y;
+					double angle = Maths.angleTo(x, y, tarx, tary);
+					double startDist = Maths.distanceTo(x, y, tarx, tary);
+					double lastDist = startDist;
+					
+					while (Maths.distanceTo(x, y, tarx, tary) <= lastDist) {
+						
+						lastDist = Maths.distanceTo(x, y, tarx, tary);
+						x += Math.sin(Math.toRadians(angle)) * velocity * multiplier;
+						y += Math.cos(Math.toRadians(angle)) * velocity * multiplier;
+						
+						path.lineTo(x, y);
+						
+						if (velocity * multiplier > min)
+							if (lastDist / startDist < 1 / ratio)
+								multiplier = lastDist / (startDist / ratio);
+					}
+					
+					prevPoint = new Point(ints[0] + origin.x, ints[1] + origin.y);
+					
+				} else if (ints.length == 1) { // Pause for ints[0] frames
 					path.lineTo(ints[0], EnemyActive.POINTPAUSEVALUE);
 					path.moveTo(prevPoint.x, prevPoint.y);
 					
 				} else
 					throw new RuntimeException();
 				
-			else if (ints.length == 6) { // No offset, Two point curve
+			} else if (ints.length == 6) { // No offset, two point curve
 				path.curveTo(ints[0], ints[1], ints[2], ints[3], ints[4], ints[5]);
 				prevPoint = new Point(ints[4], ints[5]);
 				
-			} else if (ints.length == 4) { // No offset, One point curve
+			} else if (ints.length == 4) { // No offset, one point curve
 				path.quadTo(ints[0], ints[1], ints[2], ints[3]);
 				prevPoint = new Point(ints[2], ints[3]);
 				
-			} else if (ints.length == 2) { // No offset, Straight line, TODO: make this better
+			} else if (ints.length == 3) { // No offset, straight line, custom velocity
 				
-				double velocity = 2, min = 0.3, multiplier = 1, ratio = 3;
+				int velocity = Maths.fromWidth(ints[2]);
+				
+				double min = 0.3, multiplier = 1, ratio = 3;
+				double x = prevPoint.x, y = prevPoint.y, tarx = ints[0], tary = ints[1];
+				double angle = Maths.angleTo(x, y, tarx, tary);
+				double startDist = Maths.distanceTo(x, y, tarx, tary);
+				double lastDist = startDist;
+				
+				while (Maths.distanceTo(x, y, tarx, tary) <= lastDist) {
+					
+					lastDist = Maths.distanceTo(x, y, tarx, tary);
+					x += Math.sin(Math.toRadians(angle)) * velocity * multiplier;
+					y += Math.cos(Math.toRadians(angle)) * velocity * multiplier;
+					
+					path.lineTo(x, y);
+					
+					if (velocity * multiplier > min)
+						if (lastDist / startDist < 1 / ratio)
+							multiplier = lastDist / (startDist / ratio);
+				}
+				
+				prevPoint = new Point(ints[0], ints[1]);
+				
+			} else if (ints.length == 2) { // No offset, straight line
+				
+				int velocity = 2;
+				
+				double min = 0.3, multiplier = 1, ratio = 3;
 				double x = prevPoint.x, y = prevPoint.y;
 				double angle = Maths.angleTo(x, y, ints[0], ints[1]);
 				double startDist = Maths.distanceTo(x, y, ints[0], ints[1]);
@@ -266,7 +319,7 @@ public class Parser {
 				
 				prevPoint = new Point(ints[0], ints[1]);
 				
-			} else if (ints.length == 1) { // Signals for the enemy to pause movement for ints[0] frames
+			} else if (ints.length == 1) { // Pause for ints[0] frames
 				path.lineTo(ints[0], EnemyActive.POINTPAUSEVALUE);
 				path.moveTo(prevPoint.x, prevPoint.y);
 				
@@ -318,9 +371,15 @@ public class Parser {
 				String name = "";
 				int amount = -1;
 				int angle = -1;
+				int repeat = 1;
 				
-				if (st.hasMoreTokens())
-					time = Integer.parseInt(st.nextToken());
+				if (st.hasMoreTokens()) {
+					String[] line = st.nextToken().split("r");
+					time = Integer.parseInt(line[0]);
+					
+					if (line.length == 2)
+						repeat = Integer.parseInt(line[1]);
+				}
 				if (st.hasMoreTokens())
 					name = st.nextToken();
 				if (st.hasMoreTokens())
@@ -331,7 +390,8 @@ public class Parser {
 				if (name == null || time == -1)
 					throw new java.lang.RuntimeException();
 				
-				queue.addLast(new Subroutine(time, name, amount, angle));
+				for (int j = 0; j < repeat; j++)
+					queue.addLast(new Subroutine(time, name, amount, angle));
 			}
 			
 			Game.routineMap.put(nameLocal, queue);

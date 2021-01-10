@@ -17,11 +17,11 @@ public class Pickup extends Rectangle2D.Double {
 		y = Maths.centerY(ellipse.getBounds()) - size / 2;
 	}
 	
-	public boolean collides(Ellipse2D.Double ellipse) {
+	public boolean collides(Shape shape) {
 		// Checks for pickup collision
 		// Returns true if collided
 		
-		return Maths.octagonShape(ellipse).intersects(this);
+		return Maths.ellipseHitbox(shape).intersects(this);
 	}
 	
 	public static void create(int value, int size, Ellipse2D.Double ellipse) {
@@ -36,6 +36,8 @@ public class Pickup extends Rectangle2D.Double {
 		
 		for (Pickup pu : Game.activePickups)
 			g2.fill(pu);
+			
+			g2.setColor(Color.BLACK);
 	}
 	
 	public void kill() {
@@ -57,8 +59,8 @@ public class Pickup extends Rectangle2D.Double {
 		if (Maths.checkInBounds(this.getBounds(), -20) != -1)
 			kill();
 		
-		if (Maths.distanceTo(this.getBounds(), Player.model.getBounds()) < Player.grazeRadius * 2)
-			if (collides(Player.model)) {
+		if (Maths.distanceTo(this.getBounds(), Player.grazeModel.getBounds()) < 100)
+			if (collides(Player.grazeModel)) {
 				kill();
 				Player.addScore(this.value);
 			}

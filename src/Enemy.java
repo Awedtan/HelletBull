@@ -5,7 +5,7 @@ public class Enemy extends Ellipse2D.Double {
 	
 	String sprite;
 	String path; // The string representation of the bezier curve coordinates
-	double health; // Enemy health
+	int health; // Enemy health
 	double flatness;
 	boolean offset; // If the bezier curve coordinates should move along with the origin, or are fixed
 	

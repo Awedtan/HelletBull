@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.*;
 
 public class PlayerProjectile extends Ellipse2D.Double {
 	
@@ -8,10 +7,7 @@ public class PlayerProjectile extends Ellipse2D.Double {
 			new PlayerProjectile("", 1, 175, 10, 0, new Dimension(10, 10)), new PlayerProjectile("", 1, 170, 10, 0, new Dimension(10, 10)),
 			new PlayerProjectile("", 1, 190, 10, 0, new Dimension(10, 10)) };
 	
-	static ArrayList<PlayerProjectile> activeBullets = new ArrayList<>(); // Projectiles currently alive
-	static ArrayList<PlayerProjectile> deadBullets = new ArrayList<>(); // Projectiles to be killed
-	
-	static int BUFFER = -10;
+	static final int BORDERBUFFER = -10;
 	
 	String sprite;
 	int damage;
@@ -54,7 +50,7 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		
 		for (int i = 0; i <= 2; i++) {
 			PlayerProjectile pp = shotPowers[i];
-			activeBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.model.getBounds(), pp.width), (int) Maths.centerY(Player.model.getBounds(), pp.height))));
+			Game.activePlayerBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.grazeModel.getBounds(), pp.width), (int) Maths.centerY(Player.grazeModel.getBounds(), pp.height))));
 		}
 	}
 	
@@ -63,14 +59,14 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLUE);
 		
-		for (PlayerProjectile pp : activeBullets)
+		for (PlayerProjectile pp : Game.activePlayerBullets)
 			g2.fill(pp);
 	}
 	
 	public void kill() {
 		// Marks the bullet for deletion
 		
-		deadBullets.add(this);
+		Game.deadPlayerBullets.add(this);
 	}
 	
 	public void move() {
@@ -79,20 +75,20 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		y += Math.cos(Math.toRadians(angle)) * velocity;
 	}
 	
-	public static void purge() {
+	public static void purgeAll() {
 		// Removes all bullets marked for deletion
 		
-		for (PlayerProjectile pp : deadBullets)
-			activeBullets.remove(pp);
+		for (PlayerProjectile pp : Game.deadPlayerBullets)
+		Game.activePlayerBullets.remove(pp);
 		
-		deadBullets.clear();
+		Game.deadPlayerBullets.clear();
 	}
 	
 	public void update() {
 		
 		move();
 		
-		if (Maths.checkInBounds(this.getBounds(), BUFFER) != -1)
+		if (Maths.checkInBounds(this.getBounds(), BORDERBUFFER) != -1)
 			kill();
 		
 		for (EnemyActive ea : Game.activeEnemies)

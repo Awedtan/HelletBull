@@ -5,19 +5,18 @@ public class Player {
 	
 	static final double STARTSPEED = 4.0; // Base player speed
 	static final int STARTPOSX = Game.PLAYSCREEN.width / 2;
-	static final int STARTPOSY = Game.PLAYSCREEN.height / 2;
+	static final int STARTPOSY = Game.PLAYSCREEN.height / 3 * 2;
 	
-	static int playerWidth = 40; // Player model properties
-	static int playerHeight = playerWidth;
-	static Color playerColor = Color.BLUE;
+	static int playerWidth = 120; // Player model properties
+	static int playerHeight = 120;
 	
-	static int hitboxSize = 5; // Hitbox properties
-	static int grazeRadius = 20;
-	static Color hitboxColor = Color.YELLOW;
+	static int hitboxSize = 4; // Hitbox properties
 	
-	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
-	static Ellipse2D.Double hitbox = new Ellipse2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
+	static Ellipse2D.Double grazeModel = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
+	static Rectangle2D.Double hitboxModel = new Rectangle2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
+	
+	static Image hitboxImage;
 	
 	static final int MAXPOWER = 10;
 	static int points = 0;
@@ -59,14 +58,13 @@ public class Player {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(playerColor);
-		g2.fill(model);
+		g2.setColor(Color.BLUE);
+		g2.fill(grazeModel);
 		
-		Image img = Toolkit.getDefaultToolkit().getImage("images/world-ship.png");
-		// g2.drawImage(img, (int) model.x, (int) model.y, null);
+		g2.setColor(Color.YELLOW);
+		g2.fill(hitboxModel);
 		
-		g2.setColor(hitboxColor);
-		g2.fill(hitbox);
+		g2.drawImage(hitboxImage, (int) grazeModel.x, (int) grazeModel.y, null);
 	}
 	
 	public static void hit() {
@@ -78,10 +76,10 @@ public class Player {
 	public static void move() {
 		// Updates player position
 		
-		double mx = model.x;
-		double my = model.y;
-		double hx = hitbox.x;
-		double hy = hitbox.y;
+		double mx = grazeModel.x;
+		double my = grazeModel.y;
+		double hx = hitboxModel.x;
+		double hy = hitboxModel.y;
 		
 		if (focus)
 			speed = (STARTSPEED * .5);
@@ -92,35 +90,35 @@ public class Player {
 			speed *= 0.7;
 		
 		if (moveLeft && !moveRight) {
-			model.x -= speed;
-			hitbox.x -= speed;
+			grazeModel.x -= speed;
+			hitboxModel.x -= speed;
 		} else if (moveRight && !moveLeft) {
-			model.x += speed;
-			hitbox.x += speed;
+			grazeModel.x += speed;
+			hitboxModel.x += speed;
 		}
 		
 		if (moveUp && !moveDown) {
-			model.y -= speed;
-			hitbox.y -= speed;
+			grazeModel.y -= speed;
+			hitboxModel.y -= speed;
 		} else if (moveDown && !moveUp) {
-			model.y += speed;
-			hitbox.y += speed;
+			grazeModel.y += speed;
+			hitboxModel.y += speed;
 		}
 		
-		switch (Maths.checkInBounds(Player.model.getBounds(), 0)) {
+		switch (Maths.checkInBounds(Player.grazeModel.getBounds(), 0)) {
 			case (0):
-				model.x = mx;
-				hitbox.x = hx;
+				grazeModel.x = mx;
+				hitboxModel.x = hx;
 				break;
 			case (1):
-				model.y = my;
-				hitbox.y = hy;
+				grazeModel.y = my;
+				hitboxModel.y = hy;
 				break;
 			case (2):
-				model.x = mx;
-				hitbox.x = hx;
-				model.y = my;
-				hitbox.y = hy;
+				grazeModel.x = mx;
+				hitboxModel.x = hx;
+				grazeModel.y = my;
+				hitboxModel.y = hy;
 				break;
 		}
 	}

@@ -4,14 +4,14 @@ import java.util.*;
 
 public class EnemyActive extends Enemy {
 	
-	static final int POINTPAUSEVALUE = -10;
+	static final int POINTPAUSEVALUE = -123456;
 	
 	static String damageClip = "enemydamage";
 	static String deathClip = "enemydeath";
 	
-	ArrayDeque<Point2D.Double> points; // The array of points the enemy will move through
+	ArrayDeque<Point2D.Double> points; // The queue of points the enemy will move through
 	ArrayDeque<Subroutine> routine; // The queue of subroutines the enemy will shoot through
-	int startFrame; // The frame the enemy was created
+	int lastSpawnFrame; // The frame the enemy was created
 	int pauseFrame = 0; // How long this enemy will stay in one spot as determined by its script
 	
 	public EnemyActive(Enemy enem, Point origin, String routine) {
@@ -31,7 +31,7 @@ public class EnemyActive extends Enemy {
 		x = p.x;
 		y = p.y;
 		
-		startFrame = Game.frameCount;
+		lastSpawnFrame = Game.frameCount;
 	}
 	
 	public static void create(String enem, Point origin, String routine) {
@@ -116,7 +116,7 @@ public class EnemyActive extends Enemy {
 		if (routine.peekFirst() == null)
 			return;
 		
-		if (routine.peekFirst().time == Game.frameCount - startFrame)
+		if (routine.peekFirst().time == Game.frameCount - lastSpawnFrame)
 			shoot();
 	}
 	
@@ -131,6 +131,8 @@ public class EnemyActive extends Enemy {
 			EnemyProjectile.create(routine.proj, this, routine.amount);
 		else
 			EnemyProjectile.create(routine.proj, this);
+		
+		lastSpawnFrame = Game.frameCount;
 	}
 	
 	public void update() {

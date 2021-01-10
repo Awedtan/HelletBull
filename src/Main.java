@@ -3,16 +3,15 @@ import javax.swing.*;
 /* TODO
 general
 	level scripting
-	routine scripting (0r0r)
-	verify script before starting
+	verify everything before starting
 	panel layout
+	sfx
 	music
-	FIX BULLET ROUTINES TO BEHAVE LIKE SCRIPTS FOR THEIR TIMING
 
 projectiles
-	ROTATING STUFF(MAKE EVERYTHING AN OCTAGON???)
+	fix grazing
 	sprites
-	
+
 player
 	shot power
 	sprites

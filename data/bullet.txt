@@ -1,18 +1,19 @@
+bullet test
+	sprite			mb1grey
+	inaccuracy		120
+	homing			50
+	velocity		0.5
+;
+bullet test2
+	sprite			bb3green
+	inaccuracy		120
+	velocity		0.5
+;
+
 bullet SDfirst1
-	sprite			file
-	inaccuracy		0
-	angle			0.0
-	turn			0.0
+	sprite			none
 	aimed			true
 	velocity		2.0
-	acceleration	0.0
-	maxspeed		10.0
-	minspeed		0.0
-	homing			0
-	lifetime		-1
-	width			10
-	height			10
-	secondary		n
 ;
 
 ?
@@ -20,3 +21,33 @@ bullet SDfirst1
 single/burst/circle -> S/B/C
 dumb/aimed/homing -> D/A/H
 first appearance enemy name
+
+defaults:
+String nameLocal = arr[0].split(" ")[1];
+String spriteLocal = "zhenyang";
+int inaccuracyLocal = 0;
+double angleLocal = 0;
+double turnLocal = 0;
+boolean aimedLocal = false;
+double velocityLocal = 1;
+double accelerationLocal = 0;
+double maxLocal = 1;
+double minLocal = 0;
+int homingLocal = 0;
+int lifetimeLocal = -1;
+
+template:
+bullet name
+	sprite			zy
+	inaccuracy		0
+	angle			0.0
+	turn			0.0
+	aimed			false
+	velocity		1.0
+	acceleration	0.0
+	maxspeed		1.0
+	minspeed		0.0
+	homing			0
+	lifetime		-1
+	secondary		name
+;

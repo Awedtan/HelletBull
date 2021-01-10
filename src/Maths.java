@@ -7,64 +7,35 @@ public class Maths {
 		// Finds the angle from the origin to the target
 		// FOR ALL ANGLES IN THIS GAME: down is 0, up is +-180, right is 90, left is -90
 		
-		double angle;
-		
-		if (target.x > origin.x && target.y > origin.y) // Quadrant 4
-			angle = Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-		
-		else if (target.x < origin.x && target.y > origin.y) // Quadrant 3
-			angle = -Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-		
-		else if (target.x < origin.x && target.y < origin.y) // Quadrant 2
-			angle = -180 + Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-		
-		else if (target.x > origin.x && target.y < origin.y) // Quadrant 1
-			angle = 180 - Math.toDegrees(Math.atan(Math.abs(target.x - origin.x) / Math.abs(target.y - origin.y)));
-		
-		else if (target.x == origin.x)
-			if (target.y > origin.y)
-				angle = 0;
-			else
-				angle = 180;
-			
-		else if (target.y == origin.y)
-			if (target.x > origin.x)
-				angle = 90;
-			else
-				angle = -90;
-			
-		else
-			angle = 0;
-		
-		return angle;
+		return angleTo(centerX(origin), centerY(origin), centerX(target), centerY(target));
 	}
 	
-	public static double angleTo(double originX, double originY, double tarCenterX, double tarCenterY) {
+	public static double angleTo(double originX, double originY, double targetX, double targetY) {
 		// Finds the angle from the origin coordinates to the target coordinates
 		// FOR ALL ANGLES IN THIS GAME: down is 0, up is +-180, right is 90, left is -90
 		
 		double angle;
 		
-		if (tarCenterX > originX && tarCenterY > originY) // Quadrant 4
-			angle = Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
+		if (targetX > originX && targetY > originY) // Quadrant 4
+			angle = Math.toDegrees(Math.atan(Math.abs(targetX - originX) / Math.abs(targetY - originY)));
 		
-		else if (tarCenterX < originX && tarCenterY > originY) // Quadrant 3
-			angle = -Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
+		else if (targetX < originX && targetY > originY) // Quadrant 3
+			angle = -Math.toDegrees(Math.atan(Math.abs(targetX - originX) / Math.abs(targetY - originY)));
 		
-		else if (tarCenterX < originX && tarCenterY < originY) // Quadrant 2
-			angle = -180 + Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
+		else if (targetX < originX && targetY < originY) // Quadrant 2
+			angle = -180 + Math.toDegrees(Math.atan(Math.abs(targetX - originX) / Math.abs(targetY - originY)));
 		
-		else if (tarCenterX > originX && tarCenterY < originY) // Quadrant 1
-			angle = 180 - Math.toDegrees(Math.atan(Math.abs(tarCenterX - originX) / Math.abs(tarCenterY - originY)));
+		else if (targetX > originX && targetY < originY) // Quadrant 1
+			angle = 180 - Math.toDegrees(Math.atan(Math.abs(targetX - originX) / Math.abs(targetY - originY)));
 		
-		else if (tarCenterX == originX)
-			if (tarCenterY > originY)
+		else if (targetX == originX)
+			if (targetY > originY)
 				angle = 0;
 			else
 				angle = 180;
 			
-		else if (tarCenterY == originY)
-			if (tarCenterX > originX)
+		else if (targetY == originY)
+			if (targetX > originX)
 				angle = 90;
 			else
 				angle = -90;
@@ -130,12 +101,17 @@ public class Maths {
 		return Math.sqrt(Math.pow(originY - targetY, 2) + Math.pow(originX - targetX, 2));
 	}
 	
-	public static Area octagonShape(Shape shape) {
+	public static Area ellipseHitbox(Shape shape) {
 		// Takes in an ellipse shape
-		// Returns an area object of an octagon that's roughly represenative of the ellipse
-		// This is needed because turning an ellipse directly into an area is way too slow
+		// Returns an Area object of an octagon that's roughly represenative of the ellipse but 2/3 the size
+		// This is needed because directly turning an ellipse into an Area is way too slow
 		
 		Rectangle2D.Double bound = (Rectangle2D.Double) shape.getBounds2D();
+		
+		bound.x += bound.width / 6.0; // Resizing the shape
+		bound.y += bound.height / 6.0;
+		bound.width *= (2.0 / 3.0);
+		bound.height *= (2.0 / 3.0);
 		
 		Point topLeft = new Point((int) (bound.x), (int) (bound.y));
 		Point botLeft = new Point((int) (bound.x), (int) (bound.y + bound.height));
@@ -168,12 +144,22 @@ public class Maths {
 		return new Area(path);
 	}
 	
+	public static int fromHeight(int i) {
+		
+		return i / (Game.PLAYSCREEN.height / 10);
+	}
+	
+	public static int fromWidth(int i) {
+		
+		return i / (Game.PLAYSCREEN.width / 10);
+	}
+	
 	public static boolean intersects(Shape first, Shape second) {
 		// Takes in two ellipses
 		// Checks if they intersect
 		
-		Area firArea = octagonShape(first);
-		Area secArea = octagonShape(second);
+		Area firArea = ellipseHitbox(first);
+		Area secArea = ellipseHitbox(second);
 		
 		Area temp = (Area) firArea.clone();
 		firArea.subtract(secArea);
@@ -185,8 +171,8 @@ public class Maths {
 		// Takes in two ellipses
 		// Checks if they intersect
 		
-		Area firArea = new Area(rotate(octagonShape(first), angle));
-		Area secArea = octagonShape(second);
+		Area firArea = new Area(rotate(ellipseHitbox(first), angle));
+		Area secArea = ellipseHitbox(second);
 		
 		Area temp = (Area) firArea.clone();
 		firArea.subtract(secArea);
@@ -208,7 +194,7 @@ public class Maths {
 	
 	public static Shape rotate(Shape s, double angle) {
 		
-		return AffineTransform.getRotateInstance(angle, Maths.centerX(s.getBounds()), Maths.centerY(s.getBounds())).createTransformedShape(s);
+		return AffineTransform.getRotateInstance(angle, centerX(s.getBounds()), centerY(s.getBounds())).createTransformedShape(s);
 	}
 	
 	public static int toHeight(int i) {
@@ -216,15 +202,17 @@ public class Maths {
 		if (Math.abs(i) > Game.GRIDLINES)
 			throw new RuntimeException();
 		
-		if (i >= 0)
-			return Game.PLAYSCREEN.height / 10 * i;
-		else
-			return Game.PLAYSCREEN.height / 10 * i;
+		return Game.PLAYSCREEN.height / 10 * i;
 	}
 	
 	public static double toRadians(double angle) {
-		// System.out.println(Math.abs(angle)/180);
-		return -angle/180.0 * Math.PI;
+		
+		// if (angle > 90)
+		// return -(angle - 180) / 180.0 * Math.PI;
+		// else if (angle < -90)
+		// return -(angle + 180) / 180.0 * Math.PI;
+		// else
+		return (-angle / 180.0 * Math.PI);
 	}
 	
 	public static int toWidth(int i) {
@@ -232,9 +220,6 @@ public class Maths {
 		if (Math.abs(i) > Game.GRIDLINES)
 			throw new RuntimeException();
 		
-		if (i >= 0)
-			return Game.PLAYSCREEN.width / 10 * i;
-		else
-			return Game.PLAYSCREEN.width / 10 * i;
+		return Game.PLAYSCREEN.width / 10 * i;
 	}
 }

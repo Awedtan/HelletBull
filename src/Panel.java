@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.io.*;
+
 import javax.swing.*;
 
 public class Panel extends JPanel implements KeyListener, Runnable {
@@ -25,9 +27,24 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 	
 	public Panel() {
 		
+		MediaTracker tracker = new MediaTracker(this);
+		File folder = new File("images");
+		
+		for (File f : folder.listFiles()) {
+			
+			Image img = Toolkit.getDefaultToolkit().getImage(f.toString());
+			tracker.addImage(img, 0);
+			Game.imageMap.put(f.getName(), img);
+		}
+		
+		try {
+			tracker.waitForAll();
+		} catch (InterruptedException e) {
+		}
+		
 		setLayout(null);
 		setPreferredSize(new Dimension(Game.SCREEN.width, Game.SCREEN.height));
-		setBackground(Color.WHITE);
+		setBackground(Color.GRAY);
 		setFocusable(true);
 		addKeyListener(this);
 		
@@ -41,6 +58,7 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 		Game.initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
 		Game.initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
 		Game.initializeScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
+		Game.initializeImages();
 		Controller.initialize();
 		
 		long time = System.currentTimeMillis();
@@ -79,12 +97,13 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 			Player.draw(g);
 			PlayerProjectile.drawAll(g);
 			Pickup.drawAll(g);
-			EnemyProjectile.drawAll(g);
 			
 			g.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
 			
 			for (Line2D.Double l : grid)
 				g.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
+			
+			EnemyProjectile.drawAll(g);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,14 +113,14 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		if (e.getKeyCode() == KeyEvent.VK_A)
-			Player.moveLeft = true;
-		if (e.getKeyCode() == KeyEvent.VK_D)
-			Player.moveRight = true;
-		if (e.getKeyCode() == KeyEvent.VK_W)
+		if (e.getKeyCode() == KeyEvent.VK_UP)
 			Player.moveUp = true;
-		if (e.getKeyCode() == KeyEvent.VK_S)
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 			Player.moveDown = true;
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			Player.moveLeft = true;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+			Player.moveRight = true;
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
 			Player.focus = true;
 		if (e.getKeyCode() == KeyEvent.VK_Z)
@@ -111,14 +130,14 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
-		if (e.getKeyCode() == KeyEvent.VK_A)
-			Player.moveLeft = false;
-		if (e.getKeyCode() == KeyEvent.VK_D)
-			Player.moveRight = false;
-		if (e.getKeyCode() == KeyEvent.VK_W)
+		if (e.getKeyCode() == KeyEvent.VK_UP)
 			Player.moveUp = false;
-		if (e.getKeyCode() == KeyEvent.VK_S)
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 			Player.moveDown = false;
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			Player.moveLeft = false;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+			Player.moveRight = false;
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
 			Player.focus = false;
 		if (e.getKeyCode() == KeyEvent.VK_Z)
