@@ -62,7 +62,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		this.subBullet = subBullet;
 	}
 	
-	public EnemyProjectile(EnemyProjectile proj, Ellipse2D.Double ellipse) { // Active projectiles
+	public EnemyProjectile(EnemyProjectile proj, Ellipse2D.Double origin) { // Active projectiles
 		
 		sprite = Game.getImage(proj.spriteName);
 		inaccuracy = proj.inaccuracy;
@@ -76,8 +76,8 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		lifetime = proj.lifetime;
 		width = sprite.getWidth(null);
 		height = sprite.getHeight(null);
-		x = Maths.centerX(ellipse.getBounds()) - width / 2;
-		y = Maths.centerY(ellipse.getBounds()) - height / 2;
+		x = Maths.centerX(origin.getBounds()) - width / 2;
+		y = Maths.centerY(origin.getBounds()) - height / 2;
 		subBullet = proj.subBullet;
 		
 		if (aimed)
@@ -128,8 +128,8 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		for (int i = 0; i < amount; i++) {
 			EnemyProjectile blt = Game.bulletMap.get(proj);
 			
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, blt.angle + i * (angle / amount) - angle / 2.5, blt.turn, blt.aimed, blt.velocity,
-					blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, blt.angle + i * (angle / (amount - 1)) - (angle / 2.0), blt.turn, blt.aimed,
+					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
 		}
 	}
 	
@@ -251,7 +251,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		if (lifetime == 0 || Maths.checkInBounds(this.getBounds(), BORDERBUFFER) != -1)
 			kill();
 		
-		if (Maths.distanceTo(this.getBounds(), Player.hitboxModel.getBounds()) < Math.max(this.width, this.height) + Player.grazeModel.width/4)
+		if (Maths.distanceTo(this.getBounds(), Player.hitboxModel.getBounds()) < Math.max(this.width, this.height) + Player.grazeRadius)
 			if (collides(Player.hitboxModel)) {
 				kill();
 				Player.hit();

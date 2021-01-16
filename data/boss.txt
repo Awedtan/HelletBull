@@ -1,4 +1,0 @@
-boss test
-	sprite	file
-	health
-;

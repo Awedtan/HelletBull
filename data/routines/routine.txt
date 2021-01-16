@@ -1,0 +1,38 @@
+routine empty
+;
+
+routine test
+	90r100	sgreyA	3	90
+;
+
+routine 111
+	90	sgreyA
+;
+
+routine 122
+	250	sgreyA
+;
+
+routine 133
+	90r2	sgreyA	2	45
+;
+
+routine 155
+	240r3	sgreyA
+;
+
+routine 161
+	90	sgreyA	6
+;
+
+routine 177
+	300	mgreenD	16
+	15r12	mgreenD	16
+;
+
+?
+
+level, script, enemy
+
+30r5
+30 frame delay, repeat 5 times

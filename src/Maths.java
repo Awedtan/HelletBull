@@ -103,15 +103,15 @@ public class Maths {
 	
 	public static Area ellipseHitbox(Shape shape) {
 		// Takes in an ellipse shape
-		// Returns an Area object of an octagon that's roughly represenative of the ellipse but 2/3 the size
+		// Returns an Area object of an octagon that's roughly represenative of the ellipse but 3/3 the size
 		// This is needed because directly turning an ellipse into an Area is way too slow
 		
 		Rectangle2D.Double bound = (Rectangle2D.Double) shape.getBounds2D();
 		
 		bound.x += bound.width / 6.0; // Resizing the shape
 		bound.y += bound.height / 6.0;
-		bound.width *= (2.0 / 3.0);
-		bound.height *= (2.0 / 3.0);
+		bound.width *= (3.0 / 4.0);
+		bound.height *= (3.0 / 4.0);
 		
 		Point topLeft = new Point((int) (bound.x), (int) (bound.y));
 		Point botLeft = new Point((int) (bound.x), (int) (bound.y + bound.height));

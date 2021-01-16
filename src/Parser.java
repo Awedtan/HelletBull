@@ -4,6 +4,40 @@ import java.util.*;
 
 public class Parser {
 	
+	// public static Boss parseBoss(String[] arr) {
+		
+	// 	String nameLocal = arr[0].split(" ")[1];
+	// 	String spriteLocal = "zy";
+	// 	int healthLocal = 10;
+	// 	String scriptLocal;
+		
+	// 	for (int i = 1; i < arr.length; i++) {
+			
+	// 		if (arr[i] == null)
+	// 			continue;
+			
+	// 		String variable = arr[i].split("\t")[1].trim();
+	// 		String value = arr[i].split("\t")[arr[i].split("\t").length - 1].trim();
+			
+	// 		try {
+	// 			switch (variable) {
+	// 				case "sprite":
+	// 					spriteLocal = value;
+	// 					break;
+	// 				case "health":
+	// 					healthLocal = Integer.parseInt(value);
+	// 					break;
+	// 				default:
+	// 					System.out.printf("WARN: %s is an invalid field for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+	// 			}
+	// 		} catch (Exception e) {
+	// 			System.out.printf("WARN: An error occured when creating field %s for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+	// 		}
+	// 	}
+		
+	// 	return new Boss(nameLocal, spriteLocal, healthLocal);
+	// }
+	
 	public static void parseBullet(String[] arr) {
 		// Parses through bullet data
 		// Creates a new bullet type with the given attributes
@@ -17,7 +51,7 @@ public class Parser {
 		boolean aimedLocal = false;
 		double velocityLocal = 1;
 		double accelerationLocal = 0;
-		double maxLocal = 1;
+		double maxLocal = 10;
 		double minLocal = 0;
 		int homingLocal = 0;
 		int lifetimeLocal = -1;
@@ -95,7 +129,7 @@ public class Parser {
 		String nameLocal = arr[0].split(" ")[1];
 		String spriteLocal = "";
 		String pathLocal = "";
-		int widthLocal = 20;
+		int widthLocal = 20;// TODO tie size to sprite
 		int heightLocal = 20;
 		int healthLocal = 1;
 		double flatLocal = 0.003;
@@ -431,5 +465,36 @@ public class Parser {
 		} catch (Exception e) {
 			System.out.printf("WARN: An error occured when creating script %s%n", nameLocal.toUpperCase());
 		}
+	}
+	
+	public static ArrayDeque<Subscript> parseSpell(ArrayList<String> arr) {
+		// Parses through spell data
+		// Creates a queue of half filled subscripts (spell)
+		// Returns the spell
+		
+		String nameLocal = arr.get(0).split(" ")[1];
+		ArrayDeque<Subscript> spell = new ArrayDeque<Subscript>();
+		
+		try {
+			for (int i = 1; i < arr.size(); i++) {
+				
+				if (arr.get(i) == null)
+					continue;
+				
+				StringTokenizer st = new StringTokenizer(arr.get(i));
+				// int time = Integer.parseInt(st.nextToken());
+				String enemy = st.nextToken();
+				String routine = st.nextToken();
+				// String[] str = st.nextToken().split(",");
+				// Point origin = new Point(Maths.toWidth(Integer.parseInt(str[0].trim())), Maths.toHeight(Integer.parseInt(str[1].trim())));
+				
+				spell.addLast(new Subscript(0, enemy, new Point(), routine));
+			}
+			
+		} catch (Exception e) {
+			System.out.printf("WARN: An error occured when creating spell %s%n", nameLocal.toUpperCase());
+		}
+		
+		return spell;
 	}
 }

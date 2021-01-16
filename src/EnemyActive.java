@@ -11,7 +11,7 @@ public class EnemyActive extends Enemy {
 	
 	ArrayDeque<Point2D.Double> points; // The queue of points the enemy will move through
 	ArrayDeque<Subroutine> routine; // The queue of subroutines the enemy will shoot through
-	int lastSpawnFrame; // The frame the enemy was created
+	int lastSpawnFrame; // The frame the last shot was shot
 	int pauseFrame = 0; // How long this enemy will stay in one spot as determined by its script
 	
 	public EnemyActive(Enemy enem, Point origin, String routine) {

@@ -17,7 +17,6 @@ player
 	sprites
 
 enemies
-	speed
 	sprites
 
 bosses

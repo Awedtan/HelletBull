@@ -1,0 +1,10 @@
+spell	super duper test spell
+	2,6,9,5 | 111
+;
+
+?
+
+spell	name
+	pathing | routine
+	pathing | routine
+;

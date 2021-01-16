@@ -7,7 +7,12 @@ import javax.sound.sampled.*;
 
 public class Game {
 	
+	// static final ArrayDeque<Subscript> BOSSSCRIPT = new ArrayDeque<>();
+	
 	static HashMap<String, Image> imageMap = new HashMap<>();
+	
+	// static HashMap<String, Boss> bossMap = new HashMap<>();
+	// static HashMap<String, ArrayDeque<Subscript>> spellMap = new HashMap<>();
 	
 	static HashMap<String, EnemyProjectile> bulletMap = new HashMap<>(); // Projectile types
 	static ArrayList<EnemyProjectile> activeEnemyBullets = new ArrayList<>(); // Projectiles currently alive
@@ -40,149 +45,6 @@ public class Game {
 	static int frameCount = 0;
 	static int lastSpawnFrame = 0;
 	static boolean run = true;
-	
-	public static void initializeBullets() {
-		// Reads in data from bullet files
-		// Collects and sends the data to be parsed
-		
-		try {
-			
-			BufferedReader input = new BufferedReader(new FileReader("data/bullet.txt"));
-			String str = input.readLine();
-			
-			while (str.indexOf('?') == -1) {
-				String[] accumulate = new String[15];
-				int count = 0;
-				
-				if (str.indexOf("bullet") == 0)
-					while (str.indexOf(';') == -1) {
-						accumulate[count] = str;
-						str = input.readLine();
-						count++;
-					}
-				
-				str = input.readLine();
-				if (accumulate[0] != null)
-					Parser.parseBullet(accumulate);
-			}
-			
-			input.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("The specified file was not found.");
-		} catch (IOException e) {
-			System.out.println("Something went wrong while reading a file.");
-		}
-	}
-	
-	public static void initializeEnemies() {
-		// Reads in data from enemy files
-		// Collects and sends the data to be parsed
-		
-		try {
-			
-			BufferedReader input = new BufferedReader(new FileReader("data/enemy.txt"));
-			String str = input.readLine();
-			
-			while (str.indexOf('?') == -1) {
-				String[] accumulate = new String[11];
-				int count = 0;
-				
-				if (str.indexOf("enemy") == 0)
-					while (str.indexOf(';') == -1) {
-						accumulate[count] = str;
-						str = input.readLine();
-						count++;
-					}
-				
-				str = input.readLine();
-				
-				if (accumulate[0] != null)
-					Parser.parseEnemy(accumulate);
-			}
-			
-			input.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("The specified file was not found.");
-		} catch (IOException e) {
-			System.out.println("Something went wrong while reading a file.");
-		}
-	}
-	
-	public static void initializeImages(){
-		//TODO make this
-		
-		Player.hitboxImage = imageMap.get("hitbox.png");
-	}
-	
-	public static void initializeRoutines() {
-		// Reads in data from routine files
-		// Collects and sends the data to be parsed
-		
-		try {
-			
-			BufferedReader input = new BufferedReader(new FileReader("data/routine.txt"));
-			String str = input.readLine();
-			
-			while (str.indexOf('?') == -1) {
-				ArrayList<String> accumulate = new ArrayList<String>();
-				
-				if (str.indexOf("routine") == 0)
-					while (str.indexOf(';') == -1) {
-						if (str.length() > 0)
-							accumulate.add(str);
-						str = input.readLine();
-					}
-				
-				str = input.readLine();
-				
-				if (accumulate.size() != 0)
-					Parser.parseRoutine(accumulate);
-			}
-			
-			input.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("The specified file was not found.");
-		} catch (IOException e) {
-			System.out.println("Something went wrong while reading a file.");
-		}
-	}
-	
-	public static void initializeScripts() {
-		// Reads in data from script files
-		// Collects and sends the data to be parsed
-		
-		try {
-			
-			BufferedReader input = new BufferedReader(new FileReader("data/script.txt"));
-			String str = input.readLine().trim();
-			
-			while (str.indexOf('!') == -1)
-				str = input.readLine().trim();
-			
-			while (str.indexOf('?') == -1) {
-				ArrayList<String> accumulate = new ArrayList<String>();
-				
-				if (str.indexOf("script") == 0)
-					while (str.indexOf(';') == -1) {
-						if (str.length() > 1)
-							accumulate.add(str);
-						str = input.readLine();
-					}
-				else if (scriptMap.containsKey(str))
-					scriptQueue.addLast(scriptMap.get(str).clone());
-				
-				str = input.readLine();
-				
-				if (accumulate.size() != 0)
-					Parser.parseScript(accumulate);
-			}
-			input.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("The specified file was not found.");
-		} catch (IOException e) {
-			System.out.println("Something went wrong while reading a file.");
-		}
-	}
 	
 	public static Image getImage(String s) {
 		
@@ -459,7 +321,9 @@ public class Game {
 				purgeScript();
 			else
 				return;
-			
+		
+		// if(scriptQueue.peekFirst() == BOSSSCRIPT){}
+		
 		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
 			
 			Subscript current = activeScript.removeFirst();

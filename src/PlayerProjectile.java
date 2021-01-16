@@ -50,7 +50,7 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		
 		for (int i = 0; i <= 2; i++) {
 			PlayerProjectile pp = shotPowers[i];
-			Game.activePlayerBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.grazeModel.getBounds(), pp.width), (int) Maths.centerY(Player.grazeModel.getBounds(), pp.height))));
+			Game.activePlayerBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.model.getBounds(), pp.width), (int) Maths.centerY(Player.model.getBounds(), pp.height))));
 		}
 	}
 	

@@ -59,8 +59,8 @@ public class Pickup extends Rectangle2D.Double {
 		if (Maths.checkInBounds(this.getBounds(), -20) != -1)
 			kill();
 		
-		if (Maths.distanceTo(this.getBounds(), Player.grazeModel.getBounds()) < 100)
-			if (collides(Player.grazeModel)) {
+		if (Maths.distanceTo(this.getBounds(), Player.model.getBounds()) < 100)
+			if (collides(Player.model)) {
 				kill();
 				Player.addScore(this.value);
 			}

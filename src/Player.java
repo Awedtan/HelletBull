@@ -7,12 +7,13 @@ public class Player {
 	static final int STARTPOSX = Game.PLAYSCREEN.width / 2;
 	static final int STARTPOSY = Game.PLAYSCREEN.height / 3 * 2;
 	
-	static int playerWidth = 120; // Player model properties
-	static int playerHeight = 120;
+	static int playerWidth = 60; // Player model properties
+	static int playerHeight = 60;
 	
 	static int hitboxSize = 4; // Hitbox properties
+	static int grazeRadius = 30;
 	
-	static Ellipse2D.Double grazeModel = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
+	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
 	static Rectangle2D.Double hitboxModel = new Rectangle2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
@@ -59,12 +60,12 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.setColor(Color.BLUE);
-		g2.fill(grazeModel);
+		g2.fill(model);
 		
 		g2.setColor(Color.YELLOW);
 		g2.fill(hitboxModel);
 		
-		g2.drawImage(hitboxImage, (int) grazeModel.x, (int) grazeModel.y, null);
+		g2.drawImage(hitboxImage, (int) (model.x - ((hitboxImage.getWidth(null) - model.width) / 2)), (int) (model.y - ((hitboxImage.getHeight(null) - model.height) / 2)), null);
 	}
 	
 	public static void hit() {
@@ -76,8 +77,8 @@ public class Player {
 	public static void move() {
 		// Updates player position
 		
-		double mx = grazeModel.x;
-		double my = grazeModel.y;
+		double mx = model.x;
+		double my = model.y;
 		double hx = hitboxModel.x;
 		double hy = hitboxModel.y;
 		
@@ -90,34 +91,34 @@ public class Player {
 			speed *= 0.7;
 		
 		if (moveLeft && !moveRight) {
-			grazeModel.x -= speed;
+			model.x -= speed;
 			hitboxModel.x -= speed;
 		} else if (moveRight && !moveLeft) {
-			grazeModel.x += speed;
+			model.x += speed;
 			hitboxModel.x += speed;
 		}
 		
 		if (moveUp && !moveDown) {
-			grazeModel.y -= speed;
+			model.y -= speed;
 			hitboxModel.y -= speed;
 		} else if (moveDown && !moveUp) {
-			grazeModel.y += speed;
+			model.y += speed;
 			hitboxModel.y += speed;
 		}
 		
-		switch (Maths.checkInBounds(Player.grazeModel.getBounds(), 0)) {
+		switch (Maths.checkInBounds(Player.model.getBounds(), 0)) {
 			case (0):
-				grazeModel.x = mx;
+				model.x = mx;
 				hitboxModel.x = hx;
 				break;
 			case (1):
-				grazeModel.y = my;
+				model.y = my;
 				hitboxModel.y = hy;
 				break;
 			case (2):
-				grazeModel.x = mx;
+				model.x = mx;
 				hitboxModel.x = hx;
-				grazeModel.y = my;
+				model.y = my;
 				hitboxModel.y = hy;
 				break;
 		}

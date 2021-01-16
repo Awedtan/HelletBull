@@ -1,0 +1,14 @@
+boss bosstest
+	sprite	file
+	health	50
+;
+
+?
+
+spell bosstest
+	bosstest	empty
+;
+
+bosstest
+
+?

@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.*;
-
+import java.util.*;
 import javax.swing.*;
 
 public class Panel extends JPanel implements KeyListener, Runnable {
@@ -54,11 +54,12 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void run() {
 		
-		Game.initializeBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
-		Game.initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
-		Game.initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
-		Game.initializeScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
-		Game.initializeImages();
+		initializeImages();
+		// initializeBosses();
+		initializeBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
+		initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
+		initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
+		initializeScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
 		Controller.initialize();
 		
 		long time = System.currentTimeMillis();
@@ -107,6 +108,226 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	// public static void initializeBosses() {
+		
+	// 	try {
+			
+	// 		File folder = new File("data/bosses");
+			
+	// 		for (File f : folder.listFiles()) {
+				
+	// 			BufferedReader input = new BufferedReader(new FileReader(f));
+	// 			String str = input.readLine();
+	// 			String[] bossAccumulate = new String[3];
+	// 			int count = 0;
+	// 			Boss boss;
+				
+	// 			if (str.indexOf("boss") == 0)
+	// 				while (str.indexOf(';') == -1) {
+	// 					bossAccumulate[count] = str;
+	// 					str = input.readLine();
+	// 					count++;
+	// 				}
+				
+	// 			str = input.readLine();
+				
+	// 			boss = Parser.parseBoss(bossAccumulate);
+				
+	// 			while (str.indexOf('?') == -1) {
+	// 				ArrayList<String> accumulate = new ArrayList<String>();
+					
+	// 				if (str.indexOf("spell") == 0)
+	// 					while (str.indexOf(';') == -1) {
+	// 						if (str.length() > 1)
+	// 							accumulate.add(str);
+	// 						str = input.readLine();
+	// 					}
+	// 				else if (Game.scriptMap.containsKey(str))
+	// 					Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
+					
+	// 				str = input.readLine();
+					
+	// 				if (accumulate.size() != 0)
+	// 					boss.spellQueue.addLast(Parser.parseSpell(accumulate));
+	// 			}
+				
+	// 			input.close();
+	// 		}
+	// 	} catch (FileNotFoundException e) {
+	// 		System.out.println("The specified file was not found.");
+	// 	} catch (IOException e) {
+	// 		System.out.println("Something went wrong while reading a file.");
+	// 	} catch (Exception e) {
+	// 		System.out.println("Wow something went really wrong");
+	// 		e.printStackTrace();
+	// 	}
+	// }
+	
+	public static void initializeBullets() {
+		// Reads in data from bullet files
+		// Collects and sends the data to be parsed
+		
+		try {
+			
+			File folder = new File("data/bullets");
+			
+			for (File f : folder.listFiles()) {
+				
+				BufferedReader input = new BufferedReader(new FileReader(f));
+				String str = input.readLine();
+				
+				while (str.indexOf('?') == -1) {
+					String[] accumulate = new String[15];
+					int count = 0;
+					
+					if (str.indexOf("bullet") == 0)
+						while (str.indexOf(';') == -1) {
+							accumulate[count] = str;
+							str = input.readLine();
+							count++;
+						}
+					
+					str = input.readLine();
+					if (accumulate[0] != null)
+						Parser.parseBullet(accumulate);
+				}
+				
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("The specified file was not found.");
+		} catch (IOException e) {
+			System.out.println("Something went wrong while reading a file.");
+		}
+	}
+	
+	public static void initializeEnemies() {
+		// Reads in data from enemy files
+		// Collects and sends the data to be parsed
+		
+		try {
+			
+			File folder = new File("data/enemies");
+			
+			for (File f : folder.listFiles()) {
+				
+				BufferedReader input = new BufferedReader(new FileReader(f));
+				String str = input.readLine();
+				
+				while (str.indexOf('?') == -1) {
+					String[] accumulate = new String[11];
+					int count = 0;
+					
+					if (str.indexOf("enemy") == 0)
+						while (str.indexOf(';') == -1) {
+							accumulate[count] = str;
+							str = input.readLine();
+							count++;
+						}
+					
+					str = input.readLine();
+					
+					if (accumulate[0] != null)
+						Parser.parseEnemy(accumulate);
+				}
+				
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("The specified file was not found.");
+		} catch (IOException e) {
+			System.out.println("Something went wrong while reading a file.");
+		}
+	}
+	
+	public static void initializeImages() {
+		// TODO make this
+		
+		Player.hitboxImage = Game.imageMap.get("hitbox.png");
+	}
+	
+	public static void initializeRoutines() {
+		// Reads in data from routine files
+		// Collects and sends the data to be parsed
+		
+		try {
+			
+			File folder = new File("data/routines");
+			
+			for (File f : folder.listFiles()) {
+				
+				BufferedReader input = new BufferedReader(new FileReader(f));
+				String str = input.readLine();
+				
+				while (str.indexOf('?') == -1) {
+					ArrayList<String> accumulate = new ArrayList<String>();
+					
+					if (str.indexOf("routine") == 0)
+						while (str.indexOf(';') == -1) {
+							if (str.length() > 0)
+								accumulate.add(str);
+							str = input.readLine();
+						}
+					
+					str = input.readLine();
+					
+					if (accumulate.size() != 0)
+						Parser.parseRoutine(accumulate);
+				}
+				
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("The specified file was not found.");
+		} catch (IOException e) {
+			System.out.println("Something went wrong while reading a file.");
+		}
+	}
+	
+	public static void initializeScripts() {
+		// Reads in data from script files
+		// Collects and sends the data to be parsed
+		
+		try {
+			
+			File folder = new File("data/scripts");
+			
+			for (File f : folder.listFiles()) {
+				
+				BufferedReader input = new BufferedReader(new FileReader(f));
+				String str = input.readLine().trim();
+				
+				while (str.indexOf('!') == -1)
+					str = input.readLine().trim();
+				
+				while (str.indexOf('?') == -1) {
+					ArrayList<String> accumulate = new ArrayList<String>();
+					
+					if (str.indexOf("script") == 0)
+						while (str.indexOf(';') == -1) {
+							if (str.length() > 1)
+								accumulate.add(str);
+							str = input.readLine();
+						}
+					else if (Game.scriptMap.containsKey(str))
+						Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
+					// else if (Game.bossMap.containsKey(str))
+					// 	Game.scriptQueue.addLast(Game.BOSSSCRIPT);
+					
+					str = input.readLine();
+					
+					if (accumulate.size() != 0)
+						Parser.parseScript(accumulate);
+				}
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("The specified file was not found.");
+		} catch (IOException e) {
+			System.out.println("Something went wrong while reading a file.");
 		}
 	}
 	
