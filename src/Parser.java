@@ -422,7 +422,7 @@ public class Parser {
 					angle = Integer.parseInt(st.nextToken());
 				
 				if (name == null || time == -1)
-					throw new java.lang.RuntimeException();
+					continue;
 				
 				for (int j = 0; j < repeat; j++)
 					queue.addLast(new Subroutine(time, name, amount, angle));
@@ -467,34 +467,34 @@ public class Parser {
 		}
 	}
 	
-	public static ArrayDeque<Subscript> parseSpell(ArrayList<String> arr) {
-		// Parses through spell data
-		// Creates a queue of half filled subscripts (spell)
-		// Returns the spell
+// 	public static ArrayDeque<Subscript> parseSpell(ArrayList<String> arr) {
+// 		// Parses through spell data
+// 		// Creates a queue of half filled subscripts (spell)
+// 		// Returns the spell
 		
-		String nameLocal = arr.get(0).split(" ")[1];
-		ArrayDeque<Subscript> spell = new ArrayDeque<Subscript>();
+// 		String nameLocal = arr.get(0).split(" ")[1];
+// 		ArrayDeque<Subscript> spell = new ArrayDeque<Subscript>();
 		
-		try {
-			for (int i = 1; i < arr.size(); i++) {
+// 		try {
+// 			for (int i = 1; i < arr.size(); i++) {
 				
-				if (arr.get(i) == null)
-					continue;
+// 				if (arr.get(i) == null)
+// 					continue;
 				
-				StringTokenizer st = new StringTokenizer(arr.get(i));
-				// int time = Integer.parseInt(st.nextToken());
-				String enemy = st.nextToken();
-				String routine = st.nextToken();
-				// String[] str = st.nextToken().split(",");
-				// Point origin = new Point(Maths.toWidth(Integer.parseInt(str[0].trim())), Maths.toHeight(Integer.parseInt(str[1].trim())));
+// 				StringTokenizer st = new StringTokenizer(arr.get(i));
+// 				// int time = Integer.parseInt(st.nextToken());
+// 				String enemy = st.nextToken();
+// 				String routine = st.nextToken();
+// 				// String[] str = st.nextToken().split(",");
+// 				// Point origin = new Point(Maths.toWidth(Integer.parseInt(str[0].trim())), Maths.toHeight(Integer.parseInt(str[1].trim())));
 				
-				spell.addLast(new Subscript(0, enemy, new Point(), routine));
-			}
+// 				spell.addLast(new Subscript(0, enemy, new Point(), routine));
+// 			}
 			
-		} catch (Exception e) {
-			System.out.printf("WARN: An error occured when creating spell %s%n", nameLocal.toUpperCase());
-		}
+// 		} catch (Exception e) {
+// 			System.out.printf("WARN: An error occured when creating spell %s%n", nameLocal.toUpperCase());
+// 		}
 		
-		return spell;
-	}
+// 		return spell;
+// 	}
 }

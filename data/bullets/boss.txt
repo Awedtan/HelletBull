@@ -1,0 +1,104 @@
+bullet m2greenD1
+	sprite			mb2green
+	velocity		1.5
+;
+bullet m2greenD2
+	sprite			mb2green
+	angle			5.0
+	velocity		1.5
+;
+bullet m2greenD3
+	sprite			mb2green
+	angle			10.0
+	velocity		1.5
+;
+bullet m2greenD4
+	sprite			mb2green
+	angle			15.0
+	velocity		1.5
+;
+bullet m2greenD5
+	sprite			mb2green
+	angle			20.0
+	velocity		1.5
+;
+bullet m2greenD6
+	sprite			mb2green
+	angle			25.0
+	velocity		1.5
+;
+bullet m2greenD7
+	sprite			mb2green
+	angle			30.0
+	velocity		1.5
+;
+bullet m2greenD8
+	sprite			mb2green
+	angle			35.0
+	velocity		1.5
+;
+
+bullet m2redD1
+	sprite			mb2red
+	angle			40.0
+	velocity		1.5
+;
+bullet m2redD2
+	sprite			mb2red
+	angle			35.0
+	velocity		1.5
+;
+bullet m2redD3
+	sprite			mb2red
+	angle			30.0
+	velocity		1.5
+;
+bullet m2redD4
+	sprite			mb2red
+	angle			25.0
+	velocity		1.5
+;
+bullet m2redD5
+	sprite			mb2red
+	angle			20.0
+	velocity		1.5
+;
+bullet m2redD6
+	sprite			mb2red
+	angle			15.0
+	velocity		1.5
+;
+bullet m2redD7
+	sprite			mb2red
+	angle			10.0
+	velocity		1.5
+;
+bullet m2redD8
+	sprite			mb2red
+	angle			5.0
+	velocity		1.5
+;
+bullet m2redD9
+	sprite			mb2red
+	velocity		1.5
+;
+
+bullet m4redA
+	sprite			mb4red
+	aimed			true
+	velocity		5
+;
+
+bullet m4redD360
+	sprite			mb4red
+	inaccuracy		120
+	velocity		4
+;
+
+bullet m2greenD360
+	sprite			mb2green
+	inaccuracy		180
+	velocity		1.5
+;
+
+?

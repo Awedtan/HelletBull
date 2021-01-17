@@ -282,6 +282,15 @@ public class Game {
 		deadEnemyBullets.clear();
 	}
 	
+	public static void purgePlayerBullets() {
+		// Removes all bullets marked for deletion
+		
+		for (PlayerProjectile pp : Game.deadPlayerBullets)
+		Game.activePlayerBullets.remove(pp);
+		
+		Game.deadPlayerBullets.clear();
+	}
+	
 	public static void purgeEnemies() {
 		// Removes all enemies marked for deletion
 		// TODO: clear paths as well
@@ -351,7 +360,7 @@ public class Game {
 		if (deadEnemyBullets.size() > 0)
 			purgeBullets();
 		if (deadPlayerBullets.size() > 0)
-			PlayerProjectile.purgeAll();
+			purgePlayerBullets();
 		if (deadPickups.size() > 0)
 			purgePickups();
 		

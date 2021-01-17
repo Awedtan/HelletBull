@@ -26,8 +26,8 @@ routine 161
 ;
 
 routine 177
-	300	mgreenD	16
-	15r12	mgreenD	16
+	300	m2greenA	16
+	15r12	m2greenA	16
 ;
 
 ?

@@ -4,9 +4,9 @@ bullet sgreyA
 	velocity		2.0
 ;
 
-bullet mgreenD
+bullet m2greenA
 	sprite			mb2green
-	inaccuracy		10
+	aimed			true
 	velocity		1.5
 ;
 

@@ -94,17 +94,21 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 			
 			super.paintComponent(g);
 			
-			EnemyActive.drawAll(g);
-			Player.draw(g);
-			PlayerProjectile.drawAll(g);
-			Pickup.drawAll(g);
-			
-			g.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
-			
-			for (Line2D.Double l : grid)
-				g.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
-			
-			EnemyProjectile.drawAll(g);
+			try {
+				EnemyActive.drawAll(g);
+				Player.draw(g);
+				PlayerProjectile.drawAll(g);
+				Pickup.drawAll(g);
+				
+				g.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
+				
+				for (Line2D.Double l : grid)
+					g.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
+				
+				EnemyProjectile.drawAll(g);
+			} catch (ConcurrentModificationException e) {
+				
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,58 +116,58 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 	}
 	
 	// public static void initializeBosses() {
-		
-	// 	try {
-			
-	// 		File folder = new File("data/bosses");
-			
-	// 		for (File f : folder.listFiles()) {
-				
-	// 			BufferedReader input = new BufferedReader(new FileReader(f));
-	// 			String str = input.readLine();
-	// 			String[] bossAccumulate = new String[3];
-	// 			int count = 0;
-	// 			Boss boss;
-				
-	// 			if (str.indexOf("boss") == 0)
-	// 				while (str.indexOf(';') == -1) {
-	// 					bossAccumulate[count] = str;
-	// 					str = input.readLine();
-	// 					count++;
-	// 				}
-				
-	// 			str = input.readLine();
-				
-	// 			boss = Parser.parseBoss(bossAccumulate);
-				
-	// 			while (str.indexOf('?') == -1) {
-	// 				ArrayList<String> accumulate = new ArrayList<String>();
-					
-	// 				if (str.indexOf("spell") == 0)
-	// 					while (str.indexOf(';') == -1) {
-	// 						if (str.length() > 1)
-	// 							accumulate.add(str);
-	// 						str = input.readLine();
-	// 					}
-	// 				else if (Game.scriptMap.containsKey(str))
-	// 					Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
-					
-	// 				str = input.readLine();
-					
-	// 				if (accumulate.size() != 0)
-	// 					boss.spellQueue.addLast(Parser.parseSpell(accumulate));
-	// 			}
-				
-	// 			input.close();
-	// 		}
-	// 	} catch (FileNotFoundException e) {
-	// 		System.out.println("The specified file was not found.");
-	// 	} catch (IOException e) {
-	// 		System.out.println("Something went wrong while reading a file.");
-	// 	} catch (Exception e) {
-	// 		System.out.println("Wow something went really wrong");
-	// 		e.printStackTrace();
-	// 	}
+	
+	// try {
+	
+	// File folder = new File("data/bosses");
+	
+	// for (File f : folder.listFiles()) {
+	
+	// BufferedReader input = new BufferedReader(new FileReader(f));
+	// String str = input.readLine();
+	// String[] bossAccumulate = new String[3];
+	// int count = 0;
+	// Boss boss;
+	
+	// if (str.indexOf("boss") == 0)
+	// while (str.indexOf(';') == -1) {
+	// bossAccumulate[count] = str;
+	// str = input.readLine();
+	// count++;
+	// }
+	
+	// str = input.readLine();
+	
+	// boss = Parser.parseBoss(bossAccumulate);
+	
+	// while (str.indexOf('?') == -1) {
+	// ArrayList<String> accumulate = new ArrayList<String>();
+	
+	// if (str.indexOf("spell") == 0)
+	// while (str.indexOf(';') == -1) {
+	// if (str.length() > 1)
+	// accumulate.add(str);
+	// str = input.readLine();
+	// }
+	// else if (Game.scriptMap.containsKey(str))
+	// Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
+	
+	// str = input.readLine();
+	
+	// if (accumulate.size() != 0)
+	// boss.spellQueue.addLast(Parser.parseSpell(accumulate));
+	// }
+	
+	// input.close();
+	// }
+	// } catch (FileNotFoundException e) {
+	// System.out.println("The specified file was not found.");
+	// } catch (IOException e) {
+	// System.out.println("Something went wrong while reading a file.");
+	// } catch (Exception e) {
+	// System.out.println("Wow something went really wrong");
+	// e.printStackTrace();
+	// }
 	// }
 	
 	public static void initializeBullets() {
@@ -315,7 +319,7 @@ public class Panel extends JPanel implements KeyListener, Runnable {
 					else if (Game.scriptMap.containsKey(str))
 						Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
 					// else if (Game.bossMap.containsKey(str))
-					// 	Game.scriptQueue.addLast(Game.BOSSSCRIPT);
+					// Game.scriptQueue.addLast(Game.BOSSSCRIPT);
 					
 					str = input.readLine();
 					

@@ -41,7 +41,7 @@ public class Player {
 	static String deathClip = "playerdeath";
 	static String shotClip = "playershot";
 	
-	public static void addScore(int value) {
+	public static void addPower(int value) {
 		
 		power += value;
 		shotPower = Maths.log(power / 2);
