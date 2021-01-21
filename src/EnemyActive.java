@@ -16,10 +16,10 @@ public class EnemyActive extends Enemy {
 	
 	public EnemyActive(Enemy enem, Point origin, String routine) {
 		
-		sprite = enem.sprite;
+		image = Game.getImage(enem.sprite);
 		path = enem.path;
-		width = enem.width;
-		height = enem.height;
+		width = image.getWidth(null) / 2;
+		height = image.getHeight(null);
 		health = enem.health;
 		flatness = enem.flatness;
 		offset = enem.offset;
@@ -38,17 +38,6 @@ public class EnemyActive extends Enemy {
 		// Adds a new enemy to the enemy array
 		
 		Game.activeEnemies.add(new EnemyActive(Game.enemyMap.get(enem), origin, routine));
-	}
-	
-	public static void drawAll(Graphics g) {
-		
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.RED);
-		
-		for (EnemyActive ea : Game.activeEnemies)
-			g2.fill(ea);
-		// for (Path2D.Double d : Game.activePaths)
-		// g2.draw(d);
 	}
 	
 	public void hit(int damage) {
@@ -82,12 +71,14 @@ public class EnemyActive extends Enemy {
 		Game.playClip(damageClip);
 	}
 	
+	@Override
 	public void kill() {
 		// Marks the enemy for deletion
 		
 		Game.deadEnemies.add(this);
 	}
 	
+	@Override
 	public void move() {
 		// Updates the enemy's position
 		
@@ -135,6 +126,7 @@ public class EnemyActive extends Enemy {
 		lastSpawnFrame = Game.frameCount;
 	}
 	
+	@Override
 	public void update() {
 		// Updates the enemy
 		

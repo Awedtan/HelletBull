@@ -10,7 +10,7 @@ public class Player {
 	static int playerWidth = 60; // Player model properties
 	static int playerHeight = 60;
 	
-	static int hitboxSize = 4; // Hitbox properties
+	static int hitboxSize = 6; // Hitbox properties
 	static int grazeRadius = 30;
 	
 	static Ellipse2D.Double model = new Ellipse2D.Double(STARTPOSX, STARTPOSY, playerWidth, playerHeight); // Does not get hit by projectiles
@@ -24,7 +24,7 @@ public class Player {
 	static int power = 0;
 	static int shotPower = 0;
 	
-	static final int SHOTDELAY = 7; // Player shot cooldown
+	static final int SHOTDELAY = 6; // Player shot cooldown
 	static final int BOMBDELAY = 240; // Player bomb cooldown
 	static int lastShot = 0; // Frame of last player shot
 	static int lastBomb = 0; // Frame of last player bomb
@@ -55,17 +55,15 @@ public class Player {
 		lastBomb = Game.frameCount;
 	}
 	
-	public static void draw(Graphics g) {
-		
-		Graphics2D g2 = (Graphics2D) g;
+	public static void draw(Graphics2D g2) {
 		
 		g2.setColor(Color.BLUE);
 		g2.fill(model);
-		
-		g2.setColor(Color.YELLOW);
+		g2.drawImage(hitboxImage, (int) (model.x - ((hitboxImage.getWidth(null) - model.width) / 2)) , (int) (model.y - ((hitboxImage.getHeight(null) - model.height) / 2)) + 2, null);
+
+		g2.setColor(Color.MAGENTA);
 		g2.fill(hitboxModel);
 		
-		g2.drawImage(hitboxImage, (int) (model.x - ((hitboxImage.getWidth(null) - model.width) / 2)), (int) (model.y - ((hitboxImage.getHeight(null) - model.height) / 2)), null);
 	}
 	
 	public static void hit() {

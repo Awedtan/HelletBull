@@ -1,31 +1,29 @@
 import java.awt.*;
-import java.awt.geom.*;
 
-public class PlayerProjectile extends Ellipse2D.Double {
+public class PlayerProjectile extends DObject {
 	
-	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile("", 1, 180, 10, 0, 30), new PlayerProjectile("", 1, 185, 10, 0, 30),
-			new PlayerProjectile("", 1, 175, 10, 0, 30) };
+	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile(1, 180, 10), new PlayerProjectile(1, 185, 10), new PlayerProjectile(1, 175, 10) };
 	
 	static final int BORDERBUFFER = -10;
 	
-	String sprite;
+	String sprite = "pp";
 	int damage;
 	double angle; // The angle of the proj, 0 is down, 90 is right, -90 is left, +-180 is up
 	double velocity; // The current speed of the proj
 	
-	public PlayerProjectile(String sprite, int damage, double angle, double velocity, int homing, int size) {
+	public PlayerProjectile(int damage, double angle, double velocity) {
 		
-		this.sprite = sprite;
+		image = Game.getImage(sprite);
+		width = image.getWidth(null);
+		height = image.getHeight(null);
 		this.damage = damage;
 		this.angle = angle;
 		this.velocity = velocity;
-		width = size;
-		height = size;
 	}
 	
 	public PlayerProjectile(PlayerProjectile pp, Point origin) {
 		
-		sprite = pp.sprite;
+		image = Game.getImage(sprite);
 		damage = pp.damage;
 		angle = pp.angle;
 		velocity = pp.velocity;
@@ -35,14 +33,6 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		y = origin.y;
 	}
 	
-	public boolean checkCollision(Ellipse2D.Double ellipse) {
-		// Checks for bullet collision
-		// Returns true if collided
-		// Doesn't have to be accurate
-		
-		return this.getBounds().intersects(ellipse.getBounds())
-;	}
-	
 	public static void create(int power) {
 		
 		for (int i = 0; i <= 2; i++) {
@@ -51,39 +41,32 @@ public class PlayerProjectile extends Ellipse2D.Double {
 		}
 	}
 	
-	public static void drawAll(Graphics g) {
-		
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(new Color(255, 100, 100, 150));
-		
-		for (PlayerProjectile pp : Game.activePlayerBullets)
-			g2.fill(pp);
-	}
-	
+	@Override
 	public void kill() {
 		// Marks the bullet for deletion
 		
 		Game.deadPlayerBullets.add(this);
 	}
 	
+	@Override
 	public void move() {
 		
 		x += Math.sin(Math.toRadians(angle)) * velocity;
 		y += Math.cos(Math.toRadians(angle)) * velocity;
 	}
 	
+	@Override
 	public void update() {
 		
 		move();
 		
-		if (Maths.checkInBounds(this.getBounds(), BORDERBUFFER) != -1)
+		if (Maths.checkInBounds(getBounds(), BORDERBUFFER) != -1)
 			kill();
 		
 		for (EnemyActive ea : Game.activeEnemies)
-			if (Maths.distanceTo(this.getBounds(), ea.getBounds()) < 20)
-				if (checkCollision(ea)) {
-					kill();
-					ea.hit(damage);
-				}
+			if (collides(ea)) {
+				kill();
+				ea.hit(damage);
+			}
 	}
 }

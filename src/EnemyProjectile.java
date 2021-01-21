@@ -1,12 +1,10 @@
 import java.awt.*;
 import java.awt.geom.*;
 
-public class EnemyProjectile extends Ellipse2D.Double {
+public class EnemyProjectile extends DObject {
 	
 	static final int BORDERBUFFER = -250;
 	
-	String spriteName;
-	Image sprite;
 	int inaccuracy; // How much deviation there can be when initially shooting the proj
 	double angle; // The angle of the proj, 0 is down, 90 is right, -90 is left, +-180 is up
 	double turn; // How much the angle of the proj changes each frame
@@ -21,34 +19,13 @@ public class EnemyProjectile extends Ellipse2D.Double {
 	
 	boolean grazed = false;
 	Path2D.Double rotated = null;
-	double radianAngle;
-	double sinAngle;
-	double cosAngle;
 	
 	static String grazeClip = "graze";
-	
-	public EnemyProjectile() {
-		
-		sprite = null;
-		inaccuracy = 0;
-		angle = 0;
-		turn = 0;
-		aimed = false;
-		velocity = 0;
-		acceleration = 0;
-		maxVelocity = 0;
-		minVelocity = 0;
-		homing = 0;
-		lifetime = 0;
-		width = 0;
-		height = 0;
-		subBullet = "";
-	}
 	
 	public EnemyProjectile(String sprite, int inaccuracy, double angle, double turn, boolean aimed, double velocity, double acceleration, double maxVelocity, double minVelocity, int homing,
 			int lifetime, String subBullet) { // Stored projectile types
 		
-		this.spriteName = sprite;
+		this.sprite = sprite;
 		this.inaccuracy = inaccuracy;
 		this.angle = angle;
 		this.turn = turn;
@@ -64,7 +41,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 	
 	public EnemyProjectile(EnemyProjectile proj, Ellipse2D.Double origin) { // Active projectiles
 		
-		sprite = Game.getImage(proj.spriteName);
+		image = Game.getImage(proj.sprite);
 		inaccuracy = proj.inaccuracy;
 		turn = proj.turn;
 		aimed = proj.aimed;
@@ -74,8 +51,8 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		minVelocity = proj.minVelocity;
 		homing = proj.homing;
 		lifetime = proj.lifetime;
-		width = sprite.getWidth(null);
-		height = sprite.getHeight(null);
+		width = image.getWidth(null);
+		height = image.getHeight(null);
 		x = Maths.centerX(origin.getBounds()) - width / 2;
 		y = Maths.centerY(origin.getBounds()) - height / 2;
 		subBullet = proj.subBullet;
@@ -98,13 +75,6 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		
 	}
 	
-	public boolean collides(Shape shape) {
-		// Checks for bullet collision
-		// Returns true if collided
-		
-		return Maths.intersects(this, shape, radianAngle);
-	}
-	
 	public static void create(String proj, Ellipse2D.Double origin) {
 		// Creates a single bullet
 		
@@ -117,7 +87,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		for (int i = 0; i < amount; i++) {
 			EnemyProjectile blt = Game.bulletMap.get(proj);
 			
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, blt.angle + i * (360.0 / amount), blt.turn, blt.aimed, blt.velocity, blt.acceleration,
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, blt.angle + i * (360.0 / amount), blt.turn, blt.aimed, blt.velocity, blt.acceleration,
 					blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
 		}
 	}
@@ -128,33 +98,9 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		for (int i = 0; i < amount; i++) {
 			EnemyProjectile blt = Game.bulletMap.get(proj);
 			
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, blt.angle + i * (angle / (amount - 1)) - (angle / 2.0), blt.turn, blt.aimed,
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, blt.angle + i * (angle / (amount - 1)) - (angle / 2.0), blt.turn, blt.aimed,
 					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
 		}
-	}
-	
-	public static void drawAll(Graphics g) {
-		
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.BLACK);
-		
-		for (EnemyProjectile p : Game.activeEnemyBullets) {
-			
-			AffineTransform at = AffineTransform.getTranslateInstance(Maths.centerX(p.getBounds(), p.sprite.getWidth(null)), Maths.centerY(p.getBounds(), p.sprite.getHeight(null)));
-			
-			g2.rotate(p.radianAngle + Math.PI, Maths.centerX(p.getBounds()), Maths.centerY(p.getBounds()));
-			g2.drawImage(p.sprite, at, null);
-			g2.rotate(-(p.radianAngle + Math.PI), Maths.centerX(p.getBounds()), Maths.centerY(p.getBounds()));
-			
-			// g2.setColor(Color.BLACK);
-			// g2.fill(p);
-			// g2.setColor(Color.BLUE);
-			// g2.fill(p.getShape());
-			// g2.setColor(Color.RED);
-			// g2.draw(Maths.rotate(Maths.ellipseHitbox(p), p.radianAngle));
-		}
-		
-		g2.setColor(Color.BLACK);
 	}
 	
 	public Shape getShape() {
@@ -170,12 +116,14 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		grazed = true;
 	}
 	
+	@Override
 	public void kill() {
 		// Marks the bullet for deletion
 		
 		Game.deadEnemyBullets.add(this);
 	}
 	
+	@Override
 	public void move() {
 		// Updates the bullet's position
 		
@@ -189,7 +137,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 				velocity = minVelocity;
 			
 			double oldAngle = angle;
-			angle = Maths.angleTo(this.getBounds(), Player.hitboxModel.getBounds());
+			angle = Maths.angleTo(getBounds(), Player.hitboxModel.getBounds());
 			
 			if (oldAngle != angle) {
 				radianAngle = Maths.toRadians(angle);
@@ -202,7 +150,7 @@ public class EnemyProjectile extends Ellipse2D.Double {
 			
 			rotated = (Path2D.Double) Maths.rotate(this, radianAngle);
 			
-			if (Maths.distanceTo(this.getBounds(), Player.hitboxModel.getBounds()) < homing)
+			if (Maths.distanceTo(getBounds(), Player.hitboxModel.getBounds()) < homing)
 				homing = 0;
 		} else { // Not homing
 			
@@ -235,23 +183,24 @@ public class EnemyProjectile extends Ellipse2D.Double {
 		EnemyProjectile blt = Game.bulletMap.get(subBullet);
 		
 		if (!blt.aimed)
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration, blt.maxVelocity,
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration, blt.maxVelocity,
 					blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), this));
 		else
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.spriteName, blt.inaccuracy, Maths.angleTo(this.getBounds(), Player.hitboxModel.getBounds()), blt.turn, false,
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, Maths.angleTo(getBounds(), Player.hitboxModel.getBounds()), blt.turn, false,
 					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), this));
 	}
 	
+	@Override
 	public void update() {
 		// Updates the bullet
 		
 		move();
 		lifetime--;
 		
-		if (lifetime == 0 || Maths.checkInBounds(this.getBounds(), BORDERBUFFER) != -1)
+		if (lifetime == 0 || Maths.checkInBounds(getBounds(), BORDERBUFFER) != -1)
 			kill();
 		
-		if (Maths.distanceTo(this.getBounds(), Player.hitboxModel.getBounds()) < Math.max(this.width, this.height) + Player.grazeRadius)
+		if (Maths.distanceTo(getBounds(), Player.hitboxModel.getBounds()) < Math.max(width, height) + Player.grazeRadius)
 			if (collides(Player.hitboxModel)) {
 				kill();
 				Player.hit();

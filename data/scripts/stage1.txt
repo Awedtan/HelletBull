@@ -3,7 +3,7 @@ script test
 	120	test	test	5,3
 ;
 
-
+!
 script 11
 	60	111	empty	2,-1
 	60	111	empty	2,-1
@@ -194,5 +194,3 @@ script name
 	delay	enemy	routine	origin
 	delay	enemy	routine	origin
 ;
-
-bosstest

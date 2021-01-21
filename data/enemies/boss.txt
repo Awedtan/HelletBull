@@ -1,9 +1,7 @@
 enemy boss1
-	sprite		file
+	sprite		edward
 	pathing		5,3,6 / 540 / 8,2,4 / 300 / 6,4,4 / 480 / 5,2 / 900 / 2,3 / 60 / 9,2,3 / 480 / 4,3 / 480
-	health		300
-	height		50
-	width		50
+	health		400
 	offset		false
 ;
 

@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
@@ -7,12 +6,7 @@ import javax.sound.sampled.*;
 
 public class Game {
 	
-	// static final ArrayDeque<Subscript> BOSSSCRIPT = new ArrayDeque<>();
-	
 	static HashMap<String, Image> imageMap = new HashMap<>();
-	
-	// static HashMap<String, Boss> bossMap = new HashMap<>();
-	// static HashMap<String, ArrayDeque<Subscript>> spellMap = new HashMap<>();
 	
 	static HashMap<String, EnemyProjectile> bulletMap = new HashMap<>(); // Projectile types
 	static ArrayList<EnemyProjectile> activeEnemyBullets = new ArrayList<>(); // Projectiles currently alive
@@ -26,8 +20,6 @@ public class Game {
 	static HashMap<String, Enemy> enemyMap = new HashMap<>(); // Enemy types
 	static ArrayList<EnemyActive> activeEnemies = new ArrayList<>(); // Enemies currently alive
 	static ArrayList<EnemyActive> deadEnemies = new ArrayList<>(); // Enemies to be killed
-	
-	static ArrayList<Path2D.Double> activePaths = new ArrayList<>(); // All active enemy path curves
 	
 	static HashMap<String, ArrayDeque<Subscript>> scriptMap = new HashMap<>(); // Script types
 	static ArrayDeque<ArrayDeque<Subscript>> scriptQueue = new ArrayDeque<>(); // Queue of scripts, scripts are queues of subscripts
@@ -46,6 +38,112 @@ public class Game {
 	static int lastSpawnFrame = 0;
 	static boolean run = true;
 	
+	public static void playClip(String s) {
+		
+		try {
+			
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+			clip.start();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void purgeBullets() {
+		// Removes all bullets marked for deletion
+		
+		for (EnemyProjectile p : deadEnemyBullets) {
+			if (bulletMap.get(p.subBullet) != null)
+				p.spawn();
+			activeEnemyBullets.remove(p);
+		}
+		
+		deadEnemyBullets.clear();
+	}
+	
+	public static void purgePlayerBullets() {
+		// Removes all bullets marked for deletion
+		
+		for (PlayerProjectile pp : Game.deadPlayerBullets)
+			Game.activePlayerBullets.remove(pp);
+		
+		Game.deadPlayerBullets.clear();
+	}
+	
+	public static void purgeEnemies() {
+		// Removes all enemies marked for deletion
+		
+		for (EnemyActive ea : deadEnemies)
+			activeEnemies.remove(ea);
+		
+		deadEnemies.clear();
+	}
+	
+	public static void purgePickups() {
+		// Removes all enemies marked for deletion
+		
+		for (Pickup pu : deadPickups)
+			activePickups.remove(pu);
+		
+		deadPickups.clear();
+	}
+	
+	public static void purgeScript() {
+		// Transitions into next script
+		// Resets all relevant delay values
+		
+		frameCount = 0;
+		lastSpawnFrame = 0;
+		Player.lastShot = 0;
+		Player.lastBomb = 0;
+		
+		activeScript = scriptQueue.removeFirst();
+	}
+	
+	public static void runScript() {
+		// Runs game scripts
+		
+		if (activeScript.peekFirst() == null)
+			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty())
+				purgeScript();
+			else
+				return;
+			
+		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
+			
+			Subscript current = activeScript.removeFirst();
+			EnemyActive.create(current.enemy, current.origin, current.routine);
+			lastSpawnFrame = frameCount;
+		}
+	}
+	
+	public static void update() {
+		// Updates all aspects of the game
+		
+		Player.update();
+		
+		for (EnemyProjectile p : activeEnemyBullets)
+			p.update();
+		for (EnemyActive ea : activeEnemies)
+			ea.update();
+		for (PlayerProjectile pp : activePlayerBullets)
+			pp.update();
+		for (Pickup pu : activePickups)
+			pu.update();
+		
+		if (deadEnemies.size() > 0)
+			purgeEnemies();
+		if (deadEnemyBullets.size() > 0)
+			purgeBullets();
+		if (deadPlayerBullets.size() > 0)
+			purgePlayerBullets();
+		if (deadPickups.size() > 0)
+			purgePickups();
+			
+		runScript();
+	}
+	
 	public static Image getImage(String s) {
 		
 		if (imageMap.containsKey(s + ".png"))
@@ -63,27 +161,27 @@ public class Game {
 				switch (color) {
 					case ("grey"):
 						break;
-					case ("red"):
+					case ("orange"):
 						xOffset = -16;
 						break;
-					case ("pink"):
+					case ("yellow"):
 						xOffset = -48;
 						break;
-					case ("blue"):
+					case ("green"):
 						xOffset = -96;
 						break;
 					case ("teal"):
 						yOffset = -16;
 						break;
-					case ("green"):
+					case ("blue"):
 						yOffset = -16;
 						xOffset = -16;
 						break;
-					case ("yellow"):
+					case ("pink"):
 						yOffset = -16;
-						xOffset = -64;
+						xOffset = -48;
 						break;
-					case ("orange"):
+					case ("red"):
 						yOffset = -16;
 						xOffset = -96;
 						break;
@@ -251,119 +349,11 @@ public class Game {
 		}
 		
 		BufferedImage bImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bImage.getGraphics();
+		Graphics2D g2 = (Graphics2D) bImage.getGraphics();
 		
-		g.drawImage(image, xOffset, yOffset, null);
+		g2.rotate(Math.PI, width/2, height/2);
+		g2.drawImage(image, xOffset, yOffset, null);
 		
 		return bImage;
-	}
-	
-	public static void playClip(String s) {
-		
-		try {
-			
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
-			clip.start();
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void purgeBullets() {
-		// Removes all bullets marked for deletion
-		
-		for (EnemyProjectile p : deadEnemyBullets) {
-			if (bulletMap.get(p.subBullet) != null)
-				p.spawn();
-			activeEnemyBullets.remove(p);
-		}
-		
-		deadEnemyBullets.clear();
-	}
-	
-	public static void purgePlayerBullets() {
-		// Removes all bullets marked for deletion
-		
-		for (PlayerProjectile pp : Game.deadPlayerBullets)
-		Game.activePlayerBullets.remove(pp);
-		
-		Game.deadPlayerBullets.clear();
-	}
-	
-	public static void purgeEnemies() {
-		// Removes all enemies marked for deletion
-		// TODO: clear paths as well
-		
-		for (EnemyActive ea : deadEnemies)
-			activeEnemies.remove(ea);
-		
-		deadEnemies.clear();
-	}
-	
-	public static void purgePickups() {
-		// Removes all enemies marked for deletion
-		
-		for (Pickup pu : deadPickups)
-			activePickups.remove(pu);
-		
-		deadPickups.clear();
-	}
-	
-	public static void purgeScript() {
-		// Transitions into next script
-		// Resets all relevant delay values
-		
-		frameCount = 0;
-		lastSpawnFrame = 0;
-		Player.lastShot = 0;
-		Player.lastBomb = 0;
-		
-		activeScript = scriptQueue.removeFirst();
-	}
-	
-	public static void runScript() {
-		// Runs game scripts
-		
-		if (activeScript.peekFirst() == null)
-			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty())
-				purgeScript();
-			else
-				return;
-		
-		// if(scriptQueue.peekFirst() == BOSSSCRIPT){}
-		
-		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
-			
-			Subscript current = activeScript.removeFirst();
-			EnemyActive.create(current.enemy, current.origin, current.routine);
-			lastSpawnFrame = frameCount;
-		}
-	}
-	
-	public static void update() {
-		// Updates all aspects of the game
-		
-		Player.update();
-		
-		for (EnemyProjectile p : activeEnemyBullets)
-			p.update();
-		for (EnemyActive ea : activeEnemies)
-			ea.update();
-		for (PlayerProjectile pp : activePlayerBullets)
-			pp.update();
-		for (Pickup pu : activePickups)
-			pu.update();
-		
-		if (deadEnemies.size() > 0)
-			purgeEnemies();
-		if (deadEnemyBullets.size() > 0)
-			purgeBullets();
-		if (deadPlayerBullets.size() > 0)
-			purgePlayerBullets();
-		if (deadPickups.size() > 0)
-			purgePickups();
-		
-		runScript();
 	}
 }

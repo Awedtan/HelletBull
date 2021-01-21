@@ -1,5 +1,5 @@
 bullet sgreyA
-	sprite			sb1grey
+	sprite			sb1green
 	aimed			true
 	velocity		2.0
 ;
