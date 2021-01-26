@@ -36,21 +36,21 @@ enemy 122
 enemy 131
 	sprite		enemgreen
 	pathing		3,-2,3,-5 / 2,0,6,4
-	health		1
+	health		5
 	offset		true
 ;
 
 enemy 132
 	sprite		enemgreen
 	pathing		-3,-2,-3,-5 / -2,0,-6,4
-	health		1
+	health		5
 	offset		true
 ;
 
 enemy 151
 	sprite		enemgreen
 	pathing		-4,1,0,2 / 4,3,0,4 / -4,5,0,6 / 4,7,0,8 / -4,9,0,10 / 4,11,0,12
-	health		3
+	health		10
 	flatness	0.0055
 	offset		true
 ;
@@ -58,7 +58,7 @@ enemy 151
 enemy 152
 	sprite		enemgreen
 	pathing		4,1,0,2 / -4,3,0,4 / 4,5,0,6 / -4,7,0,8 / 4,9,0,10 / -4,11,0,12
-	health		3
+	health		10
 	flatness	0.0055
 	offset		true
 ;
@@ -66,14 +66,14 @@ enemy 152
 enemy 171
 	sprite		enemgreen
 	pathing		6,0,4 / 480 / 0,0,3
-	health		40
+	health		200
 	offset		true
 ;
 
 enemy 172
 	sprite		enemgreen
 	pathing		-6,0,4 / 480 / 0,0,3
-	health		40
+	health		200
 	offset		true
 ;
 

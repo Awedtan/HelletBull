@@ -1,9 +1,8 @@
 
 script test
-	120	test	test	5,3
+	120	boss3	test	5,3
 ;
 
-!
 script 11
 	60	111	empty	2,-1
 	60	111	empty	2,-1
@@ -183,9 +182,33 @@ script 18
 	30	151	155	3,-2
 	30	152	155	7,-2
 ;
+
+script boss1
+	120	boss1	boss1	3,-2
+;
+
+script boss2
+	120	boss2	boss2	3,-2
+;
+
+script boss3
+	120	boss3	boss3	3,-2
+;
+
+script boss4
+	120	boss4	boss4	3,-2
+;
+
+script boss5
+	120	boss5	boss5	3,-2
+;
 !
-script boss
-	60	boss1	boss1	3,-2
+script boss6
+	120	boss6	boss6	3,-2
+;
+
+script edward
+	120	edward	edward	3,-2
 ;
 
 ?

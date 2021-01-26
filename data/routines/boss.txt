@@ -1,110 +1,204 @@
+routine test
+	90r100	hredD1	4
+;
 routine boss1
-	300	m2greenD1	16
-	15	m2greenD2	16
-	15	m2greenD3	16
-	15	m2greenD4	16
-	15	m2greenD5	16
-	15	m2greenD6	16
-	15	m2greenD7	16
-	15	m2greenD8	16
-	15	m2redD1	16
-	15	m2redD2	16
-	15	m2redD3	16
-	15	m2redD4	16
-	15	m2redD5	16
-	15	m2redD6	16
-	15	m2redD7	16
-	15	m2redD8	16
-	15	m2redD9	16
-	
-	350	m2greenA	9	90
-	25r4	m2greenA	9	90
-	
-	350	m4redA
-	5r60	m4redA
-	
-	300	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	1r20	m2greenD360
-	1r20	m4redD360
-	
-	300		m4redA	5	60
-	5r40	m4redA	5	60
-	
-	300	m2greenD1	16
-	15	m2redD1	16
-	15	m2greenD2	16
-	15	m2redD2	16
-	15	m2greenD3	16
-	15	m2redD3	16
-	15	m2greenD4	16
-	15	m2redD4	16
-	15	m2greenD5	16
-	15	m2redD5	16
-	15	m2greenD6	16
-	15	m2redD6	16
-	15	m2greenD7	16
-	15	m2redD7	16
-	15	m2greenD8	16
-	15	m2redD8	16
-	
-	400	m2greenD1	16
-	15	m2redD1	16
-	15	m2greenD2	16
-	15	m2redD2	16
-	15	m2greenD3	16
-	15	m2redD3	16
-	15	m2greenD4	16
-	15	m2redD4	16
-	15	m2greenD5	16
-	15	m2redD5	16
-	15	m2greenD6	16
-	15	m2redD6	16
-	15	m2greenD7	16
-	15	m2redD7	16
-	15	m2greenD8	16
-	15	m2redD8	16
+	120		b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r2	b2pinkD		16
+	30		b2redD		4
+	30r8	b2pinkD		16
+;
+
+routine boss2
+	120	m5blueA	12	180
+	15r4	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+	15r5	m5blueA	12	180
+	15r5	m5orangeA	12	180
+;
+
+routine boss3
+	120		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	60		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+	30		b5tealD	6
+	30		hredD1	10
+	60		hredD2	10
+	60		hredD3	10
+	30		b5tealD	6
+	30		hredD4	10
+	60		hredD5	10
+	60		hredD6	10
+;
+
+routine boss4
+	180		m8pinkB	16
+	180		m2pinkB	16
+	180		m8pinkB	16
+	180		m2pinkB	16
+	180		m8pinkB	16
+	180		m2pinkB	16
+	180		m8pinkB	16
+	180		m2pinkB	16
+;
+
+routine boss5
+	160		m6greenB	3
+	10r340	m6greenB	3
+;
+
+routine boss6
+	240		sunD		6
+	40r16	m2yellowA		3	180
+	40		sunD		6
+	40r16	m2yellowA		3	180
+	40		sunD		6
+	40r16	m2yellowA		3	180
+	40		sunD		6
+	40r16	m2yellowA		3	180
+	40		sunD		6
+	40r16	m2yellowA		3	180
 ;
 
 ?

@@ -1,8 +1,10 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
 import javax.sound.sampled.*;
+import javax.swing.*;
 
 public class Game {
 	
@@ -28,6 +30,9 @@ public class Game {
 	static ArrayList<Pickup> activePickups = new ArrayList<>(); // Pickups currently alive
 	static ArrayList<Pickup> deadPickups = new ArrayList<>(); // Pickups currently alive
 	
+	static HashMap<String, Integer> clipMap = new HashMap<>();
+	static int clipDelay = 7;
+	
 	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960);
 	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960);
 	static final Rectangle SIDESCREEN = new Rectangle(900, 0, 1280 - 900, 960);
@@ -38,13 +43,80 @@ public class Game {
 	static int lastSpawnFrame = 0;
 	static boolean run = true;
 	
+	public static void end() {
+		
+		Game.run = false;
+		Main.showMenu();
+		
+		Mini name = new Mini("Enter your name");
+		JLabel label = new JLabel("Enter your name:");
+		JTextField field = new JTextField("Name");
+		JButton button = new JButton("Confirm");
+		
+		name.add(label);
+		name.add(field);
+		name.add(button);
+		
+		label.setBounds(10, 0, 200, 30);
+		field.setBounds(10, 50, 200, 30);
+		button.setBounds(10, 100, 200, 30);
+		
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				
+				try {
+					
+					FileWriter writer = new FileWriter("data/score.txt", true);
+					
+					writer.write('\n' + field.getText() + ", " + Player.score);
+					writer.close();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				name.dispose();
+			}
+		});
+	}
+	
+	public static boolean isEmpty() {
+		
+		return activeEnemyBullets.isEmpty() && activePlayerBullets.isEmpty() && activeEnemies.isEmpty() && activePickups.isEmpty();
+	}
+	
+	public static void incrementClipDelay() {
+		for (String s : clipMap.keySet())
+			clipMap.put(s, clipMap.get(s) - 1);
+	}
+	
 	public static void playClip(String s) {
 		
 		try {
 			
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
-			clip.start();
+			if (clipMap.containsKey(s)) {
+				if (clipMap.get(s) < 0) {
+					
+					Clip clip = AudioSystem.getClip();
+					clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+					clip.start();
+					
+					FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(-30);
+					
+					clipMap.put(s, clipDelay);
+				}
+			} else {
+				
+				Clip clip = AudioSystem.getClip();
+				clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+				clip.start();
+				
+				FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(-30);
+				
+				clipMap.put(s, clipDelay);
+			}
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
@@ -107,7 +179,10 @@ public class Game {
 		if (activeScript.peekFirst() == null)
 			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty())
 				purgeScript();
-			else
+			else if (Game.isEmpty()) {
+				Game.end();
+				return;
+			} else
 				return;
 			
 		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
@@ -140,8 +215,9 @@ public class Game {
 			purgePlayerBullets();
 		if (deadPickups.size() > 0)
 			purgePickups();
-			
+		
 		runScript();
+		incrementClipDelay();
 	}
 	
 	public static Image getImage(String s) {
@@ -229,18 +305,8 @@ public class Game {
 						height = 32;
 						break;
 					case (9):
-						yOffset = 254;
+						yOffset = -254;
 						width = 16;
-						height = 32;
-						break;
-					case (10):
-						yOffset = -286;
-						width = 32;
-						height = 30;
-						break;
-					case (11):
-						yOffset = -318;
-						width = 32;
 						height = 32;
 						break;
 				}
@@ -351,7 +417,7 @@ public class Game {
 		BufferedImage bImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = (Graphics2D) bImage.getGraphics();
 		
-		g2.rotate(Math.PI, width/2, height/2);
+		g2.rotate(Math.PI, width / 2, height / 2);
 		g2.drawImage(image, xOffset, yOffset, null);
 		
 		return bImage;

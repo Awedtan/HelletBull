@@ -110,8 +110,8 @@ public class Maths {
 		
 		bound.x += bound.width / 5.0; // Resizing the shape
 		bound.y += bound.height / 5.0;
-		bound.width *= (2.0/3.0);
-		bound.height *= (2.0/3.0);
+		bound.width *= (2.0 / 3.0);
+		bound.height *= (2.0 / 3.0);
 		
 		Point topLeft = new Point((int) (bound.x), (int) (bound.y));
 		Point botLeft = new Point((int) (bound.x), (int) (bound.y + bound.height));
@@ -197,6 +197,16 @@ public class Maths {
 		return AffineTransform.getRotateInstance(angle, centerX(s.getBounds()), centerY(s.getBounds())).createTransformedShape(s);
 	}
 	
+	public static double toAngle(double i) {
+		
+		if (i > 180)
+			return -180 + (i % 180);
+		else if (i < -180)
+			return 180 + (i % -180);
+		else
+			return i;
+	}
+	
 	public static int toHeight(int i) {
 		
 		if (Math.abs(i) > Game.GRIDLINES)
@@ -215,11 +225,6 @@ public class Maths {
 	
 	public static double toRadians(double angle) {
 		
-		// if (angle > 90)
-		// return -(angle - 180) / 180.0 * Math.PI;
-		// else if (angle < -90)
-		// return -(angle + 180) / 180.0 * Math.PI;
-		// else
 		return (-angle / 180.0 * Math.PI);
 	}
 }

@@ -8,6 +8,8 @@ public class EnemyActive extends Enemy {
 	
 	static String damageClip = "enemydamage";
 	static String deathClip = "enemydeath";
+	static String shotClip = "enemyshot";
+	static String bossClip = "bossdeath";
 	
 	ArrayDeque<Point2D.Double> points; // The queue of points the enemy will move through
 	ArrayDeque<Subroutine> routine; // The queue of subroutines the enemy will shoot through
@@ -23,6 +25,7 @@ public class EnemyActive extends Enemy {
 		health = enem.health;
 		flatness = enem.flatness;
 		offset = enem.offset;
+		isBoss = enem.isBoss;
 		
 		this.routine = Game.routineMap.get(routine).clone();
 		points = Parser.parsePathing(path, origin, flatness, offset, false);
@@ -47,25 +50,10 @@ public class EnemyActive extends Enemy {
 		if (health <= 0) {
 			
 			kill();
+			Player.addScore();
 			Game.playClip(deathClip);
 			
-			switch ((int) (Math.random() * 100)) {
-				case (0):
-					Pickup.create(5, 20, this);
-					break;
-				case (1):
-				case (2):
-				case (3):
-				case (4):
-				case (5):
-				case (6):
-				case (7):
-				case (8):
-				case (9):
-				case (10):
-					Pickup.create(1, 10, this);
-					break;
-			}
+			Pickup.create(1, 15, this);
 		}
 		
 		Game.playClip(damageClip);
@@ -74,6 +62,11 @@ public class EnemyActive extends Enemy {
 	@Override
 	public void kill() {
 		// Marks the enemy for deletion
+		
+		if(isBoss){
+			Game.playClip(bossClip);
+			Game.activeEnemyBullets.clear();
+		}
 		
 		Game.deadEnemies.add(this);
 	}
@@ -123,6 +116,7 @@ public class EnemyActive extends Enemy {
 		else
 			EnemyProjectile.create(routine.proj, this);
 		
+		Game.playClip(shotClip);
 		lastSpawnFrame = Game.frameCount;
 	}
 	

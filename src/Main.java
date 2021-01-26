@@ -3,35 +3,18 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-/* TODO
-general
-	level scripting
-	verify everything before starting
-	panel layout
-	sfx
-	music
-
-projectiles
-	fix grazing
-
-player
-	shot power
-	sprites
-
-enemies
-	sprites
-*/
-
+// touhou 6.9 emboidment of your mother
 public class Main {
 	
-	static boolean enableController = false;
-	static boolean debug = false;
+	static boolean enableController = false; // Enable this for controller support
+	static boolean debug = false; // Enable this to turn on a bunch of debugging features
 	
 	static JFrame frame = new JFrame("Hellet Bull");
 	static MenuPanel menuPanel = new MenuPanel();
 	static GamePanel gamePanel;
+	static ScorePanel scorePanel;
 	
-	public static void runGame() {
+	public static void showGame() {
 		
 		frame.dispose();
 		
@@ -39,6 +22,34 @@ public class Main {
 		gamePanel = new GamePanel();
 		
 		frame.add(gamePanel);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setVisible(true);
+	}
+	
+	public static void showMenu() {
+		
+		frame.dispose();
+		
+		frame = new JFrame("Hellet Bull");
+		menuPanel = new MenuPanel();
+		
+		frame.add(menuPanel);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setVisible(true);
+	}
+	
+	public static void showScores() {
+		
+		frame.dispose();
+		
+		frame = new JFrame("Hellet Bull");
+		scorePanel = new ScorePanel();
+		
+		frame.add(scorePanel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -77,7 +88,7 @@ public class Main {
 				String str = input.readLine();
 				
 				while (str.indexOf('?') == -1) {
-					String[] accumulate = new String[15];
+					String[] accumulate = new String[17];
 					int count = 0;
 					
 					if (str.indexOf("bullet") == 0)
@@ -141,7 +152,6 @@ public class Main {
 	}
 	
 	public static void initializeImages() {
-		// TODO make this
 		
 		MediaTracker tracker = new MediaTracker(menuPanel);
 		File folder = new File("images");
@@ -158,7 +168,7 @@ public class Main {
 		} catch (InterruptedException e) {
 		}
 		
-		Player.hitboxImage = Game.getImage("hitbox");
+		Player.sprite = Game.getImage("player");
 	}
 	
 	public static void initializeRoutines() {

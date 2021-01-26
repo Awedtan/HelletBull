@@ -35,9 +35,11 @@ bullet name
 	aimed			false
 	velocity		1.0
 	acceleration	0.0
-	maxspeed		10.0
+	maxspeed		4.0
 	minspeed		0.0
 	homing			0
 	lifetime		-1
+	gravity			false
+	border			false
 	secondary		name
 ;

@@ -17,10 +17,12 @@ public class Parser {
 		boolean aimedLocal = false;
 		double velocityLocal = 1;
 		double accelerationLocal = 0;
-		double maxLocal = 10;
+		double maxLocal = 4;
 		double minLocal = 0;
 		int homingLocal = 0;
 		int lifetimeLocal = -1;
+		boolean gravityLocal = false;
+		boolean borderLocal = false;
 		String secondaryLocal = "";
 		
 		for (int i = 1; i < arr.length; i++) {
@@ -63,6 +65,12 @@ public class Parser {
 					case "homing":
 						homingLocal = Integer.parseInt(value);
 						break;
+					case "gravity":
+						gravityLocal = Boolean.parseBoolean(value);
+						break;
+					case "border":
+						borderLocal = Boolean.parseBoolean(value);
+						break;
 					case "lifetime":
 						lifetimeLocal = Integer.parseInt(value);
 						break;
@@ -83,8 +91,8 @@ public class Parser {
 			}
 		}
 		
-		Game.bulletMap.put(nameLocal,
-				new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal, lifetimeLocal, secondaryLocal));
+		Game.bulletMap.put(nameLocal, new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal,
+				lifetimeLocal, gravityLocal, borderLocal, secondaryLocal));
 	}
 	
 	public static void parseEnemy(String[] arr) {
@@ -98,6 +106,7 @@ public class Parser {
 		int healthLocal = 1;
 		double flatLocal = 0.003;
 		boolean offsetLocal = false;
+		boolean bossLocal = false;
 		
 		for (int i = 1; i < arr.length; i++) {
 			
@@ -124,6 +133,9 @@ public class Parser {
 					case "offset":
 						offsetLocal = Boolean.parseBoolean(value);
 						break;
+					case "boss":
+						bossLocal = Boolean.parseBoolean(value);
+						break;
 					default:
 						System.out.printf("WARN: %s is an invalid field for enemy %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
 				}
@@ -138,7 +150,7 @@ public class Parser {
 			System.out.printf("WARN: An error occured when creating pathing for enemy %s%n", nameLocal.toUpperCase());
 		}
 		
-		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, healthLocal, flatLocal, offsetLocal));
+		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, healthLocal, flatLocal, offsetLocal, bossLocal));
 	}
 	
 	public static ArrayDeque<Point2D.Double> parsePathing(String str, Point origin, double flatness, boolean offset, boolean check) {
@@ -171,9 +183,6 @@ public class Parser {
 					coords[j] = coords[j].trim();
 					
 					if (Math.abs(Integer.parseInt(coords[j])) > Game.GRIDLINES)
-						throw new RuntimeException();
-					
-					if (!offset && Integer.parseInt(coords[j]) < 0)
 						throw new RuntimeException();
 					
 					if (bool)

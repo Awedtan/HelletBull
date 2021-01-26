@@ -1,0 +1,11 @@
+Dan, 1000
+Dam, 100000
+Daur, 10
+damn, 6
+Name, 2
+Name, 155
+Name, -1591
+Name, 54
+Name, 2
+Name, -1250
+Name, -170

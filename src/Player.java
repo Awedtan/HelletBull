@@ -17,15 +17,12 @@ public class Player {
 	static Rectangle2D.Double hitboxModel = new Rectangle2D.Double(STARTPOSX + playerWidth / 2 - hitboxSize / 2, STARTPOSY + playerHeight / 2 - hitboxSize / 2, // Gets hit by projectiles
 			hitboxSize, hitboxSize);
 	
-	static Image hitboxImage;
+	static Image sprite;
 	
-	static final int MAXPOWER = 10;
-	static int points = 0;
-	static int power = 0;
-	static int shotPower = 0;
+	static int score = 0;
 	
 	static final int SHOTDELAY = 6; // Player shot cooldown
-	static final int BOMBDELAY = 240; // Player bomb cooldown
+	static final int BOMBDELAY = 1200; // Player bomb cooldown
 	static int lastShot = 0; // Frame of last player shot
 	static int lastBomb = 0; // Frame of last player bomb
 	
@@ -37,20 +34,20 @@ public class Player {
 	static boolean focus;
 	static boolean shoot;
 	
-	static String pickupClip = "pickup";
 	static String deathClip = "playerdeath";
 	static String shotClip = "playershot";
+	static String bombClip = "bomb";
 	
-	public static void addPower(int value) {
+	public static void addScore(){
 		
-		power += value;
-		shotPower = Maths.log(power / 2);
-		
-		Game.playClip(pickupClip);
+		score++;
 	}
 	
 	public static void bomb() {
-		// TODO: make this
+		
+		score -= 10;
+		Game.activeEnemyBullets.clear();
+		Game.playClip(bombClip);
 		
 		lastBomb = Game.frameCount;
 	}
@@ -59,7 +56,7 @@ public class Player {
 		
 		g2.setColor(Color.BLUE);
 		g2.fill(model);
-		g2.drawImage(hitboxImage, (int) (model.x - ((hitboxImage.getWidth(null) - model.width) / 2)) , (int) (model.y - ((hitboxImage.getHeight(null) - model.height) / 2)) + 2, null);
+		g2.drawImage(sprite, (int) (model.x - ((sprite.getWidth(null) - model.width) / 2)) , (int) (model.y - ((sprite.getHeight(null) - model.height) / 2)) + 2, null);
 
 		g2.setColor(Color.MAGENTA);
 		g2.fill(hitboxModel);
@@ -67,8 +64,8 @@ public class Player {
 	}
 	
 	public static void hit() {
-		// TODO: make this
 		
+		score -= 100;
 		Game.playClip(deathClip);
 	}
 	
@@ -104,7 +101,7 @@ public class Player {
 			hitboxModel.y += speed;
 		}
 		
-		switch (Maths.checkInBounds(Player.model.getBounds(), 0)) {
+		switch (Maths.checkInBounds(model.getBounds(), 0)) {
 			case (0):
 				model.x = mx;
 				hitboxModel.x = hx;
@@ -194,7 +191,7 @@ public class Player {
 	
 	public static void shoot() {
 		
-		PlayerProjectile.create(shotPower);
+		PlayerProjectile.create();
 		lastShot = Game.frameCount;
 		
 		Game.playClip(shotClip);

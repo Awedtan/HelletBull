@@ -1,0 +1,110 @@
+routine edward
+	300	m2greenD1	16
+	15	m2greenD2	16
+	15	m2greenD3	16
+	15	m2greenD4	16
+	15	m2greenD5	16
+	15	m2greenD6	16
+	15	m2greenD7	16
+	15	m2greenD8	16
+	15	m2redD1	16
+	15	m2redD2	16
+	15	m2redD3	16
+	15	m2redD4	16
+	15	m2redD5	16
+	15	m2redD6	16
+	15	m2redD7	16
+	15	m2redD8	16
+	15	m2redD9	16
+	
+	350	m2greenA	9	90
+	25r4	m2greenA	9	90
+	
+	350	m4redA
+	5r60	m4redA
+	
+	300	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	1r20	m2greenD360
+	1r20	m4redD360
+	
+	300		m4redA	5	60
+	5r40	m4redA	5	60
+	
+	300	m2greenD1	16
+	15	m2redD1	16
+	15	m2greenD2	16
+	15	m2redD2	16
+	15	m2greenD3	16
+	15	m2redD3	16
+	15	m2greenD4	16
+	15	m2redD4	16
+	15	m2greenD5	16
+	15	m2redD5	16
+	15	m2greenD6	16
+	15	m2redD6	16
+	15	m2greenD7	16
+	15	m2redD7	16
+	15	m2greenD8	16
+	15	m2redD8	16
+	
+	400	m2greenD1	16
+	15	m2redD1	16
+	15	m2greenD2	16
+	15	m2redD2	16
+	15	m2greenD3	16
+	15	m2redD3	16
+	15	m2greenD4	16
+	15	m2redD4	16
+	15	m2greenD5	16
+	15	m2redD5	16
+	15	m2greenD6	16
+	15	m2redD6	16
+	15	m2greenD7	16
+	15	m2redD7	16
+	15	m2greenD8	16
+	15	m2redD8	16
+;
+
+?

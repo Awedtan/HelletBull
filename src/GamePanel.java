@@ -7,6 +7,7 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements KeyListener, Runnable {
 	
 	static Thread gameThread;
+	static Font font = new Font("Arial", Font.PLAIN, 22);
 	
 	static Line2D.Double[] grid = new Line2D.Double[] { new Line2D.Double(Maths.toWidth(1), 0, Maths.toWidth(1), Game.PLAYSCREEN.height),
 			new Line2D.Double(Maths.toWidth(2), 0, Maths.toWidth(2), Game.PLAYSCREEN.height), new Line2D.Double(Maths.toWidth(3), 0, Maths.toWidth(3), Game.PLAYSCREEN.height),
@@ -22,7 +23,14 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	static JLabel scoreLabel = new JLabel() {
 		{
 			setBounds(1000, 200, 200, 50);
-			setText(Integer.toString(Player.shotPower));
+			setFont(font);
+		}
+	};
+	
+	static JLabel bombLabel = new JLabel() {
+		{
+			setBounds(1000, 300, 200, 50);
+			setFont(font);
 		}
 	};
 	
@@ -38,6 +46,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 		
 		add(scoreLabel);
+		add(bombLabel);
 	}
 	
 	@Override
@@ -50,7 +59,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			
 			try {
 				
-				scoreLabel.setText(Integer.toString(Player.power));
+				scoreLabel.setText("Score: " + Player.score);
+				
+				if (Player.BOMBDELAY - Game.frameCount + Player.lastBomb > 0)
+					bombLabel.setText("Bomb: " + (Player.BOMBDELAY - Game.frameCount + Player.lastBomb));
+				else
+					bombLabel.setText("Bomb: READY");
+				
 				Game.update();
 				
 				if (Main.enableController)
@@ -81,45 +96,56 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
 			
+			g2.setColor(Color.GRAY);
+			g2.fill(Game.PLAYSCREEN);
+			
 			try {
 				
 				g2.setColor(Color.RED);
 				for (EnemyActive ea : Game.activeEnemies) { // Enemies
-					// g2.fill(ea);
+					if (Main.debug)
+						g2.fill(ea);
 					ea.draw(g2);
 				}
 				
 				g2.setColor(new Color(255, 100, 100, 150));
 				for (PlayerProjectile pp : Game.activePlayerBullets) { // Player bullets
-					// g2.fill(pp);
+					if (Main.debug)
+						g2.fill(pp);
 					pp.draw(g2);
 				}
 				
 				g2.setColor(Color.MAGENTA);
 				for (Pickup pu : Game.activePickups) { // Pickups
-					g2.fill(pu);
-					// pu.draw(g2);
+					if (Main.debug)
+						g2.fill(pu);
+					pu.draw(g2);
 				}
 				
-				g2.setColor(Color.BLACK);
-				for (Line2D.Double l : grid)
-					g2.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
-				g2.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
+				if (Main.debug) {
+					g2.setColor(Color.BLACK);
+					for (Line2D.Double l : grid)
+						g2.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
+					g2.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
+				}
 				
 				Player.draw(g2);
 				
 				for (EnemyProjectile p : Game.activeEnemyBullets) { // Enemy bullets
 					p.draw(g2);
-					// g2.setColor(Color.BLACK);
-					// g2.fill(p);
-					// g2.setColor(Color.BLUE);
-					// g2.fill(p.getShape());
-					// g2.setColor(Color.RED);
-					// g2.draw(Maths.rotate(Maths.ellipseHitbox(p), p.radianAngle));
+					if (Main.debug) {
+						g2.setColor(Color.BLACK);
+						g2.fill(p);
+						g2.setColor(Color.BLUE);
+						g2.fill(p.getShape());
+						g2.setColor(Color.RED);
+						g2.draw(Maths.rotate(Maths.ellipseHitbox(p), p.radianAngle));
+					}
+					
 				}
 				
 			} catch (ConcurrentModificationException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
 			}
 			
 		} catch (Exception e) {
@@ -142,6 +168,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			Player.focus = true;
 		if (e.getKeyCode() == KeyEvent.VK_Z)
 			Player.shoot = true;
+		if (e.getKeyCode() == KeyEvent.VK_X && Game.frameCount - Player.lastBomb > Player.BOMBDELAY)
+			Player.bomb();
 	}
 	
 	@Override

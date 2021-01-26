@@ -3,7 +3,9 @@ import java.awt.geom.*;
 
 public class EnemyProjectile extends DObject {
 	
-	static final int BORDERBUFFER = -250;
+	static final int BORDERBUFFER = -1000;
+	static final double GRAVITYACCEL = 0.02;
+	static final Point2D.Double GRAVITY = new Point2D.Double(0, -GRAVITYACCEL);
 	
 	int inaccuracy; // How much deviation there can be when initially shooting the proj
 	double angle; // The angle of the proj, 0 is down, 90 is right, -90 is left, +-180 is up
@@ -14,16 +16,19 @@ public class EnemyProjectile extends DObject {
 	double maxVelocity; // The maximum speed
 	double minVelocity; // The minimum speed
 	int homing; // If greater than 0, the proj will follow the player until this many pixels away
+	boolean gravity;
+	boolean border;
 	int lifetime; // How many frames the proj will last, -1 for forever
 	String subBullet; // The proj to be created when the current proj dies
 	
+	int spawnFrame;
 	boolean grazed = false;
 	Path2D.Double rotated = null;
 	
 	static String grazeClip = "graze";
 	
 	public EnemyProjectile(String sprite, int inaccuracy, double angle, double turn, boolean aimed, double velocity, double acceleration, double maxVelocity, double minVelocity, int homing,
-			int lifetime, String subBullet) { // Stored projectile types
+			int lifetime, boolean gravity, boolean border, String subBullet) { // Stored projectile types
 		
 		this.sprite = sprite;
 		this.inaccuracy = inaccuracy;
@@ -36,6 +41,8 @@ public class EnemyProjectile extends DObject {
 		this.minVelocity = minVelocity;
 		this.homing = homing;
 		this.lifetime = lifetime;
+		this.gravity = gravity;
+		this.border = border;
 		this.subBullet = subBullet;
 	}
 	
@@ -51,11 +58,14 @@ public class EnemyProjectile extends DObject {
 		minVelocity = proj.minVelocity;
 		homing = proj.homing;
 		lifetime = proj.lifetime;
+		gravity = proj.gravity;
+		border = proj.border;
 		width = image.getWidth(null);
 		height = image.getHeight(null);
 		x = Maths.centerX(origin.getBounds()) - width / 2;
 		y = Maths.centerY(origin.getBounds()) - height / 2;
 		subBullet = proj.subBullet;
+		spawnFrame = Game.frameCount;
 		
 		if (aimed)
 			angle = Maths.angleTo(x, y, Maths.centerX(Player.hitboxModel.getBounds()) - width / 2, Maths.centerY(Player.hitboxModel.getBounds()) - height / 2);
@@ -84,12 +94,7 @@ public class EnemyProjectile extends DObject {
 	public static void create(String proj, Ellipse2D.Double origin, int amount) {
 		// Creates a circle of bullets
 		
-		for (int i = 0; i < amount; i++) {
-			EnemyProjectile blt = Game.bulletMap.get(proj);
-			
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, blt.angle + i * (360.0 / amount), blt.turn, blt.aimed, blt.velocity, blt.acceleration,
-					blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
-		}
+		create(proj, origin, amount, 360 - (360 / amount));
 	}
 	
 	public static void create(String proj, Ellipse2D.Double origin, int amount, int angle) {
@@ -98,8 +103,8 @@ public class EnemyProjectile extends DObject {
 		for (int i = 0; i < amount; i++) {
 			EnemyProjectile blt = Game.bulletMap.get(proj);
 			
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, blt.angle + i * (angle / (amount - 1)) - (angle / 2.0), blt.turn, blt.aimed,
-					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), origin));
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, blt.angle + i * (angle / (amount - 1)) - (angle / 2.0), blt.turn, blt.aimed, blt.velocity,
+					blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.gravity, blt.border, blt.subBullet), origin));
 		}
 	}
 	
@@ -113,6 +118,7 @@ public class EnemyProjectile extends DObject {
 	public void graze() {
 		
 		Game.playClip(grazeClip);
+		Player.addScore();
 		grazed = true;
 	}
 	
@@ -152,6 +158,29 @@ public class EnemyProjectile extends DObject {
 			
 			if (Maths.distanceTo(getBounds(), Player.hitboxModel.getBounds()) < homing)
 				homing = 0;
+			
+		} else if (gravity) { // Gravity
+			
+			angle = Maths.toAngle(angle);
+			angle -= Maths.toAngle(angle) / 180;
+			
+			if (angle > 0)
+				velocity += 180 / angle * 0.002;
+			else if (angle < 0)
+				velocity -= 180 / angle * 0.002;
+			
+			if (velocity > maxVelocity)
+				velocity = maxVelocity;
+			if (velocity < minVelocity)
+				velocity = minVelocity;
+			
+			radianAngle = Maths.toRadians(angle);
+			sinAngle = Math.sin(radianAngle);
+			cosAngle = Math.cos(radianAngle);
+			
+			x += -sinAngle * velocity;
+			y += cosAngle * velocity;
+			
 		} else { // Not homing
 			
 			velocity += acceleration;
@@ -183,11 +212,11 @@ public class EnemyProjectile extends DObject {
 		EnemyProjectile blt = Game.bulletMap.get(subBullet);
 		
 		if (!blt.aimed)
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration, blt.maxVelocity,
-					blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), this));
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, angle + blt.angle, blt.turn, blt.aimed, blt.velocity, blt.acceleration, blt.maxVelocity,
+					blt.minVelocity, blt.homing, blt.lifetime, blt.gravity, blt.border, blt.subBullet), this));
 		else
-			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, Maths.angleTo(getBounds(), Player.hitboxModel.getBounds()), blt.turn, false,
-					blt.velocity, blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.subBullet), this));
+			Game.activeEnemyBullets.add(new EnemyProjectile(new EnemyProjectile(blt.sprite, blt.inaccuracy, Maths.angleTo(getBounds(), Player.hitboxModel.getBounds()), blt.turn, false, blt.velocity,
+					blt.acceleration, blt.maxVelocity, blt.minVelocity, blt.homing, blt.lifetime, blt.gravity, blt.border, blt.subBullet), this));
 	}
 	
 	@Override
@@ -197,6 +226,10 @@ public class EnemyProjectile extends DObject {
 		move();
 		lifetime--;
 		
+		if (border && Game.frameCount - spawnFrame > 30)
+			if (Maths.checkInBounds(getBounds(), -10) != -1)
+				kill();
+			
 		if (lifetime == 0 || Maths.checkInBounds(getBounds(), BORDERBUFFER) != -1)
 			kill();
 		

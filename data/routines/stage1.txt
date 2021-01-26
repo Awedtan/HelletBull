@@ -1,10 +1,6 @@
 routine empty
 ;
 
-routine test
-	90r100	sgreyA	3	90
-;
-
 routine 111
 	90	sgreyA
 ;

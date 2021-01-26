@@ -8,8 +8,11 @@ public class Pickup extends DObject {
 	double velocity = -1;
 	int value;
 	
+	static String pickupClip = "pickup";
+	
 	public Pickup(int value, int size, Ellipse2D.Double ellipse) {
 		
+		image = Game.getImage("pickup");
 		this.value = value;
 		width = size;
 		height = size;
@@ -44,10 +47,11 @@ public class Pickup extends DObject {
 		if (Maths.checkInBounds(getBounds(), -20) != -1)
 			kill();
 		
-		if (Maths.distanceTo(getBounds(), Player.model.getBounds()) < 100)
-			if (collides(Player.model)) {
+		if (Maths.distanceTo(getBounds(), Player.model.getBounds()) < 300)
+			if (getBounds().intersects(Player.model.getBounds())) {
 				kill();
-				Player.addPower(value);
+				Player.addScore();
+				Game.playClip(pickupClip);
 			}
 	}
 }

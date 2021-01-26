@@ -2,7 +2,8 @@ import java.awt.*;
 
 public class PlayerProjectile extends DObject {
 	
-	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile(1, 180, 10), new PlayerProjectile(1, 185, 10), new PlayerProjectile(1, 175, 10) };
+	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile(1, 180, 10), new PlayerProjectile(1, 182, 10), new PlayerProjectile(1, 178, 10),
+			new PlayerProjectile(1, 184, 10), new PlayerProjectile(1, 176, 10) };
 	
 	static final int BORDERBUFFER = -10;
 	
@@ -33,12 +34,10 @@ public class PlayerProjectile extends DObject {
 		y = origin.y;
 	}
 	
-	public static void create(int power) {
+	public static void create() {
 		
-		for (int i = 0; i <= 2; i++) {
-			PlayerProjectile pp = shotPowers[i];
+		for (PlayerProjectile pp : shotPowers)
 			Game.activePlayerBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.model.getBounds(), pp.width), (int) Maths.centerY(Player.model.getBounds(), pp.height))));
-		}
 	}
 	
 	@Override
@@ -64,9 +63,10 @@ public class PlayerProjectile extends DObject {
 			kill();
 		
 		for (EnemyActive ea : Game.activeEnemies)
-			if (collides(ea)) {
-				kill();
-				ea.hit(damage);
-			}
+			if (Maths.distanceTo(getBounds(), ea.getBounds()) < Math.max(width, height) + Math.max(ea.width, ea.height))
+				if (collides(ea)) {
+					kill();
+					ea.hit(damage);
+				}
 	}
 }

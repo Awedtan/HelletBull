@@ -1,8 +1,50 @@
 enemy boss1
 	sprite		edward
-	pathing		5,3,6 / 540 / 8,2,4 / 300 / 6,4,4 / 480 / 5,2 / 900 / 2,3 / 60 / 9,2,3 / 480 / 4,3 / 480
-	health		400
-	offset		false
+	pathing		5,2,6 / 2400 / 3,-2
+	health		1000
+	boss		true
+;
+
+enemy boss2
+	sprite		edward
+	pathing		5,2,6 / 4000 / 3,-2
+	health		1400
+	boss		true
+;
+
+enemy boss3
+	sprite		edward
+	pathing		5,2,6 / 3400 / 3,-2
+	health		1200
+	boss		true
+;
+
+enemy boss4
+	sprite		edward
+	pathing		5,2,6 / 3800 / 3,-2
+	health		1200
+	boss		true
+;
+
+enemy boss5
+	sprite		edward
+	pathing		5,2,6 / 3600 / 3,-2
+	health		1200
+	boss		true
+;
+
+enemy boss6
+	sprite		edward
+	pathing		5,2,6 / 4000 / 3,-2
+	health		1200
+	boss		true
+;
+
+enemy edward
+	sprite		edward
+	pathing		5,3,6 / 540 / 8,2,4 / 300 / 6,4,4 / 480 / 5,2 / 900 / 2,3 / 60 / 9,2,3 / 480 / 4,3,3 / 480
+	health		3000
+	boss		true
 ;
 
 ?

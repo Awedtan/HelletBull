@@ -14,7 +14,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					Main.runGame();
+					Main.showGame();
 				}
 				
 				public void mouseEntered(MouseEvent e) {
@@ -37,7 +37,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					
+					Main.showScores();
 				}
 				
 				public void mouseEntered(MouseEvent e) {
