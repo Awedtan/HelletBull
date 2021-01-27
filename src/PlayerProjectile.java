@@ -1,6 +1,8 @@
 import java.awt.*;
 
 public class PlayerProjectile extends DObject {
+	// Bullets that the player shoots out
+	// Originally planned to have increased in damage and number as game went along, didnt get around to that
 	
 	static PlayerProjectile[] shotPowers = new PlayerProjectile[] { new PlayerProjectile(1, 180, 10), new PlayerProjectile(1, 182, 10), new PlayerProjectile(1, 178, 10),
 			new PlayerProjectile(1, 184, 10), new PlayerProjectile(1, 176, 10) };
@@ -13,6 +15,8 @@ public class PlayerProjectile extends DObject {
 	double velocity; // The current speed of the proj
 	
 	public PlayerProjectile(int damage, double angle, double velocity) {
+		// Stored projectiles
+		// No location
 		
 		image = Game.getImage(sprite);
 		width = image.getWidth(null);
@@ -23,6 +27,8 @@ public class PlayerProjectile extends DObject {
 	}
 	
 	public PlayerProjectile(PlayerProjectile pp, Point origin) {
+		// Projectiles that are spawned in game
+		// Have a location
 		
 		image = Game.getImage(sprite);
 		damage = pp.damage;
@@ -35,6 +41,7 @@ public class PlayerProjectile extends DObject {
 	}
 	
 	public static void create() {
+		// Creates all bullets in the bullet array
 		
 		for (PlayerProjectile pp : shotPowers)
 			Game.activePlayerBullets.add(new PlayerProjectile(pp, new Point((int) Maths.centerX(Player.model.getBounds(), pp.width), (int) Maths.centerY(Player.model.getBounds(), pp.height))));
@@ -49,6 +56,7 @@ public class PlayerProjectile extends DObject {
 	
 	@Override
 	public void move() {
+		// Moves the bullet
 		
 		x += Math.sin(Math.toRadians(angle)) * velocity;
 		y += Math.cos(Math.toRadians(angle)) * velocity;
@@ -56,6 +64,7 @@ public class PlayerProjectile extends DObject {
 	
 	@Override
 	public void update() {
+		// Main update method
 		
 		move();
 		

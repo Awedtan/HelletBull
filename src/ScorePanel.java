@@ -5,12 +5,13 @@ import java.io.*;
 import javax.swing.*;
 
 public class ScorePanel extends JPanel {
+	// Panel for displaying high scores
 	
 	static Font font = new Font("Arial", Font.PLAIN, 22);
 	
-	static JLabel backLabel = new JLabel("Back ", SwingConstants.RIGHT) {
+	static JLabel backLabel = new JLabel("Back ", SwingConstants.RIGHT) { // Goes back to menu panel
 		{
-			setFont(font);
+			setFont(new Font("Arial", Font.PLAIN, 30));
 			setBackground(Color.GRAY);
 			
 			addMouseListener(new MouseAdapter() {
@@ -42,11 +43,18 @@ public class ScorePanel extends JPanel {
 		
 		ArrayList<Score> list = readScores();
 		for (Score s : list) {
-			add(new JLabel(s.toString()));
+			add(new JLabel(s.toString()) {// Adds all scores to the panel
+				{
+					setFont(font);
+				}
+			});
 		}
 	}
 	
 	public static ArrayList<Score> readScores() {
+		// Reads in scores from save file
+		// Sorts high to low
+		// Returns a sorted list of scores
 		
 		Scanner input;
 		ArrayList<Score> list = new ArrayList<>();

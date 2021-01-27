@@ -7,36 +7,44 @@ enemy boss1
 
 enemy boss2
 	sprite		edward
-	pathing		5,2,6 / 4000 / 3,-2
-	health		1400
+	pathing		5,2,6 / 3400 / 3,-2
+	health		1200
 	boss		true
 ;
 
 enemy boss3
 	sprite		edward
-	pathing		5,2,6 / 3400 / 3,-2
-	health		1200
+	pathing		5,2,6 / 4000 / 3,-2
+	health		1800
 	boss		true
 ;
 
 enemy boss4
 	sprite		edward
 	pathing		5,2,6 / 3800 / 3,-2
-	health		1200
+	health		2400
 	boss		true
 ;
 
 enemy boss5
 	sprite		edward
 	pathing		5,2,6 / 3600 / 3,-2
-	health		1200
+	health		2000
 	boss		true
 ;
 
 enemy boss6
 	sprite		edward
 	pathing		5,2,6 / 4000 / 3,-2
-	health		1200
+	health		2400
+	boss		true
+;
+
+enemy boss7
+	sprite		edward
+	pathing		5,6,6 / 120 /  9,6,9,0,5,0 / 1,0,1,6,5,6 / 9,6,9,0,5,0 / 1,0,1,6,5,6 / 9,6,9,0,5,0 / 1,0,1,6,5,6 / 9,6,9,0,5,0 / 240 / 3,-2
+	health		3400
+	flatness	0.001
 	boss		true
 ;
 

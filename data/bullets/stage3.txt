@@ -1,0 +1,136 @@
+bullet m3tealG
+	sprite			mb3teal
+	inaccuracy		5
+	angle			180.0
+	velocity		1.0
+	variance		0.5
+	gravity			true
+;
+bullet m3yellowG
+	sprite			mb3yellow
+	inaccuracy		5
+	angle			180.0
+	velocity		1.0
+	variance		0.5
+	gravity			true
+;
+
+bullet m5redD
+	sprite			mb5red
+	velocity		4.0
+;
+
+bullet b6redH
+	sprite			bb4red
+	velocity		0.5
+	acceleration	0.02
+	homing			100
+;
+bullet b6greenH
+	sprite			bb4green
+	velocity		0.5
+	acceleration	0.02
+	homing			100
+;
+bullet b6greyA
+	sprite			bb4grey
+	aimed			true
+	velocity		0.5
+	acceleration	0.02
+;
+bullet b6yellowA
+	sprite			bb4yellow
+	aimed			true
+	velocity		0.5
+	acceleration	0.02
+;
+
+bullet m5pinkG
+	sprite			mb5pink
+	inaccuracy		30
+	angle			180.0
+	velocity		2.0
+	variance		0.5
+	gravity			true
+;
+bullet m5redG
+	sprite			mb5red
+	inaccuracy		30
+	angle			180.0
+	velocity		2.0
+	variance		0.5
+	gravity			true
+;
+bullet m5orangeG
+	sprite			mb5orange
+	inaccuracy		30
+	angle			180.0
+	velocity		2.0
+	variance		0.5
+	gravity			true
+;
+bullet m5blueG
+	sprite			mb5blue
+	inaccuracy		30
+	angle			180.0
+	velocity		2.0
+	variance		0.5
+	gravity			true
+;
+
+bullet m3blueG
+	sprite			mb3blue
+	inaccuracy		5
+	angle			180.0
+	velocity		1.0
+	variance		0.5
+	gravity			true
+;
+bullet m3pinkG
+	sprite			mb3pink
+	inaccuracy		5
+	angle			180.0
+	velocity		1.0
+	variance		0.5
+	gravity			true
+;
+
+bullet m5orangeD
+	sprite			mb5orange
+	velocity		4.0
+;
+
+?
+
+defaults:
+String name = arr[0].split(" ")[1];
+String sprite = "zy";
+int inaccuracy = 0;
+double angle = 0;
+double turn = 0;
+boolean aimed = false;
+double velocity = 1;
+double acceleration = 0;
+double max = 1;
+double min = 0;
+int homing = 0;
+int lifetime = -1;
+
+template:
+bullet name
+	sprite			zy
+	inaccuracy		0
+	angle			0.0
+	turn			0.0
+	aimed			false
+	velocity		1.0
+	variance		0.0
+	acceleration	0.0
+	maxspeed		5.0
+	minspeed		0.0
+	homing			0
+	lifetime		-1
+	gravity			false
+	border			false
+	secondary		name
+;

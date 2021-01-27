@@ -48,13 +48,13 @@ public class Maths {
 	public static double centerX(Rectangle rect) {
 		// Returns the x coordinate of the center of the given rectangle
 		
-		return rect.x + rect.width / 2;
+		return centerX(rect, 0);
 	}
 	
 	public static double centerY(Rectangle rect) {
 		// Returns the y coordinate of the center of the given rectangle
 		
-		return rect.y + rect.height / 2;
+		return centerY(rect, 0);
 	}
 	
 	public static double centerX(Rectangle rect, double offset) {
@@ -70,8 +70,8 @@ public class Maths {
 	}
 	
 	public static int checkInBounds(Rectangle rect, double buffer) {
-		// Checks if the rectangle is within some arbitrary rectangle
-		// Returns false if the rectangle exceeds these bounds
+		// Checks if the rectangle is within some arbitrary bounds
+		// Returns an int depending on if and how the rectangle exceeds these bounds
 		
 		double x1 = rect.x;
 		double y1 = rect.y;
@@ -80,58 +80,59 @@ public class Maths {
 		
 		if (x2 > Game.PLAYSCREEN.width - buffer || x1 < buffer)
 			if (y2 > Game.PLAYSCREEN.height - buffer || y1 < buffer)
-				return 2;
+				return 2; // Both horizontally and vertically
 			else
-				return 0;
+				return 0; // Only horizontally
 		else if (y2 > Game.PLAYSCREEN.height - buffer || y1 < buffer)
-			return 1;
-		
-		return -1;
+			return 1; // Only vertically
+			
+		return -1; // Doesn't
 	}
 	
 	public static double distanceTo(Rectangle origin, Rectangle target) {
 		// Returns the distance from the center of the origin rectangle to the center of the target rectangle
 		
-		return Math.sqrt(Math.pow(centerY(origin.getBounds()) - centerY(target.getBounds()), 2) + Math.pow(centerX(origin.getBounds()) - centerX(target.getBounds()), 2));
+		return distanceTo(centerX(origin), centerY(origin), centerX(target), centerY(target));
 	}
 	
 	public static double distanceTo(double originX, double originY, double targetX, double targetY) {
-		// Returns the distance from the center of the origin rectangle to the center of the target rectangle
+		// Returns the distance from one coordinate to another
 		
 		return Math.sqrt(Math.pow(originY - targetY, 2) + Math.pow(originX - targetX, 2));
 	}
 	
 	public static Area ellipseHitbox(Shape shape) {
-		// Takes in an ellipse shape
+		// Takes in an shape
+		// Assumes it is an ellipse
 		// Returns an Area object of an octagon that's roughly represenative of the ellipse but 2/3 the size
-		// This is needed because directly turning an ellipse into an Area is way too slow
+		// This is needed because working directly with an ellipse is way too slow
 		
 		Rectangle2D.Double bound = (Rectangle2D.Double) shape.getBounds2D();
 		
-		bound.x += bound.width / 5.0; // Resizing the shape
-		bound.y += bound.height / 5.0;
+		bound.x += bound.width / 6.0; // Resizing the shape
+		bound.y += bound.height / 6.0;
 		bound.width *= (2.0 / 3.0);
 		bound.height *= (2.0 / 3.0);
 		
-		Point topLeft = new Point((int) (bound.x), (int) (bound.y));
+		Point topLeft = new Point((int) (bound.x), (int) (bound.y)); // Creating a rectangle that encompasses the entire shape
 		Point botLeft = new Point((int) (bound.x), (int) (bound.y + bound.height));
 		Point topRight = new Point((int) (bound.x + bound.width), (int) (bound.y));
 		Point botRight = new Point((int) (bound.x + bound.width), (int) (bound.y + bound.height));
 		Point origin = new Point((int) (bound.x + bound.width / 2), (int) (bound.y + bound.height / 2));
 		
-		Point tlMid = midpoint(topLeft, midpoint(topLeft, origin));
+		Point tlMid = midpoint(topLeft, midpoint(topLeft, origin)); // Resizing the rectangle so its corners are 3/4 of the original distance to the center of the rectangle
 		Point blMid = midpoint(botLeft, midpoint(botLeft, origin));
 		Point trMid = midpoint(topRight, midpoint(topRight, origin));
 		Point brMid = midpoint(botRight, midpoint(botRight, origin));
 		
-		Point left = new Point((int) (bound.x), (int) (bound.y + bound.height / 2));
+		Point left = new Point((int) (bound.x), (int) (bound.y + bound.height / 2)); // Creating a rhombus with points on the original rectangle's sides' midpoint
 		Point right = new Point((int) (bound.x + bound.width), (int) (bound.y + bound.height / 2));
 		Point up = new Point((int) (bound.x + bound.width / 2), (int) (bound.y));
 		Point down = new Point((int) (bound.x + bound.width / 2), (int) (bound.y + bound.height));
 		
 		Path2D.Double path = new Path2D.Double();
 		
-		path.moveTo(left.x, left.y);
+		path.moveTo(left.x, left.y); // Connecting the points on the resized rectangle and rhombus to create an octagon
 		path.lineTo(tlMid.x, tlMid.y);
 		path.lineTo(up.x, up.y);
 		path.lineTo(trMid.x, trMid.y);
@@ -144,12 +145,27 @@ public class Maths {
 		return new Area(path);
 	}
 	
+	public static double equivalentAngle(double i) {
+		// Takes in an angle
+		// Returns an equivalent angle with the smallest absolute value
+		// 210 -> -150, -350 -> 10, 170 -> 170
+		
+		if (i > 180)
+			return -180 + (i % 180);
+		else if (i < -180)
+			return 180 + (i % -180);
+		else
+			return i;
+	}
+	
 	public static int fromHeight(int i) {
+		// Turns pixel coordinates into grid coordinates
 		
 		return i / (Game.PLAYSCREEN.height / 10);
 	}
 	
 	public static int fromWidth(int i) {
+		// Turns pixel coordinates into grid coordinates
 		
 		return i / (Game.PLAYSCREEN.width / 10);
 	}
@@ -161,7 +177,7 @@ public class Maths {
 		Area firArea = ellipseHitbox(first);
 		Area secArea = ellipseHitbox(second);
 		
-		Area temp = (Area) firArea.clone();
+		Area temp = (Area) firArea.clone(); // This is the best way of checking for collisions I could think of
 		firArea.subtract(secArea);
 		
 		return !firArea.equals(temp);
@@ -169,6 +185,7 @@ public class Maths {
 	
 	public static boolean intersects(Shape first, Shape second, double angle) {
 		// Takes in two ellipses
+		// Rotates the first one
 		// Checks if they intersect
 		
 		Area firArea = new Area(rotate(ellipseHitbox(first), angle));
@@ -180,11 +197,6 @@ public class Maths {
 		return !firArea.equals(temp);
 	}
 	
-	public static int log(int x) {
-		
-		return (int) (Math.log(x) / Math.log(2) + 1e-10);
-	}
-	
 	public static Point midpoint(Point p1, Point p2) {
 		// Takes in two points
 		// Returns the midpoint between p1 and p2
@@ -193,38 +205,28 @@ public class Maths {
 	}
 	
 	public static Shape rotate(Shape s, double angle) {
+		// Takes in a shape and an angle
+		// Returns a rotated instance of the shape
 		
 		return AffineTransform.getRotateInstance(angle, centerX(s.getBounds()), centerY(s.getBounds())).createTransformedShape(s);
 	}
 	
-	public static double toAngle(double i) {
+	public static double toRadians(double angle) {
+		// Takes in an angle
+		// Returns the radian value of that angle
 		
-		if (i > 180)
-			return -180 + (i % 180);
-		else if (i < -180)
-			return 180 + (i % -180);
-		else
-			return i;
+		return (-angle / 180.0 * Math.PI);
 	}
 	
 	public static int toHeight(int i) {
-		
-		if (Math.abs(i) > Game.GRIDLINES)
-			throw new RuntimeException();
+		// Turns grid coordinates into pixel coordinates
 		
 		return Game.PLAYSCREEN.height / 10 * i;
 	}
 	
 	public static int toWidth(int i) {
-		
-		if (Math.abs(i) > Game.GRIDLINES)
-			throw new RuntimeException();
+		// Turns grid coordinates into pixel coordinates
 		
 		return Game.PLAYSCREEN.width / 10 * i;
-	}
-	
-	public static double toRadians(double angle) {
-		
-		return (-angle / 180.0 * Math.PI);
 	}
 }

@@ -1,6 +1,3 @@
-routine test
-	90r100	hredD1	4
-;
 routine boss1
 	120		b2pinkD		16
 	30		b2redD		4
@@ -48,58 +45,6 @@ routine boss1
 ;
 
 routine boss2
-	120	m5blueA	12	180
-	15r4	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-	15r5	m5blueA	12	180
-	15r5	m5orangeA	12	180
-;
-
-routine boss3
 	120		hredD1	10
 	60		hredD2	10
 	60		hredD3	10
@@ -172,15 +117,67 @@ routine boss3
 	60		hredD6	10
 ;
 
+routine boss3
+	120	m5blueA	7	180
+	15r4	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+	15r5	m5blueA	7	180
+	15r5	m5orangeA	7	180
+;
+
 routine boss4
-	180		m8pinkB	16
-	180		m2pinkB	16
-	180		m8pinkB	16
-	180		m2pinkB	16
-	180		m8pinkB	16
-	180		m2pinkB	16
-	180		m8pinkB	16
-	180		m2pinkB	16
+	220		m8pinkB	16
+	220		m2pinkB	16
+	220		m8pinkB	16
+	220		m2pinkB	16
+	220		m8pinkB	16
+	220		m2pinkB	16
+	220		m8pinkB	16
+	220		m2pinkB	16
 ;
 
 routine boss5
@@ -199,6 +196,105 @@ routine boss6
 	40r16	m2yellowA		3	180
 	40		sunD		6
 	40r16	m2yellowA		3	180
+;
+
+routine boss7
+	240	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
+	70	b1redD1		12
+	70	m9redD		36
+	70	b1pinkD1	12
+	70	m9pinkD		36
+	70	b1blueD1	12
+	70	m9blueD		36
+	70	b1tealD1	12
+	70	m9tealD		36
+	70	b1greenD1	12
+	70	m9greenD	36
+	70	b1yellowD1	12
+	70	m9yellowD	36
 ;
 
 ?

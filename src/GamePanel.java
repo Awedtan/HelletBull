@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
+	// Panel that runs the game
 	
 	static Thread gameThread;
 	static Font font = new Font("Arial", Font.PLAIN, 22);
@@ -18,7 +19,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			new Line2D.Double(0, Maths.toHeight(2), Game.PLAYSCREEN.width, Maths.toHeight(2)), new Line2D.Double(0, Maths.toHeight(3), Game.PLAYSCREEN.width, Maths.toHeight(3)),
 			new Line2D.Double(0, Maths.toHeight(4), Game.PLAYSCREEN.width, Maths.toHeight(4)), new Line2D.Double(0, Maths.toHeight(5), Game.PLAYSCREEN.width, Maths.toHeight(5)),
 			new Line2D.Double(0, Maths.toHeight(6), Game.PLAYSCREEN.width, Maths.toHeight(6)), new Line2D.Double(0, Maths.toHeight(7), Game.PLAYSCREEN.width, Maths.toHeight(7)),
-			new Line2D.Double(0, Maths.toHeight(8), Game.PLAYSCREEN.width, Maths.toHeight(8)), new Line2D.Double(0, Maths.toHeight(9), Game.PLAYSCREEN.width, Maths.toHeight(9)) };
+			new Line2D.Double(0, Maths.toHeight(8), Game.PLAYSCREEN.width, Maths.toHeight(8)), new Line2D.Double(0, Maths.toHeight(9), Game.PLAYSCREEN.width, Maths.toHeight(9)) }; // Only for testing
+																																													// purposes
 	
 	static JLabel scoreLabel = new JLabel() {
 		{
@@ -35,6 +37,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	};
 	
 	public GamePanel() {
+		// Panel size and stuff
 		
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -56,17 +59,16 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 		long time = System.currentTimeMillis();
 		
 		while (Game.run) { // Main game loop
-			
 			try {
 				
 				scoreLabel.setText("Score: " + Player.score);
 				
-				if (Player.BOMBDELAY - Game.frameCount + Player.lastBomb > 0)
-					bombLabel.setText("Bomb: " + (Player.BOMBDELAY - Game.frameCount + Player.lastBomb));
+				if (Player.BOMBDELAY - Game.globalFrameCount + Player.lastBomb > 0)
+					bombLabel.setText("Bomb: " + (Player.BOMBDELAY - Game.globalFrameCount + Player.lastBomb));
 				else
 					bombLabel.setText("Bomb: READY");
 				
-				Game.update();
+				Game.update(); // Main update method
 				
 				if (Main.enableController)
 					Controller.update();
@@ -74,13 +76,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 				this.repaint();
 				
 				Game.frameCount++;
+				Game.globalFrameCount++;
 				
-				if (Game.frameCount % (Game.FPS * 2) == 0) {
-					if (System.currentTimeMillis() - time > 2500)
-						System.out.print("Slow! ");
-					System.out.println(System.currentTimeMillis() - time + " ms/" + Game.FPS * 2 + " frames");
-					time = System.currentTimeMillis();
-				}
+				if (Main.debug)
+					if (Game.frameCount % (Game.FPS * 2) == 0) {
+						if (System.currentTimeMillis() - time > 2500)
+							System.out.print("Slow! ");
+						System.out.println(System.currentTimeMillis() - time + " ms/" + Game.FPS * 2 + " frames"); // Prints frame times
+						time = System.currentTimeMillis();
+					}
 				
 				Thread.sleep(1000 / (int) (Game.FPS * Game.gameSpeed));
 			} catch (Exception e) {
@@ -90,6 +94,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	}
 	
 	public void paintComponent(Graphics g) {
+		// Draws objects in a specific order
 		
 		try {
 			
@@ -144,7 +149,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 					
 				}
 				
-			} catch (ConcurrentModificationException e) {
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fill(Game.SIDESCREEN);
+				
+			} catch (ConcurrentModificationException e) { // This happens sometimes but doesn't actually affect anything :)
 				// e.printStackTrace();
 			}
 			
@@ -155,6 +163,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// Sets player movement and action booleans
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 			Player.moveUp = true;
@@ -168,12 +177,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			Player.focus = true;
 		if (e.getKeyCode() == KeyEvent.VK_Z)
 			Player.shoot = true;
-		if (e.getKeyCode() == KeyEvent.VK_X && Game.frameCount - Player.lastBomb > Player.BOMBDELAY)
+		if (e.getKeyCode() == KeyEvent.VK_X && Game.globalFrameCount - Player.lastBomb > Player.BOMBDELAY)
 			Player.bomb();
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
+		// Also sets player movement and action booleans
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 			Player.moveUp = false;
@@ -191,6 +201,5 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
 	}
 }

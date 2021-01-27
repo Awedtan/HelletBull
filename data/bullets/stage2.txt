@@ -1,14 +1,33 @@
-bullet sgreyA
-	sprite			sb1green
-	aimed			true
-	velocity		2.0
+bullet b5redA
+	sprite		bb5red
+	inaccuracy	1
+	aimed		true
+	velocity	4.0
+	variance	0.5
 ;
 
-bullet m2greenA
-	sprite			mb2green
-	aimed			true
-	velocity		1.5
+bullet m1redA1
+	sprite		mb1red
+	inaccuracy	5
+	velocity	2.0
+	turn		0.4
+	lifetime	240
+	secondary	m1redD
 ;
+bullet m1redA2
+	sprite		mb1red
+	inaccuracy	5
+	velocity	2.0
+	turn		-0.4
+	lifetime	240
+	secondary	m1redD
+;
+bullet m1redD
+	sprite		mb1red
+	velocity	2.0
+	variance	0.5
+;
+
 
 ?
 

@@ -3,27 +3,30 @@ import java.awt.geom.*;
 import java.util.*;
 
 public class Parser {
+	// Class of methods that read through collected information and create objects based on them
+	// Nothing really important here, just a lot of string manipulation
 	
 	public static void parseBullet(String[] arr) {
 		// Parses through bullet data
 		// Creates a new bullet type with the given attributes
 		// Adds the bullet type to the global bullet map
 		
-		String nameLocal = arr[0].split(" ")[1];
-		String spriteLocal = "zy";
-		int inaccuracyLocal = 0;
-		double angleLocal = 0;
-		double turnLocal = 0;
-		boolean aimedLocal = false;
-		double velocityLocal = 1;
-		double accelerationLocal = 0;
-		double maxLocal = 4;
-		double minLocal = 0;
-		int homingLocal = 0;
-		int lifetimeLocal = -1;
-		boolean gravityLocal = false;
-		boolean borderLocal = false;
-		String secondaryLocal = "";
+		String name = arr[0].split(" ")[1];
+		String sprite = "zy";
+		int inaccuracy = 0;
+		double angle = 0;
+		double turn = 0;
+		boolean aimed = false;
+		double velocity = 1;
+		double variance = 0;
+		double acceleration = 0;
+		double max = 5;
+		double min = 0;
+		int homing = 0;
+		int lifetime = -1;
+		boolean gravity = false;
+		boolean border = false;
+		String secondary = "";
 		
 		for (int i = 1; i < arr.length; i++) {
 			
@@ -36,63 +39,60 @@ public class Parser {
 			try {
 				switch (variable) {
 					case "sprite":
-						spriteLocal = value;
+						sprite = value;
 						break;
 					case "inaccuracy":
-						inaccuracyLocal = Integer.parseInt(value);
+						inaccuracy = Integer.parseInt(value);
 						break;
 					case "angle":
-						angleLocal = java.lang.Double.parseDouble(value);
+						angle = java.lang.Double.parseDouble(value);
 						break;
 					case "turn":
-						turnLocal = java.lang.Double.parseDouble(value);
+						turn = java.lang.Double.parseDouble(value);
 						break;
 					case "aimed":
-						aimedLocal = Boolean.parseBoolean(value);
+						aimed = Boolean.parseBoolean(value);
 						break;
 					case "velocity":
-						velocityLocal = java.lang.Double.parseDouble(value);
+						velocity = java.lang.Double.parseDouble(value);
+						break;
+					case "variance":
+						variance = java.lang.Double.parseDouble(value);
 						break;
 					case "acceleration":
-						accelerationLocal = java.lang.Double.parseDouble(value);
+						acceleration = java.lang.Double.parseDouble(value);
 						break;
 					case "maxspeed":
-						maxLocal = java.lang.Double.parseDouble(value);
+						max = java.lang.Double.parseDouble(value);
 						break;
 					case "minspeed":
-						minLocal = java.lang.Double.parseDouble(value);
+						min = java.lang.Double.parseDouble(value);
 						break;
 					case "homing":
-						homingLocal = Integer.parseInt(value);
+						homing = Integer.parseInt(value);
 						break;
 					case "gravity":
-						gravityLocal = Boolean.parseBoolean(value);
+						gravity = Boolean.parseBoolean(value);
 						break;
 					case "border":
-						borderLocal = Boolean.parseBoolean(value);
+						border = Boolean.parseBoolean(value);
 						break;
 					case "lifetime":
-						lifetimeLocal = Integer.parseInt(value);
+						lifetime = Integer.parseInt(value);
 						break;
-					// case "width":
-					// widthLocal = Integer.parseInt(value);
-					// break;
-					// case "height":
-					// heightLocal = Integer.parseInt(value);
-					// break;
 					case "secondary":
-						secondaryLocal = value;
+						secondary = value;
 						break;
 					default:
-						System.out.printf("WARN: %s is an invalid field for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+						System.out.printf("WARN: %s is an invalid field for bullet %s%n", variable.toUpperCase(), name.toUpperCase());
 				}
 			} catch (Exception e) {
-				System.out.printf("WARN: An error occured when creating field %s for bullet %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+				System.out.printf("WARN: An error occured when creating field %s for bullet %s%n", variable.toUpperCase(), name.toUpperCase());
 			}
 		}
 		
-		Game.bulletMap.put(nameLocal, new EnemyProjectile(spriteLocal, inaccuracyLocal, angleLocal, turnLocal, aimedLocal, velocityLocal, accelerationLocal, maxLocal, minLocal, homingLocal,
-				lifetimeLocal, gravityLocal, borderLocal, secondaryLocal));
+		Game.bulletMap.put(name, new EnemyProjectile(sprite, inaccuracy, angle, turn, aimed, velocity, variance, acceleration, max, min, homing,
+				lifetime, gravity, border, secondary));
 	}
 	
 	public static void parseEnemy(String[] arr) {
@@ -100,13 +100,13 @@ public class Parser {
 		// Creates a new enemy type with the given attributes
 		// Adds the enemy type to the global enemy map
 		
-		String nameLocal = arr[0].split(" ")[1];
-		String spriteLocal = "";
-		String pathLocal = "";
-		int healthLocal = 1;
-		double flatLocal = 0.003;
-		boolean offsetLocal = false;
-		boolean bossLocal = false;
+		String name = arr[0].split(" ")[1];
+		String sprite = "";
+		String path = "";
+		int health = 1;
+		double flat = 0.003;
+		boolean offset = false;
+		boolean boss = false;
 		
 		for (int i = 1; i < arr.length; i++) {
 			
@@ -119,38 +119,38 @@ public class Parser {
 			try {
 				switch (variable) {
 					case "sprite":
-						spriteLocal = value;
+						sprite = value;
 						break;
 					case "pathing":
-						pathLocal = value;
+						path = value;
 						break;
 					case "health":
-						healthLocal = Integer.parseInt(value);
+						health = Integer.parseInt(value);
 						break;
 					case "flatness":
-						flatLocal = Double.parseDouble(value);
+						flat = Double.parseDouble(value);
 						break;
 					case "offset":
-						offsetLocal = Boolean.parseBoolean(value);
+						offset = Boolean.parseBoolean(value);
 						break;
 					case "boss":
-						bossLocal = Boolean.parseBoolean(value);
+						boss = Boolean.parseBoolean(value);
 						break;
 					default:
-						System.out.printf("WARN: %s is an invalid field for enemy %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+						System.out.printf("WARN: %s is an invalid field for enemy %s%n", variable.toUpperCase(), name.toUpperCase());
 				}
 			} catch (Exception e) {
-				System.out.printf("WARN: An error occured when creating field %s for enemy %s%n", variable.toUpperCase(), nameLocal.toUpperCase());
+				System.out.printf("WARN: An error occured when creating field %s for enemy %s%n", variable.toUpperCase(), name.toUpperCase());
 			}
 		}
 		
 		try {
-			parsePathing(pathLocal, new Point(0, 0), flatLocal, offsetLocal, true);
+			parsePathing(path, new Point(0, 0), flat, offset, true);
 		} catch (Exception e) {
-			System.out.printf("WARN: An error occured when creating pathing for enemy %s%n", nameLocal.toUpperCase());
+			System.out.printf("WARN: An error occured when creating pathing for enemy %s%n", name.toUpperCase());
 		}
 		
-		Game.enemyMap.put(nameLocal, new Enemy(spriteLocal, pathLocal, healthLocal, flatLocal, offsetLocal, bossLocal));
+		Game.enemyMap.put(name, new Enemy(sprite, path, health, flat, offset, boss));
 	}
 	
 	public static ArrayDeque<Point2D.Double> parsePathing(String str, Point origin, double flatness, boolean offset, boolean check) {
@@ -174,16 +174,10 @@ public class Parser {
 			int[] ints = new int[coords.length];
 			boolean bool = true;
 			
-			// if (coords.length == 1 && i == 0)
-			// throw new RuntimeException();
-			
 			if (coords.length != 1)
 				for (int j = 0; j < coords.length; j++) {
 					
 					coords[j] = coords[j].trim();
-					
-					if (Math.abs(Integer.parseInt(coords[j])) > Game.GRIDLINES)
-						throw new RuntimeException();
 					
 					if (bool)
 						ints[j] = Maths.toWidth(Integer.parseInt(coords[j]));
@@ -353,7 +347,7 @@ public class Parser {
 		// Creates a queue of subroutines (routine)
 		// Adds the routine to the global routine map
 		
-		String nameLocal = arr.get(0).split(" ")[1];
+		String title = arr.get(0).split(" ")[1];
 		
 		try {
 			
@@ -392,9 +386,9 @@ public class Parser {
 					queue.addLast(new Subroutine(time, name, amount, angle));
 			}
 			
-			Game.routineMap.put(nameLocal, queue);
+			Game.routineMap.put(title, queue);
 		} catch (Exception e) {
-			System.out.printf("WARN: An error occured when creating routine %s%n", nameLocal.toUpperCase());
+			System.out.printf("WARN: An error occured when creating routine %s%n", title.toUpperCase());
 		}
 	}
 	
@@ -403,7 +397,7 @@ public class Parser {
 		// Creates a queue of subscripts (script)
 		// Adds the script to the global script queue
 		
-		String nameLocal = arr.get(0).split(" ")[1];
+		String name = arr.get(0).split(" ")[1];
 		
 		try {
 			
@@ -425,9 +419,9 @@ public class Parser {
 			}
 			
 			Game.scriptQueue.addLast(script);
-			Game.scriptMap.put(nameLocal, script);
+			Game.scriptMap.put(name, script);
 		} catch (Exception e) {
-			System.out.printf("WARN: An error occured when creating script %s%n", nameLocal.toUpperCase());
+			System.out.printf("WARN: An error occured when creating script %s%n", name.toUpperCase());
 		}
 	}
 }

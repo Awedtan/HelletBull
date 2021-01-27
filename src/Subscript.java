@@ -1,6 +1,8 @@
 import java.awt.*;
 
 public class Subscript {
+	// Scripts are a queue of these
+	// At the specified time, spawn an enemy at the origin and give it the bullet routine
 	
 	int time;
 	String enemy;
@@ -15,7 +17,7 @@ public class Subscript {
 		this.routine = routine;
 	}
 	
-	public String toString(){
+	public String toString() {
 		return time + ", " + enemy + ", " + origin + "," + routine;
 	}
 }

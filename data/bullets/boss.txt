@@ -52,31 +52,37 @@ bullet b5blueA
 bullet hredD1
 	sprite			hb1red
 	velocity		1.5
+	variance		0.3
 ;
 bullet hredD2
 	sprite			hb1red
 	angle			6
 	velocity		1.5
+	variance		0.3
 ;
 bullet hredD3
 	sprite			hb1red
 	angle			12
 	velocity		1.5
+	variance		0.3
 ;
 bullet hredD4
 	sprite			hb1red
 	angle			18
 	velocity		1.5
+	variance		0.3
 ;
 bullet hredD5
 	sprite			hb1red
 	angle			24
 	velocity		1.5
+	variance		0.3
 ;
 bullet hredD6
 	sprite			hb1red
 	angle			30
 	velocity		1.5
+	variance		0.3
 ;
 
 bullet m8pinkB
@@ -216,7 +222,7 @@ bullet m6yellowG
 	sprite			mb6yellow
 	angle			180
 	inaccuracy		25
-	velocity		0.5
+	velocity		1.0
 	lifetime		-1
 	gravity			true
 ;
@@ -241,6 +247,105 @@ bullet m8whiteH
 	homing			200
 	acceleration	0.01
 ;
+
+bullet b1redD1
+	sprite			bb1red
+	aimed			true
+	velocity		3.0
+	turn			-1
+	lifetime		1080
+	secondary		b1redD2
+;
+bullet b1redD2
+	sprite			bb1red
+	velocity		3.0
+	;
+bullet b1pinkD1
+	sprite			bb1pink
+	aimed			true
+	velocity		3.0
+	turn			1
+	lifetime		1080
+	secondary		b1pinkD2
+;
+bullet b1pinkD2
+	sprite			bb1pink
+	velocity		3.0
+	;
+bullet b1blueD1
+	sprite			bb1blue
+	aimed			true
+	velocity		3.0
+	turn			-1
+	lifetime		1080
+	secondary		b1blueD2
+;
+bullet b1blueD2
+	sprite			bb1blue
+	velocity		3.0
+;
+bullet b1tealD1
+	sprite			bb1teal
+	aimed			true
+	velocity		3.0
+	turn			1
+	lifetime		1080
+	secondary		b1tealD2
+;
+bullet b1tealD2
+	sprite			bb1teal
+	velocity		3.0
+;
+bullet b1greenD1
+	sprite			bb1green
+	aimed			true
+	velocity		3.0
+	turn			-1
+	lifetime		1080
+	secondary		b1greenD2
+;
+bullet b1greenD2
+	sprite			bb1green
+	velocity		3.0
+;
+bullet b1yellowD1
+	sprite			bb1yellow
+	aimed			true
+	velocity		3.0
+	turn			1
+	lifetime		1080
+	secondary		b1greenD2
+;
+bullet b1yellowD2
+	sprite			bb1yellow
+	velocity		3.0
+;
+
+bullet m9redD
+	sprite			mb9red
+	velocity 		5.0
+;
+bullet m9pinkD
+	sprite			mb9pink
+	velocity 		5.0
+;
+bullet m9blueD
+	sprite			mb9blue
+	velocity 		5.0
+;
+bullet m9tealD
+	sprite			mb9teal
+	velocity 		5.0
+;
+bullet m9greenD
+	sprite			mb9green
+	velocity 		5.0
+;
+bullet m9yellowD
+	sprite			mb9yellow
+	velocity 		5.0
+;
+
 ?
 
 bullet name
@@ -250,8 +355,9 @@ bullet name
 	turn			0.0
 	aimed			false
 	velocity		1.0
+	variance		0.0
 	acceleration	0.0
-	maxspeed		4.0
+	maxspeed		5.0
 	minspeed		0.0
 	homing			0
 	lifetime		-1

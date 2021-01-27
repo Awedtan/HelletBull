@@ -2,11 +2,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MenuPanel extends JPanel implements KeyListener {
+public class MenuPanel extends JPanel {
+	// Panel that shows the main menu
 	
 	static Font font = new Font("Arial", Font.PLAIN, 22);
 	
-	static JLabel playLabel = new JLabel("Play ", SwingConstants.RIGHT) {
+	static JLabel playLabel = new JLabel("Play ", SwingConstants.RIGHT) { // Starts the game
 		{
 			setFont(font);
 			setBounds(1000, 200, 100, 50);
@@ -29,7 +30,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 			});
 		}
 	};
-	static JLabel scoreLabel = new JLabel("Scores ", SwingConstants.RIGHT) {
+	static JLabel scoreLabel = new JLabel("Scores ", SwingConstants.RIGHT) { // Shows the score panel
 		{
 			setFont(font);
 			setBounds(1000, 300, 100, 50);
@@ -52,7 +53,7 @@ public class MenuPanel extends JPanel implements KeyListener {
 			});
 		}
 	};
-	static JLabel exitLabel = new JLabel("Exit ", SwingConstants.RIGHT) {
+	static JLabel exitLabel = new JLabel("Exit ", SwingConstants.RIGHT) { // Quits the program
 		{
 			setFont(font);
 			setBounds(1000, 400, 100, 50);
@@ -82,26 +83,9 @@ public class MenuPanel extends JPanel implements KeyListener {
 		setPreferredSize(new Dimension(Game.SCREEN.width, Game.SCREEN.height));
 		setBackground(Color.LIGHT_GRAY);
 		setFocusable(true);
-		addKeyListener(this);
 		
 		add(playLabel);
 		add(scoreLabel);
 		add(exitLabel);
 	}
-	
-	@Override
-	public void keyTyped(KeyEvent e) {
-		
-	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-	}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
-	
 }

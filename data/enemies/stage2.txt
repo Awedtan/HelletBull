@@ -1,0 +1,40 @@
+enemy 211
+	sprite		enemgreen
+	pathing		13,0,3
+	health		7
+	offset		true
+;
+enemy 212
+	sprite		enemgreen
+	pathing		-13,0,3
+	health		7
+	offset		true
+;
+
+enemy 231
+	sprite		enemgreen
+	pathing		0,13,3
+	health		7
+	offset		true
+;
+
+?
+
+defaults:
+String name = arr[0].split(" ")[1];
+String sprite = "";
+String path = "";
+int health = 1;
+double flat = 0.003;
+boolean offset = false;
+
+straight path speed: 2
+
+template:
+enemy name
+	sprite		image
+	pathing		path
+	health		1
+	flatness	0.003
+	offset		false
+;

@@ -3,11 +3,11 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-// touhou 6.9 emboidment of your mother
+// touhou 6.9 embroidery of google max
 public class Main {
 	
 	static boolean enableController = false; // Enable this for controller support
-	static boolean debug = false; // Enable this to turn on a bunch of debugging features
+	static boolean debug = false; // Enable this to turn on a bunch of dev features
 	
 	static JFrame frame = new JFrame("Hellet Bull");
 	static MenuPanel menuPanel = new MenuPanel();
@@ -15,6 +15,7 @@ public class Main {
 	static ScorePanel scorePanel;
 	
 	public static void showGame() {
+		// Opens new frame with game panel
 		
 		frame.dispose();
 		
@@ -29,6 +30,7 @@ public class Main {
 	}
 	
 	public static void showMenu() {
+		// Opens new frame with menu panel
 		
 		frame.dispose();
 		
@@ -43,6 +45,7 @@ public class Main {
 	}
 	
 	public static void showScores() {
+		// Opens new frame with scores panel
 		
 		frame.dispose();
 		
@@ -61,7 +64,7 @@ public class Main {
 		initializeImages();
 		initializeBullets(); // Bullets are ellipses that move around and hit the player. Can spawn other bullets upon death
 		initializeRoutines(); // Bullet routines tell individual enemies when to spawn bullets
-		initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement routines
+		initializeEnemies(); // Enemies are ellipses that spawn bullets. Have built-in movement paths
 		initializeScripts(); // Scripts control when and where enemies are spawned. Also specify the bullet routine for each enemy
 		
 		if (enableController)
@@ -88,7 +91,7 @@ public class Main {
 				String str = input.readLine();
 				
 				while (str.indexOf('?') == -1) {
-					String[] accumulate = new String[17];
+					String[] accumulate = new String[18];
 					int count = 0;
 					
 					if (str.indexOf("bullet") == 0)
@@ -152,6 +155,8 @@ public class Main {
 	}
 	
 	public static void initializeImages() {
+		// Collects and loads images
+		// Puts them in a map
 		
 		MediaTracker tracker = new MediaTracker(menuPanel);
 		File folder = new File("images");
@@ -219,12 +224,15 @@ public class Main {
 			
 			for (File f : folder.listFiles()) {
 				
-				BufferedReader input = new BufferedReader(new FileReader(f));
-				String str = input.readLine().trim();
+				Scanner input = new Scanner(f);
+				String str = input.nextLine().trim();
 				
 				while (str.indexOf('!') == -1)
-					str = input.readLine().trim();
-				
+					if (input.hasNext())
+						str = input.nextLine().trim();
+					else
+						return;
+					
 				while (str.indexOf('?') == -1) {
 					ArrayList<String> accumulate = new ArrayList<String>();
 					
@@ -232,14 +240,14 @@ public class Main {
 						while (str.indexOf(';') == -1) {
 							if (str.length() > 1)
 								accumulate.add(str);
-							str = input.readLine();
+							str = input.nextLine();
 						}
 					else if (Game.scriptMap.containsKey(str))
 						Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
 					// else if (Game.bossMap.containsKey(str))
 					// Game.scriptQueue.addLast(Game.BOSSSCRIPT);
 					
-					str = input.readLine();
+					str = input.nextLine();
 					
 					if (accumulate.size() != 0)
 						Parser.parseScript(accumulate);

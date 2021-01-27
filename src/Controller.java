@@ -1,11 +1,12 @@
 import com.studiohartman.jamepad.*;
 
 public class Controller {
+	// Class for all things controller
 	
 	static ControllerManager controllers = new ControllerManager();
 	
 	static final double[] MOVEANGLES = { 27.5, 62.5, 117.5, 152.5 };
-	static final double DEADZONE = 0.5;
+	static final double DEADZONE = 0.5; // Joystick deadzone
 	
 	public static void initialize() {
 		
@@ -15,7 +16,7 @@ public class Controller {
 	public static void update() {
 		// Updates the controller state and does stuff accordingly
 		
-		ControllerState state = controllers.getState(0); // State of first controller
+		ControllerState state = controllers.getState(0); // State of first controller (game only supports one)
 		
 		if (!state.isConnected)
 			return;
@@ -25,7 +26,7 @@ public class Controller {
 				Player.shoot();
 			
 		if (state.rb)
-			if (Game.frameCount - Player.lastBomb > Player.BOMBDELAY) // Player bombing
+			if (Game.globalFrameCount - Player.lastBomb > Player.BOMBDELAY) // Player bombing
 				Player.bomb();
 			
 		if (state.leftTrigger > 0) // Player focusing

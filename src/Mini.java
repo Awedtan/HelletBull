@@ -15,16 +15,4 @@ public class Mini extends JFrame {
 		setVisible(true);
 		pack();
 	}
-	
-	public Mini(String title, int width, int height) {
-		
-		setTitle(title);
-		setPreferredSize(new Dimension(width, height));
-		setBackground(new Color(45, 42, 46));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setFocusable(true);
-		setResizable(false);
-		setVisible(true);
-		pack();
-	}
 }

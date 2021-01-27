@@ -1,0 +1,44 @@
+routine 211
+	90r5	b5redA
+;
+
+routine 221
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+	40		b5redA
+	1		m1redA1	3
+	1		m1redA2	3
+;
+
+?

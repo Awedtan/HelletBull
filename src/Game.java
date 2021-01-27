@@ -7,8 +7,9 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 
 public class Game {
+	// Catch-all class for anything game related but not belonging in other classes
 	
-	static HashMap<String, Image> imageMap = new HashMap<>();
+	static HashMap<String, Image> imageMap = new HashMap<>(); // Map of preloaded images
 	
 	static HashMap<String, EnemyProjectile> bulletMap = new HashMap<>(); // Projectile types
 	static ArrayList<EnemyProjectile> activeEnemyBullets = new ArrayList<>(); // Projectiles currently alive
@@ -30,25 +31,26 @@ public class Game {
 	static ArrayList<Pickup> activePickups = new ArrayList<>(); // Pickups currently alive
 	static ArrayList<Pickup> deadPickups = new ArrayList<>(); // Pickups currently alive
 	
-	static HashMap<String, Integer> clipMap = new HashMap<>();
-	static int clipDelay = 7;
+	static HashMap<String, Integer> clipMap = new HashMap<>(); // Map of sound clip delays
+	static int clipDelay = 7; // The same clip can only be played once every 7 frames
 	
-	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960);
-	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960);
-	static final Rectangle SIDESCREEN = new Rectangle(900, 0, 1280 - 900, 960);
-	static final int GRIDLINES = 20;
+	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960); // A rectangle covering the entire frame
+	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960); // A rectangle covering the play area
+	static final Rectangle SIDESCREEN = new Rectangle(900, 0, 1280 - 900, 960); // A rectangle covering the side area
 	static final int FPS = 120;
-	static double gameSpeed = 1.0;
-	static int frameCount = 0;
+	static double gameSpeed = 1.0; // FPS multiplier
+	static int frameCount = 0; // Gets reset after each script
+	static long globalFrameCount = 0; // Is always incrementing
 	static int lastSpawnFrame = 0;
 	static boolean run = true;
 	
 	public static void end() {
+		// Stops the game
 		
 		Game.run = false;
 		Main.showMenu();
 		
-		Mini name = new Mini("Enter your name");
+		Mini name = new Mini("Your score is: " + Player.score); // Score submission window
 		JLabel label = new JLabel("Enter your name:");
 		JTextField field = new JTextField("Name");
 		JButton button = new JButton("Confirm");
@@ -62,7 +64,7 @@ public class Game {
 		button.setBounds(10, 100, 200, 30);
 		
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
+			public void actionPerformed(ActionEvent ae) { // Saves score and name into save file
 				
 				try {
 					
@@ -81,21 +83,26 @@ public class Game {
 	}
 	
 	public static boolean isEmpty() {
+		// Checks if the game is clear of enemies and other stuff
+		// Returns true if it is, false if it is not
 		
-		return activeEnemyBullets.isEmpty() && activePlayerBullets.isEmpty() && activeEnemies.isEmpty() && activePickups.isEmpty();
+		return activeEnemyBullets.isEmpty() && activeEnemies.isEmpty() && activePickups.isEmpty();
 	}
 	
 	public static void incrementClipDelay() {
+		// Increments clip delay in the clip map
+		
 		for (String s : clipMap.keySet())
 			clipMap.put(s, clipMap.get(s) - 1);
 	}
 	
 	public static void playClip(String s) {
+		// Plays a sound clip from a string
 		
 		try {
 			
-			if (clipMap.containsKey(s)) {
-				if (clipMap.get(s) < 0) {
+			if (clipMap.containsKey(s)) { // If the clip has already been played
+				if (clipMap.get(s) < 0) { // If >7 frames have elapsed since it was last played
 					
 					Clip clip = AudioSystem.getClip();
 					clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
@@ -106,7 +113,7 @@ public class Game {
 					
 					clipMap.put(s, clipDelay);
 				}
-			} else {
+			} else { // If the clip was not yet played
 				
 				Clip clip = AudioSystem.getClip();
 				clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
@@ -135,7 +142,7 @@ public class Game {
 	}
 	
 	public static void purgePlayerBullets() {
-		// Removes all bullets marked for deletion
+		// Removes all player bullets marked for deletion
 		
 		for (PlayerProjectile pp : Game.deadPlayerBullets)
 			Game.activePlayerBullets.remove(pp);
@@ -168,7 +175,6 @@ public class Game {
 		frameCount = 0;
 		lastSpawnFrame = 0;
 		Player.lastShot = 0;
-		Player.lastBomb = 0;
 		
 		activeScript = scriptQueue.removeFirst();
 	}
@@ -177,15 +183,15 @@ public class Game {
 		// Runs game scripts
 		
 		if (activeScript.peekFirst() == null)
-			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty())
+			if (scriptQueue.peekFirst() != null && activeEnemies.isEmpty()) // Goes to next script
 				purgeScript();
-			else if (Game.isEmpty()) {
+			else if (Game.isEmpty()) { // Ends the game
 				Game.end();
 				return;
 			} else
 				return;
 			
-		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) {
+		if (frameCount - lastSpawnFrame == activeScript.peekFirst().time) { // Creates an enemy
 			
 			Subscript current = activeScript.removeFirst();
 			EnemyActive.create(current.enemy, current.origin, current.routine);
@@ -221,8 +227,10 @@ public class Game {
 	}
 	
 	public static Image getImage(String s) {
+		// Gets an image based on the input string
+		// Returns that image
 		
-		if (imageMap.containsKey(s + ".png"))
+		if (imageMap.containsKey(s + ".png")) // If the image is a standalone file
 			return imageMap.get(s + ".png");
 		
 		String color = s.split("\\d+")[1];
@@ -230,7 +238,7 @@ public class Game {
 		Image image = imageMap.get(name.substring(0, name.length() - 1) + ".png");
 		int xOffset = 0, yOffset = 0, width = 0, height = 0;
 		
-		switch (name.substring(0, name.length() - 1)) {
+		switch (name.substring(0, name.length() - 1)) { // If the image is part of a spritesheet
 			case ("sb"):
 				width = 16;
 				height = 16;
@@ -305,9 +313,9 @@ public class Game {
 						height = 32;
 						break;
 					case (9):
-						yOffset = -254;
-						width = 16;
-						height = 32;
+						yOffset = -288;
+						width = 32;
+						height = 28;
 						break;
 				}
 				
@@ -420,6 +428,6 @@ public class Game {
 		g2.rotate(Math.PI, width / 2, height / 2);
 		g2.drawImage(image, xOffset, yOffset, null);
 		
-		return bImage;
+		return bImage; // Returns a section of the spritesheet
 	}
 }
