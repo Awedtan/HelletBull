@@ -22,16 +22,21 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			new Line2D.Double(0, Maths.toHeight(8), Game.PLAYSCREEN.width, Maths.toHeight(8)), new Line2D.Double(0, Maths.toHeight(9), Game.PLAYSCREEN.width, Maths.toHeight(9)) }; // Only for testing
 																																													// purposes
 	
-	static JLabel scoreLabel = new JLabel() {
+	static JLabel hiScoreLabel = new JLabel() {
 		{
 			setBounds(1000, 200, 200, 50);
 			setFont(font);
 		}
 	};
-	
-	static JLabel bombLabel = new JLabel() {
+	static JLabel scoreLabel = new JLabel() {
 		{
 			setBounds(1000, 300, 200, 50);
+			setFont(font);
+		}
+	};
+	static JLabel bombLabel = new JLabel() {
+		{
+			setBounds(1000, 400, 200, 50);
 			setFont(font);
 		}
 	};
@@ -48,6 +53,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 		setFocusable(true);
 		addKeyListener(this);
 		
+		add(hiScoreLabel);
 		add(scoreLabel);
 		add(bombLabel);
 	}
@@ -57,6 +63,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 		
 		System.out.println("Running game...");
 		long time = System.currentTimeMillis();
+		hiScoreLabel.setText("High score: " + ScorePanel.readScores().get(0).toString());
 		
 		while (Game.run) { // Main game loop
 			try {
