@@ -108,8 +108,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
 			
-			g2.setColor(Color.GRAY);
-			g2.fill(Game.PLAYSCREEN);
+			g2.drawImage(Game.getImage("space"), null, null);
 			
 			try {
 				
