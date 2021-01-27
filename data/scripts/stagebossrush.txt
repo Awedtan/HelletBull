@@ -1,4 +1,5 @@
 !
+
 script boss4
 	120	boss4	boss4	3,-2
 ;
