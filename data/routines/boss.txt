@@ -199,101 +199,101 @@ routine boss6
 ;
 
 routine boss7
-	240	b1redD1		12
+	360	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
-	70	b1redD1		12
+	70	b1redD1		10
 	70	m9redD		36
-	70	b1pinkD1	12
+	70	b1pinkD1	10
 	70	m9pinkD		36
-	70	b1blueD1	12
+	70	b1blueD1	10
 	70	m9blueD		36
-	70	b1tealD1	12
+	70	b1tealD1	10
 	70	m9tealD		36
-	70	b1greenD1	12
+	70	b1greenD1	10
 	70	m9greenD	36
-	70	b1yellowD1	12
+	70	b1yellowD1	10
 	70	m9yellowD	36
 ;
 

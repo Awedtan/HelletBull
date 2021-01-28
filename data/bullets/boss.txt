@@ -253,7 +253,7 @@ bullet b1redD1
 	aimed			true
 	velocity		3.0
 	turn			-1
-	lifetime		1080
+	lifetime		720
 	secondary		b1redD2
 ;
 bullet b1redD2
@@ -265,7 +265,7 @@ bullet b1pinkD1
 	aimed			true
 	velocity		3.0
 	turn			1
-	lifetime		1080
+	lifetime		720
 	secondary		b1pinkD2
 ;
 bullet b1pinkD2
@@ -277,7 +277,7 @@ bullet b1blueD1
 	aimed			true
 	velocity		3.0
 	turn			-1
-	lifetime		1080
+	lifetime		720
 	secondary		b1blueD2
 ;
 bullet b1blueD2
@@ -289,7 +289,7 @@ bullet b1tealD1
 	aimed			true
 	velocity		3.0
 	turn			1
-	lifetime		1080
+	lifetime		720
 	secondary		b1tealD2
 ;
 bullet b1tealD2
@@ -301,7 +301,7 @@ bullet b1greenD1
 	aimed			true
 	velocity		3.0
 	turn			-1
-	lifetime		1080
+	lifetime		720
 	secondary		b1greenD2
 ;
 bullet b1greenD2
@@ -313,7 +313,7 @@ bullet b1yellowD1
 	aimed			true
 	velocity		3.0
 	turn			1
-	lifetime		1080
+	lifetime		720
 	secondary		b1greenD2
 ;
 bullet b1yellowD2

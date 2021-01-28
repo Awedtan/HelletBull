@@ -34,6 +34,9 @@ Bomb: X
 
 Bugs:
 
+Bullets stutter on lower power computers (ie. laptops)
+Most notable on Edward final phase (boss7)
+
 Occasional concurrent modification exceptions
 Doesn't actually affect the gameplay at all, just prints a bunch of stuff in the console
 

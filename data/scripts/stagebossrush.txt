@@ -13,7 +13,7 @@ script boss6
 ;
 
 script boss7
-	120	boss7	boss7	3,-2
+	130	boss7	boss7	3,-2
 ;
 
 ?

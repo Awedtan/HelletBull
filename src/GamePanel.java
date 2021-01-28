@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 	
 	static JLabel hiScoreLabel = new JLabel() {
 		{
-			setBounds(1000, 200, 200, 50);
+			setBounds(1000, 200, 400, 50);
 			setFont(font);
 		}
 	};
@@ -100,6 +100,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 		}
 	}
 	
+	@Override
 	public void paintComponent(Graphics g) {
 		// Draws objects in a specific order
 		
@@ -107,6 +108,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 			
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
+			Graphics2D gBullets = (Graphics2D) g.create();
 			
 			g2.drawImage(Game.getImage("space"), null, null);
 			
@@ -143,7 +145,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 				Player.draw(g2);
 				
 				for (EnemyProjectile p : Game.activeEnemyBullets) { // Enemy bullets
-					p.draw(g2);
+					p.draw(gBullets);
 					if (Main.debug) {
 						g2.setColor(Color.BLACK);
 						g2.fill(p);
@@ -152,8 +154,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 						g2.setColor(Color.RED);
 						g2.draw(Maths.rotate(Maths.ellipseHitbox(p), p.radianAngle));
 					}
-					
 				}
+				
+				gBullets.dispose();
 				
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.fill(Game.SIDESCREEN);

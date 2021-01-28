@@ -11,7 +11,8 @@ public class MenuPanel extends JPanel {
 		{
 			setFont(font);
 			setBounds(1000, 200, 100, 50);
-			setBackground(Color.GRAY);
+			setBackground(Color.BLACK);
+			setForeground(Color.LIGHT_GRAY);
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -34,7 +35,8 @@ public class MenuPanel extends JPanel {
 		{
 			setFont(font);
 			setBounds(1000, 300, 100, 50);
-			setBackground(Color.GRAY);
+			setBackground(Color.BLACK);
+			setForeground(Color.LIGHT_GRAY);
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -57,7 +59,8 @@ public class MenuPanel extends JPanel {
 		{
 			setFont(font);
 			setBounds(1000, 400, 100, 50);
-			setBackground(Color.GRAY);
+			setBackground(Color.BLACK);
+			setForeground(Color.LIGHT_GRAY);
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -76,6 +79,13 @@ public class MenuPanel extends JPanel {
 			});
 		}
 	};
+	static JLabel titleLabel = new JLabel("touhou 9.6 embroidery of google max") {
+		{
+			setFont(font);
+			setForeground(Color.LIGHT_GRAY);
+			setBounds(30, 30, 500, 50);
+		}
+	};
 	
 	public MenuPanel() {
 		
@@ -84,8 +94,16 @@ public class MenuPanel extends JPanel {
 		setBackground(Color.LIGHT_GRAY);
 		setFocusable(true);
 		
+		add(titleLabel);
 		add(playLabel);
 		add(scoreLabel);
 		add(exitLabel);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		
+		super.paintComponent(g);
+		g.drawImage(Game.getImage("title"), 0, 0, this);
 	}
 }
