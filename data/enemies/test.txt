@@ -1,0 +1,13 @@
+enemy test
+	sprite		edward
+	pathing		9600
+	health		2400
+	boss		true
+;
+
+enemy delay
+	sprite		zy
+	pathing		480
+;
+
+?

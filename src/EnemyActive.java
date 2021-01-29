@@ -43,7 +43,9 @@ public class EnemyActive extends Enemy {
 	public static void create(String enem, Point origin, String routine) {
 		// Adds a new EnemyActive to the game array
 		
-		Game.activeEnemies.add(new EnemyActive(Game.enemyMap.get(enem), origin, routine));
+		Enemy e = Game.enemyMap.get(enem);
+		
+		Game.activeEnemies.add(new EnemyActive(e, origin, routine));
 	}
 	
 	public void hit(int damage) {

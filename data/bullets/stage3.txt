@@ -50,7 +50,7 @@ bullet m5pinkG
 	inaccuracy		30
 	angle			180.0
 	velocity		2.0
-	variance		0.5
+	variance		1.0
 	gravity			true
 ;
 bullet m5redG
@@ -58,7 +58,7 @@ bullet m5redG
 	inaccuracy		30
 	angle			180.0
 	velocity		2.0
-	variance		0.5
+	variance		1.0
 	gravity			true
 ;
 bullet m5orangeG
@@ -66,7 +66,7 @@ bullet m5orangeG
 	inaccuracy		30
 	angle			180.0
 	velocity		2.0
-	variance		0.5
+	variance		1.0
 	gravity			true
 ;
 bullet m5blueG
@@ -74,7 +74,7 @@ bullet m5blueG
 	inaccuracy		30
 	angle			180.0
 	velocity		2.0
-	variance		0.5
+	variance		1.0
 	gravity			true
 ;
 

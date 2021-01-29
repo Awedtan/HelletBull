@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-// touhou 6.9 embroidery of google max
+// touhou 9.6 embroidery of google max
 public class Main {
 	
 	static boolean enableController = false; // Enable this for controller support
@@ -230,9 +230,11 @@ public class Main {
 				while (str.indexOf('!') == -1)
 					if (input.hasNext())
 						str = input.nextLine().trim();
-					else
+					else {
+						input.close();
 						return;
-					
+					}
+				
 				while (str.indexOf('?') == -1) {
 					ArrayList<String> accumulate = new ArrayList<String>();
 					
@@ -244,8 +246,6 @@ public class Main {
 						}
 					else if (Game.scriptMap.containsKey(str))
 						Game.scriptQueue.addLast(Game.scriptMap.get(str).clone());
-					// else if (Game.bossMap.containsKey(str))
-					// Game.scriptQueue.addLast(Game.BOSSSCRIPT);
 					
 					str = input.nextLine();
 					

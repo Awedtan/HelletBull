@@ -64,14 +64,14 @@ enemy 361
 	sprite		genemwhite
 	pathing		4,-22,8,0
 	flatness	0.0001
-	health		150
+	health		200
 	offset		true
 ;
 enemy 362
 	sprite		genemblack
 	pathing		-4,-22,-8,0
 	flatness	0.0001
-	health		150
+	health		200
 	offset		true
 ;
 

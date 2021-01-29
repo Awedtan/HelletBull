@@ -1,0 +1,134 @@
+routine 411
+	787	hyellow1
+;
+routine 412
+	727	hyellow1
+;
+routine 413
+	667	hyellow1
+;
+routine 414
+	607	hyellow1
+;
+routine 415
+	547	hyellow1
+;
+routine 416
+	487	hyellow1
+;
+routine 417
+	427	hyellow1
+;
+routine 418
+	367	hyellow1
+;
+
+routine 421
+	787	hgreen1
+;
+routine 422
+	727	hgreen1
+;
+routine 423
+	667	hgreen1
+;
+routine 424
+	607	hgreen1
+;
+routine 425
+	547	hgreen1
+;
+routine 426
+	487	hgreen1
+;
+routine 427
+	427	hgreen1
+;
+routine 428
+	367	hgreen1
+;
+
+routine 431
+	787	hyellow2
+;
+routine 432
+	727	hyellow2
+;
+routine 433
+	667	hyellow2
+;
+routine 434
+	607	hyellow2
+;
+routine 435
+	547	hyellow2
+;
+routine 436
+	487	hyellow2
+;
+routine 437
+	427	hyellow2
+;
+routine 438
+	367	hyellow2
+;
+
+routine 441
+	787	hgreen3
+;
+routine 442
+	727	hgreen3
+;
+routine 443
+	667	hgreen3
+;
+routine 444
+	607	hgreen3
+;
+routine 445
+	547	hgreen3
+;
+routine 446
+	487	hgreen3
+;
+routine 447
+	427	hgreen3
+;
+routine 448
+	367	hgreen3
+;
+
+routine 451
+	380		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+	120		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+	120		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+	120		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+	120		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+	120		m9pinkD2	32
+	2r12		m9redD2
+	10r2	m9pinkD2	32
+;
+
+routine 471
+	60r7	b1pinkD3
+;
+routine 472
+	60r7	b1tealD3
+;
+
+routine 481
+	80		b1tealD3	2
+	5r70	b1tealD3	4
+;
+
+?

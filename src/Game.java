@@ -33,6 +33,8 @@ public class Game {
 	
 	static HashMap<String, Integer> clipMap = new HashMap<>(); // Map of sound clip delays
 	static int clipDelay = 7; // The same clip can only be played once every 7 frames
+	static Clip currentSong;
+	static String stageSong = "";
 	
 	static final Rectangle SCREEN = new Rectangle(0, 0, 1280, 960); // A rectangle covering the entire frame
 	static final Rectangle PLAYSCREEN = new Rectangle(0, 0, 900, 960); // A rectangle covering the play area
@@ -48,12 +50,15 @@ public class Game {
 		// Stops the game
 		
 		Game.run = false;
+		Game.currentSong.close();
+		Game.currentSong = null;
+		Game.stageSong = "";
 		Main.showMenu();
 		
 		Mini name = new Mini("Your score is: " + Player.score); // Score submission window
 		JLabel label = new JLabel("Enter your name:");
 		JTextField field = new JTextField("Name");
-		JButton button = new JButton("Confirm");
+		JButton button = new JButton("Submit");
 		
 		name.add(label);
 		name.add(field);
@@ -106,10 +111,10 @@ public class Game {
 					
 					Clip clip = AudioSystem.getClip();
 					clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
-					clip.start();
 					
 					FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 					gainControl.setValue(-30);
+					clip.start();
 					
 					clipMap.put(s, clipDelay);
 				}
@@ -117,10 +122,46 @@ public class Game {
 				
 				Clip clip = AudioSystem.getClip();
 				clip.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
-				clip.start();
 				
 				FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 				gainControl.setValue(-30);
+				clip.start();
+				
+				clipMap.put(s, clipDelay);
+			}
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void playSong(String s) {
+		// Plays a sound clip from a string
+		
+		if (currentSong != null)
+			currentSong.close();
+		
+		try {
+			
+			if (clipMap.containsKey(s)) { // If the clip has already been played
+				if (clipMap.get(s) < 0) { // If >7 frames have elapsed since it was last played
+					
+					currentSong = AudioSystem.getClip();
+					currentSong.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+					
+					FloatControl gainControl = (FloatControl) currentSong.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(-20);
+					currentSong.start();
+					
+					clipMap.put(s, clipDelay);
+				}
+			} else { // If the clip was not yet played
+				
+				currentSong = AudioSystem.getClip();
+				currentSong.open(AudioSystem.getAudioInputStream(new File("sounds/" + s + ".wav")));
+				
+				FloatControl gainControl = (FloatControl) currentSong.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(-20);
+				currentSong.start();
 				
 				clipMap.put(s, clipDelay);
 			}
@@ -177,6 +218,11 @@ public class Game {
 		Player.lastShot = 0;
 		
 		activeScript = scriptQueue.removeFirst();
+		
+		if (!stageSong.equalsIgnoreCase(activeScript.peek().song)) {
+			playSong(activeScript.peek().song);
+			stageSong = activeScript.peek().song;
+		}
 	}
 	
 	public static void runScript() {

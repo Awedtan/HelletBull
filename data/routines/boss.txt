@@ -45,139 +45,139 @@ routine boss1
 ;
 
 routine boss2
-	120		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	60		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
-	30		b5tealD	6
-	30		hredD1	10
-	60		hredD2	10
-	60		hredD3	10
-	30		b5tealD	6
-	30		hredD4	10
-	60		hredD5	10
-	60		hredD6	10
+	120		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	60		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
+	30		b5blueA	6
+	30		hblueD1	10
+	60		hblueD2	10
+	60		hblueD3	10
+	30		b5blueA	6
+	30		hblueD4	10
+	60		hblueD5	10
+	60		hblueD6	10
 ;
 
 routine boss3
 	120	m5blueA	7	180
-	15r4	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
-	15r5	m5blueA	7	180
-	15r5	m5orangeA	7	180
+	25r2	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
+	25r3	m5blueA	7	180
+	25r3	m5orangeA	7	180
 ;
 
 routine boss4
-	220		m8pinkB	16
-	220		m2pinkB	16
-	220		m8pinkB	16
-	220		m2pinkB	16
-	220		m8pinkB	16
-	220		m2pinkB	16
-	220		m8pinkB	16
-	220		m2pinkB	16
+	220		m8pinkB	14
+	220		m2pinkB	14
+	220		m8pinkB	14
+	220		m2pinkB	14
+	220		m8pinkB	14
+	220		m2pinkB	14
+	220		m8pinkB	14
+	220		m2pinkB	14
 ;
 
 routine boss5
@@ -187,15 +187,15 @@ routine boss5
 
 routine boss6
 	240		sunD		6
-	40r16	m2yellowA		3	180
+	32r20	m2yellowA		3	180
 	40		sunD		6
-	40r16	m2yellowA		3	180
+	32r20	m2yellowA		3	180
 	40		sunD		6
-	40r16	m2yellowA		3	180
+	32r20	m2yellowA		3	180
 	40		sunD		6
-	40r16	m2yellowA		3	180
+	32r20	m2yellowA		3	180
 	40		sunD		6
-	40r16	m2yellowA		3	180
+	32r20	m2yellowA		3	180
 ;
 
 routine boss7

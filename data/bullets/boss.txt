@@ -36,50 +36,50 @@ bullet m5orangeA
 	velocity		2.0
 ;
 
-bullet b5tealD
-	sprite			bb5teal
+bullet b5blueA
+	sprite			bb5blue
 	turn			2
 	velocity		2.0
 	lifetime		180
-	secondary		b5blueA
+	secondary		b5tealA
 ;
-bullet b5blueA
-	sprite			bb5blue
+bullet b5tealA
+	sprite			bb5teal
 	inaccuracy		14
 	aimed			true
 	velocity		4.0
 ;
-bullet hredD1
-	sprite			hb1red
+bullet hblueD1
+	sprite			hb1blue
 	velocity		1.5
 	variance		0.3
 ;
-bullet hredD2
-	sprite			hb1red
+bullet hblueD2
+	sprite			hb1blue
 	angle			6
 	velocity		1.5
 	variance		0.3
 ;
-bullet hredD3
-	sprite			hb1red
+bullet hblueD3
+	sprite			hb1blue
 	angle			12
 	velocity		1.5
 	variance		0.3
 ;
-bullet hredD4
-	sprite			hb1red
+bullet hblueD4
+	sprite			hb1blue
 	angle			18
 	velocity		1.5
 	variance		0.3
 ;
-bullet hredD5
-	sprite			hb1red
+bullet hblueD5
+	sprite			hb1blue
 	angle			24
 	velocity		1.5
 	variance		0.3
 ;
-bullet hredD6
-	sprite			hb1red
+bullet hblueD6
+	sprite			hb1blue
 	angle			30
 	velocity		1.5
 	variance		0.3
@@ -88,7 +88,7 @@ bullet hredD6
 bullet m8pinkB
 	sprite			mb8pink
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -97,7 +97,7 @@ bullet m8pinkB
 bullet m8blueB
 	sprite			mb8blue
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -106,7 +106,7 @@ bullet m8blueB
 bullet m8tealB
 	sprite			mb8teal
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -115,7 +115,7 @@ bullet m8tealB
 bullet m8greenB
 	sprite			mb8green
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -124,7 +124,7 @@ bullet m8greenB
 bullet m8yellowB
 	sprite			mb8yellow
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -133,7 +133,7 @@ bullet m8yellowB
 bullet m8orangeB
 	sprite			mb8orange
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -142,7 +142,7 @@ bullet m8orangeB
 bullet m8redB
 	sprite			mb8red
 	inaccuracy		10
-	turn			0.2
+	turn			0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -150,7 +150,7 @@ bullet m8redB
 bullet m2pinkB
 	sprite			mb2pink
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -159,7 +159,7 @@ bullet m2pinkB
 bullet m2blueB
 	sprite			mb2blue
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -168,7 +168,7 @@ bullet m2blueB
 bullet m2tealB
 	sprite			mb2teal
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -177,7 +177,7 @@ bullet m2tealB
 bullet m2greenB
 	sprite			mb2green
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -186,7 +186,7 @@ bullet m2greenB
 bullet m2yellowB
 	sprite			mb2yellow
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -195,7 +195,7 @@ bullet m2yellowB
 bullet m2orangeB
 	sprite			mb2orange
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -204,7 +204,7 @@ bullet m2orangeB
 bullet m2redB
 	sprite			mb2red
 	inaccuracy		10
-	turn			-0.2
+	turn			-0.15
 	angle			180
 	velocity		2.0
 	border			true
@@ -244,6 +244,7 @@ bullet m2yellowA
 bullet m8whiteH
 	sprite			mb8white
 	velocity		1.8
+	maxspeed		4.0
 	homing			200
 	acceleration	0.01
 ;

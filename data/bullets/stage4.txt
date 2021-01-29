@@ -1,0 +1,182 @@
+bullet hyellow1
+	sprite			hb1yellow
+	velocity		0.5
+	variance		0.2
+	gravity			true
+;
+
+bullet hgreen1
+	sprite			hb1green
+	velocity		0.5
+	variance		0.3
+	lifetime		300
+	gravity			true
+	secondary		hgreen2
+;
+bullet hgreen2
+	sprite			hb1green
+	velocity		3.0
+	acceleration	-0.03
+	minspeed		-4.0
+;
+
+bullet hyellow2
+	sprite			hb1yellow
+	velocity		0.5
+	variance		0.3
+	lifetime		300
+	gravity			true
+	secondary		hyellow3
+;
+bullet hyellow3
+	sprite			hb1yellow
+	velocity		3.0
+	variance		0.3
+	acceleration	-0.03
+	minspeed		-4.0
+	lifetime		300
+	secondary		hyellow4
+;
+bullet hyellow4
+	sprite			hb1yellow
+	angle			180
+	velocity		3.0
+	variance		0.3
+	minspeed		-4.0
+	acceleration	-0.03
+	lifetime		100
+	secondary		hyellow5
+;
+bullet hyellow5
+	sprite			hb1yellow
+	velocity		0.0
+	variance		0.3
+	acceleration	0.03
+	aimed			true
+;
+
+bullet hgreen3
+	sprite			hb1green
+	velocity		0.5
+	variance		0.3
+	lifetime		300
+	gravity			true
+	secondary		hgreen4
+;
+bullet hgreen4
+	sprite			hb1green
+	velocity		3.0
+	variance		0.3
+	acceleration	-0.03
+	minspeed		-4.0
+	lifetime		300
+	secondary		hgreen5
+;
+bullet hgreen5
+	sprite			hb1green
+	angle			180
+	velocity		3.0
+	variance		0.3
+	minspeed		-4.0
+	acceleration	-0.03
+	lifetime		100
+	secondary		hgreen6
+;
+bullet hgreen6
+	sprite			hb1green
+	velocity		0.0
+	variance		0.3
+	acceleration	0.03
+	aimed			true
+;
+
+bullet m9pinkD2
+	sprite			mb9pink
+	aimed			true
+	velocity		5.0
+	acceleration	-0.05
+	minspeed		-4.0
+;
+bullet m9redD2
+	sprite			mb9red
+	inaccuracy		20
+	angle			180
+	aimed			true
+	velocity		5.0
+	acceleration	-0.05
+	minspeed		-4.0
+;
+
+bullet b1pinkD3
+	sprite			bb1pink
+	velocity		0.1
+	variance		0.3
+	minspeed		-4.0
+	gravity			true
+	border			true
+	secondary		m9pinkD3
+;
+bullet m9pinkD3
+	sprite			mb9pink
+	inaccuracy		20
+	aimed			true
+	velocity		4.0
+	variance		0.3
+	maxspeed		10.0
+	minspeed		-3.0
+	gravity			true
+;
+bullet b1tealD3
+	sprite			bb1teal
+	velocity		0.1
+	variance		0.3
+	minspeed		-4.0
+	gravity			true
+	border			true
+	secondary		m9tealD2
+;
+bullet m9tealD2
+	sprite			mb9teal
+	inaccuracy		20
+	aimed			true
+	velocity		4.0
+	variance		0.3
+	maxspeed		10.0
+	minspeed		-3.0
+	gravity			true
+;
+
+?
+
+defaults:
+String name = arr[0].split(" ")[1];
+String sprite = "zy";
+int inaccuracy = 0;
+double angle = 0;
+double turn = 0;
+boolean aimed = false;
+double velocity = 1;
+double acceleration = 0;
+double max = 1;
+double min = 0;
+int homing = 0;
+int lifetime = -1;
+
+template:
+bullet name
+	sprite			zy
+	inaccuracy		0
+	angle			0.0
+	turn			0.0
+	aimed			false
+	velocity		1.0
+	variance		0.0
+	acceleration	0.0
+	maxspeed		5.0
+	minspeed		0.0
+	homing			0
+	lifetime		-1
+	gravity			false
+	border			false
+	secondary		name
+;

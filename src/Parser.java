@@ -91,8 +91,7 @@ public class Parser {
 			}
 		}
 		
-		Game.bulletMap.put(name, new EnemyProjectile(sprite, inaccuracy, angle, turn, aimed, velocity, variance, acceleration, max, min, homing,
-				lifetime, gravity, border, secondary));
+		Game.bulletMap.put(name, new EnemyProjectile(sprite, inaccuracy, angle, turn, aimed, velocity, variance, acceleration, max, min, homing, lifetime, gravity, border, secondary));
 	}
 	
 	public static void parseEnemy(String[] arr) {
@@ -414,8 +413,13 @@ public class Parser {
 				String routine = st.nextToken();
 				String[] str = st.nextToken().split(",");
 				Point origin = new Point(Maths.toWidth(Integer.parseInt(str[0].trim())), Maths.toHeight(Integer.parseInt(str[1].trim())));
+				String song = "stage" + name.charAt(0);
 				
-				script.addLast(new Subscript(time, enemy, origin, routine));
+				if (name.length() > 4)
+					if (name.substring(0, 4).equalsIgnoreCase("boss"))
+						song = "boss" + name.charAt(4);
+					
+				script.addLast(new Subscript(time, enemy, origin, routine, song));
 			}
 			
 			Game.scriptQueue.addLast(script);

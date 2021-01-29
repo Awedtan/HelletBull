@@ -1,0 +1,61 @@
+enemy 411
+	sprite		enemgreen
+	pathing		5,0 / 800 / 0,0
+	health		80
+	offset		true
+;
+
+enemy 412
+	sprite		enemyellow
+	pathing		-5,0 / 800 / 0,0
+	health		80
+	offset		true
+;
+
+enemy 451
+	sprite		genemblack
+	pathing		7,0,3 / 960 / 0,0
+	health		500
+	offset		true
+;
+
+enemy 461
+	sprite		genemblack
+	pathing		-7,0,3 / 800 / 0,0
+	health		500
+	offset		true
+;
+
+enemy 471
+	sprite		benemblue
+	pathing		13,0
+	health		50
+	offset		true
+;
+enemy 472
+	sprite		benemred
+	pathing		-13,0
+	health		50
+	offset		true
+;
+
+?
+
+defaults:
+String name = arr[0].split(" ")[1];
+String sprite = "";
+String path = "";
+int health = 1;
+double flat = 0.003;
+boolean offset = false;
+
+straight path speed: 2
+
+template:
+enemy name
+	sprite		image
+	pathing		path
+	health		1
+	flatness	0.003
+	offset		false
+;

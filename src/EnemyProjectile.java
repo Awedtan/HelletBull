@@ -23,7 +23,7 @@ public class EnemyProjectile extends DObject {
 	int lifetime; // How many frames the proj will last, -1 for forever
 	String subBullet; // The proj to be created when the current proj dies
 	
-	int spawnFrame;
+	long spawnFrame;
 	boolean grazed = false; // Bullets can only be grazed once
 	Path2D.Double rotated = null; // This will be not null if the bullet is being rotated
 	
@@ -74,7 +74,7 @@ public class EnemyProjectile extends DObject {
 		height = image.getHeight(null);
 		x = Maths.centerX(origin.getBounds()) - width / 2;
 		y = Maths.centerY(origin.getBounds()) - height / 2;
-		spawnFrame = Game.frameCount;
+		spawnFrame = Game.globalFrameCount;
 		
 		if (aimed) // Aims the bullet towards the player
 			angle = Maths.angleTo(x, y, Maths.centerX(Player.hitboxModel.getBounds()) - width / 2, Maths.centerY(Player.hitboxModel.getBounds()) - height / 2);
@@ -106,10 +106,10 @@ public class EnemyProjectile extends DObject {
 	public static void create(String proj, Ellipse2D.Double origin, int amount) {
 		// Creates a circle of bullets
 		
-		create(proj, origin, amount, 360 - (360 / amount));
+		create(proj, origin, amount, 360 - (360.0 / amount));
 	}
 	
-	public static void create(String proj, Ellipse2D.Double origin, int amount, int angle) {
+	public static void create(String proj, Ellipse2D.Double origin, int amount, double angle) {
 		// Creates a arc of bullets
 		
 		for (int i = 0; i < amount; i++) {
@@ -239,7 +239,7 @@ public class EnemyProjectile extends DObject {
 		move();
 		lifetime--;
 		
-		if (border && Game.frameCount - spawnFrame > 30) // Border check
+		if (border && Game.globalFrameCount - spawnFrame > 30) // Border check
 			if (Maths.checkInBounds(getBounds(), -10) != -1)
 				kill();
 			

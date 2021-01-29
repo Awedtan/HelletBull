@@ -8,9 +8,9 @@ class Test {
 		
 		ArrayDeque<Point2D.Double> path;
 		Point p = new Point(toWidth(5), toHeight(6));
-		String s = "9,6,9,0,5,0 / 1,0,1,6,5,6";
+		String s = "5,0";
 		
-		path = Parser.parsePathing(s, p, 0.001, false, true);
+		path = Parser.parsePathing(s, p, 0.001, true, true);
 		System.out.println(path.size());
 	}
 	

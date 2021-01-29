@@ -12,7 +12,8 @@ public class ScorePanel extends JPanel {
 	static JLabel backLabel = new JLabel("Back ", SwingConstants.RIGHT) { // Goes back to menu panel
 		{
 			setFont(new Font("Arial", Font.PLAIN, 30));
-			setBackground(Color.GRAY);
+			setBackground(Color.BLACK);
+			setForeground(Color.LIGHT_GRAY);
 			
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -46,9 +47,17 @@ public class ScorePanel extends JPanel {
 			add(new JLabel(s.toString()) {// Adds all scores to the panel
 				{
 					setFont(font);
+					setForeground(Color.LIGHT_GRAY);
 				}
 			});
 		}
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		
+		super.paintComponent(g);
+		g.drawImage(Game.getImage("title"), 0, 0, this);
 	}
 	
 	public static ArrayList<Score> readScores() {

@@ -7,6 +7,8 @@ script 21
 	40	212	211	11,1
 ;
 
+21
+
 script 22
 	120	211	221	-1,1
 	150	211	221	-1,1
@@ -40,7 +42,13 @@ script 25
 22
 24
 23
+23
+23
 25
+
+script 26
+	120	delay	empty	-1,-1
+;
 
 script boss2
 	120	boss2	boss2	3,-2

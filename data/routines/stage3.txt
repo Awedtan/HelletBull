@@ -49,28 +49,28 @@ routine 332
 
 routine 341
 	100r6	m3tealG	10	90
-	50r20	m3tealG	10	90
+	75r15	m3tealG	10	90
 ;
 routine 342
 	100r6	m3yellowG	10	90
-	50r20	m3yellowG	10	90
+	75r15	m3yellowG	10	90
 ;
 
 routine 351
-	12r1000	m5pinkG
+	16r700	m5pinkG	2	10
 ;
 routine 352
-	12r1000	m5redG
+	16r700	m5redG	2	10
 ;
 routine 353
-	12r1000	m5orangeG
+	16r700	m5orangeG	2	10
 ;
 routine 354
-	12r1000	m5blueG
+	16r700	m5blueG	2	10
 ;
 
 routine 361
-	90r10	m5redD		36
+	160r4	m5redD		36
 ;
 
 routine 371
@@ -83,6 +83,10 @@ routine 372
 
 routine 373
 	100r4	m5orangeD		40
+;
+
+routine 381
+	160r4	m5orangeD		50
 ;
 
 ?

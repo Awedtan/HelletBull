@@ -136,7 +136,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 				}
 				
 				if (Main.debug) {
-					g2.setColor(Color.BLACK);
+					g2.setColor(Color.WHITE);
 					for (Line2D.Double l : grid)
 						g2.drawLine((int) l.x1, (int) l.y1, (int) l.x2, (int) l.y2);
 					g2.drawRect(Game.SIDESCREEN.x, Game.SIDESCREEN.y, Game.SIDESCREEN.width, Game.SIDESCREEN.height);
@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 				for (EnemyProjectile p : Game.activeEnemyBullets) { // Enemy bullets
 					p.draw(gBullets);
 					if (Main.debug) {
-						g2.setColor(Color.BLACK);
+						g2.setColor(Color.WHITE);
 						g2.fill(p);
 						g2.setColor(Color.BLUE);
 						g2.fill(p.getShape());

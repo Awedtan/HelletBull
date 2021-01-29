@@ -14,7 +14,7 @@ routine 133
 ;
 
 routine 155
-	240r3	sgreyA
+	240r9	sgreyA
 ;
 
 routine 161

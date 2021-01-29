@@ -5,12 +5,12 @@ import javax.swing.*;
 public class MenuPanel extends JPanel {
 	// Panel that shows the main menu
 	
-	static Font font = new Font("Arial", Font.PLAIN, 22);
+	static Font font = new Font("Arial", Font.PLAIN, 28);
 	
 	static JLabel playLabel = new JLabel("Play ", SwingConstants.RIGHT) { // Starts the game
 		{
 			setFont(font);
-			setBounds(1000, 200, 100, 50);
+			setBounds(1050, 250, 120, 50);
 			setBackground(Color.BLACK);
 			setForeground(Color.LIGHT_GRAY);
 			
@@ -34,7 +34,7 @@ public class MenuPanel extends JPanel {
 	static JLabel scoreLabel = new JLabel("Scores ", SwingConstants.RIGHT) { // Shows the score panel
 		{
 			setFont(font);
-			setBounds(1000, 300, 100, 50);
+			setBounds(1050, 350, 120, 50);
 			setBackground(Color.BLACK);
 			setForeground(Color.LIGHT_GRAY);
 			
@@ -58,7 +58,7 @@ public class MenuPanel extends JPanel {
 	static JLabel exitLabel = new JLabel("Exit ", SwingConstants.RIGHT) { // Quits the program
 		{
 			setFont(font);
-			setBounds(1000, 400, 100, 50);
+			setBounds(1050, 450, 120, 50);
 			setBackground(Color.BLACK);
 			setForeground(Color.LIGHT_GRAY);
 			
@@ -83,7 +83,7 @@ public class MenuPanel extends JPanel {
 		{
 			setFont(font);
 			setForeground(Color.LIGHT_GRAY);
-			setBounds(30, 30, 500, 50);
+			setBounds(20, 400, 500, 50);
 		}
 	};
 	
@@ -93,6 +93,9 @@ public class MenuPanel extends JPanel {
 		setPreferredSize(new Dimension(Game.SCREEN.width, Game.SCREEN.height));
 		setBackground(Color.LIGHT_GRAY);
 		setFocusable(true);
+		
+		if (Game.currentSong == null)
+			Game.playSong("title");
 		
 		add(titleLabel);
 		add(playLabel);
